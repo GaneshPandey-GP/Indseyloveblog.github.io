@@ -1,0 +1,84 @@
+@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+.login-box{
+    width: 350px;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #0f0827;
+    border: 1px solid transparent;
+    background-color:#ffe;
+    box-shadow: 2px 3px 9px #0f0827;
+    border-radius:12px ;
+    padding:12px 0;
+  }
+ 
+  .textbox{
+    width: 100%;
+    overflow: hidden;
+    font-size: 20px;
+    padding-left: 18px;
+    margin: 12px 0;
+    
+  }
+  .textbox i{
+    width: 26px;
+    float: left;
+    padding-top:10px ;
+    text-align: center;
+    margin-right: 10px;
+  }
+  .textbox input{
+    border: none;
+    outline: none;
+    background: none;
+    color: #0f0827;
+    font-size: 18px;
+    width: 100%;
+    float: left;
+ 
+    margin: 0px 15px;
+  }
+  .btn{
+    width: 90%;
+    background:  #0f0827;
+    border: 2px solid #0f0827;
+    color: #d3cbee;
+    padding: 0px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 0px 15px;
+    
+  }
+  .link{
+    text-decoration:none;
+    text-align: center;
+    font-size: 12px;
+    margin: 0px 20px;
+  }
+  .link1{
+    text-decoration:none;
+    text-align: center;
+    font-size: 15px;
+  }
+  
+.head{
+    text-align: center;
+    background-color: #e0e0f1;
+    align-items: center;
+    text-align: center;
+    font-size: 35px;
+    margin-bottom: 50px;
+    font-weight: 900;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    text-shadow: 2px 3px 9px #0f0827;
+    margin-top: -15px;
+    font-family: 'Times New Roman', Times, serif ;
+}
