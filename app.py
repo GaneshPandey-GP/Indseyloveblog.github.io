@@ -6,7 +6,7 @@ from pymongo import MongoClient
 
 ##### to write data format
 ##{
-##    "database": "hostelManagementSystem",
+##    "database": "ExaminationSystem",
 ##    "collection": "users",
 ##    "Document": {
 ##        
