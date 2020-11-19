@@ -6,79 +6,86 @@ import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Login() {
-  const [user, setUser] = useState();
-  const [password, setPassword] = useState();
+  const [formData, setFormData] = useState({
+    uname: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
 
-  const passwordEvent = (e) => {
-    setPassword(e.target.value);
+    // SignupFunction
+
+    setLoading(true);
   };
-  const emailEvent = (e) => {
-    setUser(e.target.value);
-  };
-  const submitEvent = () => {
-    if (user === "youremail" && password === "yourpassword") {
-      alert("welcome!");
-    } else {
-      alert("check your email or password!");
-    }
-    console.log(user.email);
-    console.log(user.password);
-    // <Redirect to="/home"/>
-  };
+
+  const { uname, password } = formData;
+
+  const handleInputChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
     <>
       <Card>
         <div className="login-box">
-          <div className="head">Login</div>
-          <div className="textbox">
-            <i className="fa fa-envelope"></i>
-            <Input
-              type="email"
-              placeholder="Enter Your Email.."
-              name="email"
-              value={user}
-              onChange={emailEvent}
-            />
-          </div>
+          <form>
+            <div className="head">Login</div>
 
-          <div className="textbox">
-            <i className="fas fa-lock"></i>
-            <Input
-              className="input "
-              type="password"
-              name="password"
-              placeholder="Enter Your Password.."
-              value={password}
-              onChange={passwordEvent}
-            />
+            <div className="textbox">
+              <i className="fa fa-envelope"></i>
+              <Input
+                type="text"
+                id="first_name"
+                placeholder="Enter Your Email.."
+                name="uname"
+                required
+                autoComplete="uname"
+                value={uname || ''}
+                onChange={(e) => handleInputChange(e)}
+              />
+            </div>
+
+            <div className="textbox">
+              <i className="fas fa-lock"></i>
+              <Input
+                required
+                id="password"
+                className="input "
+                type="password"
+                name="password"
+                placeholder="Enter Your Password.."
+                value={password || ''}
+                autoComplete="current-password"
+                onChange={(e) => handleInputChange(e)}
+              />
+              <br />
+            </div>
+
+            <Button
+              className="btn mt-4"
+              style={{
+                background: "#0f0827",
+                color: "#d3cbee",
+                margin: "0px 15px",
+              }}
+              onClick={handleFormSubmit}
+            >
+              Login
+            </Button>
             <br />
-          </div>
-
-          <Button
-            className="btn mt-4"
-            style={{
-              background: "#0f0827",
-              color: "#d3cbee",
-              margin: "0px 15px",
-            }}
-            onClick={submitEvent}
-          >
-            Login
-          </Button>
-          <br />
-          <div className="row mt-3 pt-2 text-capitalize">
-            <div className="col-sm-12">
-              <Link to="#" className="link1 col-sm-6">
-                Forgot password?
-              </Link>
+            <div className="row mt-3 pt-2 text-capitalize">
+              <div className="col-sm-12">
+                <Link to="#" className="link1 col-sm-6">
+                  Forgot password?
+                </Link>
+              </div>
+              <div className="col-sm-12">
+                <Link to="/register" className="link1 col-sm-6">
+                Don't have an Account, Sign Up"
+                </Link>
+              </div>
             </div>
-            <div className="col-sm-12">
-              <Link to="/register" className="link1 col-sm-6">
-                Are you a new Member?
-              </Link>
-            </div>
-          </div>
+          </form>
         </div>
       </Card>
     </>
