@@ -1,0 +1,11 @@
+First Step is to create react project and upload it to the repo
+
+to get api start the app.py file which will create local api server for you
+http://localhost:5001
+Note you might need to install new libraries for python.
+Contact me if help needed.
+Python used by me is 3.7.6
+
+The data will be sent to the api only in POST and in the form of JSON Object.
+
+Structure of JSON Object is defined in app.py in comments at the starting of the file after library imports.
