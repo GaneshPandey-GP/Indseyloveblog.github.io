@@ -12,6 +12,13 @@ from pymongo import MongoClient
 ##        
 ##    }
 ##}
+
+###to login
+### database:"name",
+### collection:"name",
+### username:"username",
+### password:"password"
+
 class MongoAPI:
     def __init__(self, data):
         self.client = MongoClient("mongodb+srv://allplayertest:qwerty1234@examinationsystem.sqwfq.mongodb.net/Examinatipn?retryWrites=true&w=majority")
@@ -35,6 +42,11 @@ class MongoAPI:
     def readUsers(self):
         print(self.data)
         documents = self.collection.find()
+        output = [{item: data[item] for item in data if item != '_id'} for data in documents]
+        return output
+    def login(self):
+        print(self.data)
+        documents = self.collection.find({"username": self.data['username'],"password":self.data['password'],"isActive":1},{'createdBy':0,'createdOn':0,'isActive':0,'password':0,'email':0,'contact':0,'fname':0,'lname':0})
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
         return output
 app = Flask(__name__)
@@ -63,7 +75,19 @@ def read_users():
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json') 
-
+@app.route('/login', methods=['POST'])
+def login_class():
+    data = request.json
+    if data is None or data == {}:
+        print("No data")
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.login()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
 if __name__ == '__main__':
     data={}
     app.run(use_reloader=False, debug=True, port=5001, host='127.0.0.1')
