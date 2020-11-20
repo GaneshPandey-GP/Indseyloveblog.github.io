@@ -12,7 +12,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { AuthReducer, initialState } from "../context/reducers";
+import { reducer, initialState } from "../context/reducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,8 +43,8 @@ export default function Register() {
     re_password: "",
     created_on: "",
   });
-  const [error, setError] = useState("")
   const [uid, setUid] = useState(0);
+  const username = "testuser"
 
   const { fname, lname, contact, email, password, re_password } = formData;
 

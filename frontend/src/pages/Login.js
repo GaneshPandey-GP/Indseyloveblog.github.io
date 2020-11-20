@@ -1,43 +1,29 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
-import { Input, Button } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
+import { Input, Button, Card } from "@material-ui/core";
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
+import { reducer, initialState } from "../context/reducer";
+import { loginUser, useAuthState } from "../context";
 
-function Login() {
+function Login(props) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const login = async (username, password) => {
-    const data = {
-      "database": "ExaminationSystem",
-      "collection": "users",
-      "username": username,
-      "password": password,
-    };
-    console.log(data);
-    await axios
-      .post("http://127.0.0.1:5001/login", data)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  };
-  const [loading, setLoading] = useState(false);
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    login(username, password);
-    // SignInFunction
-
-    setLoading(true);
-  };
-
   const { username, password } = formData;
+  const dispatch = reducer()
 
   const handleInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    loginUser(dispatch, username, password);
+  };
+  const [{isAuthenticated, loading}] = useAuthState()
+  console.log(isAuthenticated, loading) 
+  
   return (
     <>
       <Card>
