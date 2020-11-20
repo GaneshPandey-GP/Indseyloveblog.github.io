@@ -34,3 +34,24 @@ This currently the rough documentation for examination system.
           
         After successful user validation user redirect to dashboard
         After successful registration user redirects to login
+
+20 Nov- Create SubAdmin Dashboard
+
+            Sub Admin
+            Note that subadmin dashboard can only be accessed by users having level 1
+            Create Subjects
+            View Subjects
+            Edit Subjects
+            Create Test for specific subject
+            View Test for specific subjects
+            View All Tests
+            Edit Test for specific subjects
+            After Test Creation Add Questions to tests
+            Question Format
+                  Question (Type text or insert image button)
+                  choice 1
+                  choice 2
+                  choice 3
+                  choice 4
+                  correct
+            View Test Submissions(Subject Wise and Test Wise)
