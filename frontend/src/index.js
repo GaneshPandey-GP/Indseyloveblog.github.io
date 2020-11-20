@@ -5,11 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './context/context';
-import {AuthReducer, initialState} from "../src/context/reducers"
+import {reducer, initialState} from "../src/context/reducer"
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthProvider initialState={initialState} reducer={AuthReducer}>
+    <AuthProvider initialState={initialState} reducer={reducer}>
     <App />
     </AuthProvider>
   </React.StrictMode>,
