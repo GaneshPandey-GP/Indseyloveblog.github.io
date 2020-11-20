@@ -38,6 +38,7 @@ This currently the rough documentation for examination system.
 20 Nov- Create SubAdmin Dashboard
 
             Sub Admin
+            Note that subadmin dashboard can only be accessed by users having level 1
             Create Subjects
             View Subjects
             Edit Subjects
