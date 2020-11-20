@@ -55,3 +55,6 @@ This currently the rough documentation for examination system.
                   choice 4
                   correct
             View Test Submissions(Subject Wise and Test Wise)
+            
+            API's created
+            /createSubject
