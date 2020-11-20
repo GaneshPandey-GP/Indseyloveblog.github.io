@@ -12,8 +12,8 @@ function Login(props) {
     password: "",
   });
   const { username, password } = formData;
-  const dispatch = reducer()
-
+  // const dispatch = reducer();
+  const [access, dispatch] = useReducer(reducer, initialState);
   const handleInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -22,8 +22,8 @@ function Login(props) {
     loginUser(dispatch, username, password);
   };
   const [{isAuthenticated, loading}] = useAuthState()
-  console.log(isAuthenticated, loading) 
-  
+  console.log(isAuthenticated, loading)
+
   return (
     <>
       <Card>

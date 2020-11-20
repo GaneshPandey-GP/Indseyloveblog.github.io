@@ -1,18 +1,16 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {Signup} from '../context';
 import {
   Card,
   CardContent,
   Typography,
   Container,
   Grid,
+  Link,
   TextField,
   CssBaseline,
   Button,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { reducer, initialState } from "../context/reducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,39 +31,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Register() {
+export default function SignIn() {
   const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
-    contact: "",
+    first_name: "",
+    last_name: "",
+    phone: "",
     email: "",
     password: "",
     re_password: "",
-    created_on: "",
+    created_on: ""
   });
-  const [uid, setUid] = useState(0);
-  const username = "testuser"
-
-  const { fname, lname, contact, email, password, re_password } = formData;
-
-  const handleInputChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const [access, dispatch] = useReducer(reducer, initialState);
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setUid(uid + 1);
-    password === re_password ?
-    Signup(dispatch, username, fname, lname, contact, email, password, uid)
-    : console.log("password must match")
-  };
-
+  const [loading, setLoading] = useState(false);
   const classes = useStyles();
-  return (
-    <Container component="main" className={classes.container}>
-      <CssBaseline />
-      <Card>
-        <div style={{ backgroundColor: "#ffe" }}>
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault()
+
+    // SignupFunction
+
+    setLoading(true)
+  }
+
+    const {
+      first_name,
+      last_name,
+      phone,
+      email,
+      password,
+      re_password,
+      created_on,
+    } = formData;
+
+    const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
+
+    return (
+      <Container component="main" className={classes.container}>
+        <CssBaseline />
+        <Card>
+        <div style={{ backgroundColor: '#ffe'}}>
           <Typography variant="h4" align="center" className={classes.heading}>
             Register
           </Typography>
@@ -86,13 +89,13 @@ export default function Register() {
               <TextField
                 margin="normal"
                 required
-                id="fname"
+                id="first_name"
                 style={{ width: "17.9ch" }}
                 label="First Name"
-                name="fname"
+                name="first_name"
                 type="text"
-                value={fname || ""}
-                autoComplete="fname"
+                value={first_name || ''}
+                autoComplete="first_name"
                 variant="outlined"
                 autoFocus
                 onChange={(e) => handleInputChange(e)}
@@ -100,12 +103,12 @@ export default function Register() {
               <TextField
                 required
                 style={{ width: "17.9ch" }}
-                id="lname"
+                id="last_name"
                 label="Last Name"
-                name="lname"
+                name="last_name"
                 type="text"
-                value={lname || ""}
-                autoComplete="lname"
+                value={last_name || ''}
+                autoComplete="last_name"
                 variant="outlined"
                 autoFocus
                 onChange={(e) => handleInputChange(e)}
@@ -113,12 +116,12 @@ export default function Register() {
               <TextField
                 required
                 style={{ width: "38ch" }}
-                id="contact"
+                id="phone"
                 type="tel"
-                label="contact Number"
-                name="contact"
-                value={contact || ""}
-                autoComplete="contact"
+                label="Phone Number"
+                name="phone"
+                value={phone || ''}
+                autoComplete="phone"
                 variant="outlined"
                 autoFocus
                 onChange={(e) => handleInputChange(e)}
@@ -130,7 +133,7 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 type="email"
-                value={email || ""}
+                value={email || ''}
                 autoComplete="email"
                 variant="outlined"
                 autoFocus
@@ -144,7 +147,7 @@ export default function Register() {
                 type="password"
                 id="password"
                 variant="outlined"
-                value={password || ""}
+                value={password || ''}
                 autoComplete="current-password"
                 onChange={(e) => handleInputChange(e)}
               />
@@ -152,7 +155,7 @@ export default function Register() {
                 required
                 name="re_password"
                 label="re_Password"
-                value={re_password || ""}
+                value={re_password || ''}
                 style={{ width: "17.9ch" }}
                 type="password"
                 id="re_password"
@@ -172,15 +175,15 @@ export default function Register() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link to="/login" variant="body2">
+                  <Link href="/login" variant="body2">
                     {"Already have an account? Sign In"}
                   </Link>
                 </Grid>
               </Grid>
             </form>
           </CardContent>
-        </div>
-      </Card>
-    </Container>
-  );
-}
+          </div>
+        </Card>
+      </Container>
+    );
+  };

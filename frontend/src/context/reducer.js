@@ -6,7 +6,7 @@ import {
     LOGIN_FAIL,
     LOGOUT,
   } from './types';
-  
+
   export const initialState = {
     Document_ID: localStorage.getItem('Document_ID'),
     isAuthenticated: false,
@@ -14,11 +14,10 @@ import {
     loading: false,
     errorMessage: null
   };
-  
-  
+
+
   export const reducer = (initialState, action) => {
-    // const { type, payload } = action;
-  
+    console.log(action);
     switch(action.type) {
         case START_LOADING:
           return {
@@ -54,4 +53,3 @@ import {
           return initialState
     }
   }
-  
