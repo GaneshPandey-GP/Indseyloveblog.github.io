@@ -46,7 +46,7 @@ class MongoAPI:
         return output
     def login(self):
         print(self.data)
-        documents = self.collection.find({"username": self.data['username'],"password":self.data['password'],"isActive":1},{'createdBy':0,'createdOn':0,'isActive':0,'password':0,'email':0,'contact':0,'fname':0,'lname':0})
+        documents = self.collection.find({"email": self.data['username'],"password":self.data['password'],"isActive":1},{'createdBy':0,'createdOn':0,'isActive':0,'password':0,'email':0,'contact':0,'fname':0,'lname':0})
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
         return output
 app = Flask(__name__)
