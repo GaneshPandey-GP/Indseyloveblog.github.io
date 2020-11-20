@@ -4,22 +4,36 @@ import { Input, Button } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 
 function Login() {
   const [formData, setFormData] = useState({
-    uname: "",
+    username: "",
     password: "",
   });
+  const login = async (username, password) => {
+    const data = {
+      "database": "ExaminationSystem",
+      "collection": "users",
+      "username": username,
+      "password": password,
+    };
+    console.log(data);
+    await axios
+      .post("http://127.0.0.1:5001/login", data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
   const [loading, setLoading] = useState(false);
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    // SignupFunction
+    login(username, password);
+    // SignInFunction
 
     setLoading(true);
   };
 
-  const { uname, password } = formData;
+  const { username, password } = formData;
 
   const handleInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,12 +49,12 @@ function Login() {
               <i className="fa fa-envelope"></i>
               <Input
                 type="text"
-                id="first_name"
+                id="username"
                 placeholder="Enter Your Email.."
-                name="uname"
+                name="username"
                 required
-                autoComplete="uname"
-                value={uname || ''}
+                autoComplete="username"
+                value={username || ""}
                 onChange={(e) => handleInputChange(e)}
               />
             </div>
@@ -54,7 +68,7 @@ function Login() {
                 type="password"
                 name="password"
                 placeholder="Enter Your Password.."
-                value={password || ''}
+                value={password || ""}
                 autoComplete="current-password"
                 onChange={(e) => handleInputChange(e)}
               />
@@ -62,7 +76,7 @@ function Login() {
             </div>
 
             <Button
-              className="btn mt-4"
+              className="btn mt-4 btn-primary"
               style={{
                 background: "#0f0827",
                 color: "#d3cbee",
@@ -81,7 +95,7 @@ function Login() {
               </div>
               <div className="col-sm-12">
                 <Link to="/register" className="link1 col-sm-6">
-                Don't have an Account, Sign Up"
+                  Don't have an Account, Sign Up"
                 </Link>
               </div>
             </div>
