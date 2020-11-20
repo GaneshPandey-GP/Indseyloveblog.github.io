@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import {Signup} from '../context'
 import {
   Card,
   CardContent,
   Typography,
   Container,
   Grid,
-  Link,
   TextField,
   CssBaseline,
   Button,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { AuthReducer, initialState } from "../context/reducers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,44 +33,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function Register() {
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    phone: "",
+    fname: "",
+    lname: "",
+    contact: "",
     email: "",
     password: "",
     re_password: "",
-    created_on: ""
+    created_on: "",
   });
-  const [loading, setLoading] = useState(false);
-  const classes = useStyles();
+  const [error, setError] = useState("")
+  const [uid, setUid] = useState(0);
 
+  const { fname, lname, contact, email, password, re_password } = formData;
+
+  const handleInputChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const [access, dispatch] = useReducer(AuthReducer, initialState);
   const handleFormSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setUid(uid + 1);
+    password === re_password ?
+    Signup(dispatch, username, fname, lname, contact, email, password, uid)
+    : console.log("password must match")
+  };
 
-    // SignupFunction
-    
-    setLoading(true)
-  }
-
-    const {
-      first_name,
-      last_name,
-      phone,
-      email,
-      password,
-      re_password,
-      created_on,
-    } = formData;
-
-    const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
-
-    return (
-      <Container component="main" className={classes.container}>
-        <CssBaseline />
-        <Card>
-        <div style={{ backgroundColor: '#ffe'}}>
+  const classes = useStyles();
+  return (
+    <Container component="main" className={classes.container}>
+      <CssBaseline />
+      <Card>
+        <div style={{ backgroundColor: "#ffe" }}>
           <Typography variant="h4" align="center" className={classes.heading}>
             Register
           </Typography>
@@ -89,13 +86,13 @@ export default function SignIn() {
               <TextField
                 margin="normal"
                 required
-                id="first_name"
+                id="fname"
                 style={{ width: "17.9ch" }}
                 label="First Name"
-                name="first_name"
+                name="fname"
                 type="text"
-                value={first_name || ''}
-                autoComplete="first_name"
+                value={fname || ""}
+                autoComplete="fname"
                 variant="outlined"
                 autoFocus
                 onChange={(e) => handleInputChange(e)}
@@ -103,12 +100,12 @@ export default function SignIn() {
               <TextField
                 required
                 style={{ width: "17.9ch" }}
-                id="last_name"
+                id="lname"
                 label="Last Name"
-                name="last_name"
+                name="lname"
                 type="text"
-                value={last_name || ''}
-                autoComplete="last_name"
+                value={lname || ""}
+                autoComplete="lname"
                 variant="outlined"
                 autoFocus
                 onChange={(e) => handleInputChange(e)}
@@ -116,12 +113,12 @@ export default function SignIn() {
               <TextField
                 required
                 style={{ width: "38ch" }}
-                id="phone"
+                id="contact"
                 type="tel"
-                label="Phone Number"
-                name="phone"
-                value={phone || ''}
-                autoComplete="phone"
+                label="contact Number"
+                name="contact"
+                value={contact || ""}
+                autoComplete="contact"
                 variant="outlined"
                 autoFocus
                 onChange={(e) => handleInputChange(e)}
@@ -133,7 +130,7 @@ export default function SignIn() {
                 label="Email Address"
                 name="email"
                 type="email"
-                value={email || ''}
+                value={email || ""}
                 autoComplete="email"
                 variant="outlined"
                 autoFocus
@@ -147,7 +144,7 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 variant="outlined"
-                value={password || ''}
+                value={password || ""}
                 autoComplete="current-password"
                 onChange={(e) => handleInputChange(e)}
               />
@@ -155,7 +152,7 @@ export default function SignIn() {
                 required
                 name="re_password"
                 label="re_Password"
-                value={re_password || ''}
+                value={re_password || ""}
                 style={{ width: "17.9ch" }}
                 type="password"
                 id="re_password"
@@ -175,15 +172,15 @@ export default function SignIn() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="/login" variant="body2">
+                  <Link to="/login" variant="body2">
                     {"Already have an account? Sign In"}
                   </Link>
                 </Grid>
               </Grid>
             </form>
           </CardContent>
-          </div>
-        </Card>
-      </Container>
-    );
-  };
+        </div>
+      </Card>
+    </Container>
+  );
+}
