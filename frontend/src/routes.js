@@ -8,14 +8,20 @@ import SadminLogin from "./components/Sadmin";
 import CreateTest from "./components/CreateTest";
 import { PrivateRoute } from "./config/PrivateRoute";
 
+import TestView from './components/TestView/TestView';
+import SubAdminDashboard from './components/SubAdminDashboard';
+
 const BaseRouter = () => (
     <Router>
             <Switch>
                 <Route exact path="/login" component={Login} /> 
-                <Route exact path="/subadmin" component={SadminLogin} />
+                <Route exact path="/sadmlogin" component={SadminLogin} />
                 <Route exact path="/createtest" component={CreateTest} />
                 <Route exact path="/register" component={Register} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/testview" component={TestView} /> 
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/sadmdashboard" component={SubAdminDashboard} />
                 <Route exact path="*" component={NotFound} />
             </Switch>
     </Router>

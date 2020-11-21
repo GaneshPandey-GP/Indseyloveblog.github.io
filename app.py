@@ -100,6 +100,31 @@ def create_subject():
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
+@app.route('/createTest', methods=['POST'])
+def create_test():
+    data = request.json
+    if data is None or data == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.write(data)
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/getSubjects', methods=['POST'])
+def get_subjects():
+    data = request.json
+    if data is None or data == {}:
+        print("No data")
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.read()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json') 
 if __name__ == '__main__':
     data={}
     app.run(use_reloader=False, debug=True, port=5001, host='127.0.0.1')
