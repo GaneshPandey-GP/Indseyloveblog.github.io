@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Input, Button, Card } from "@material-ui/core";
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,8 +12,7 @@ function Login(props) {
     password: "",
   });
   const { username, password } = formData;
-  // const dispatch = reducer();
-  const [access, dispatch] = useReducer(reducer, initialState);
+  const [Document_ID, dispatch] = useReducer(reducer, initialState);
   const handleInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -21,14 +20,17 @@ function Login(props) {
     e.preventDefault();
     loginUser(dispatch, username, password);
   };
-  const [{isAuthenticated, loading}] = useAuthState()
-  console.log(isAuthenticated, loading)
 
+  const [{isAuthenticated, loading}] = useAuthState()
+  console.log(isAuthenticated)
+  
+  if (isAuthenticated)
+    return <Redirect to='/dashboard' />;
   return (
     <>
       <Card>
         <div className="login-box">
-          <form>
+          <form onSubmit={handleInputChange}>
             <div className="head">Login</div>
 
             <div className="textbox">

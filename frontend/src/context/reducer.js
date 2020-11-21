@@ -17,8 +17,9 @@ import {
 
 
   export const reducer = (initialState, action) => {
-    console.log(action);
-    switch(action.type) {
+    const {type, payload} = action
+    console.log(action)
+    switch(type) {
         case START_LOADING:
           return {
             ...initialState,
@@ -29,10 +30,10 @@ import {
           return {
             ...initialState,
             isAuthenticated: true,
-            // Document_ID: payload.Document_ID,
+            // Document_ID: "payload.Document_ID",
           }
         case SIGNUP_SUCCESS:
-          localStorage.setItem('Document_ID', action.payload.Document_ID);
+          localStorage.setItem('Document_ID', payload.Document_ID);
           return {
             ...initialState,
             isAuthenticated: true
@@ -47,7 +48,7 @@ import {
             Document_ID: null,
             isAuthenticated: false,
             user: null,
-            errorMessage: action.error
+            // errorMessage: error
           }
         default:
           return initialState
