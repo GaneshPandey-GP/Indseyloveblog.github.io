@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Fab from "@material-ui/core/Fab";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import { Button, Paper, TextField, Typography } from "@material-ui/core";
+// import Fab from "@material-ui/core/Fab";
+// import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import { Button, Paper, TextField } from "@material-ui/core";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
