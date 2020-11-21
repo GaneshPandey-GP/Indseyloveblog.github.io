@@ -113,7 +113,7 @@ def create_test():
                     status=200,
                     mimetype='application/json')
 @app.route('/getSubjects', methods=['POST'])
-def read_users():
+def get_subjects():
     data = request.json
     if data is None or data == {}:
         print("No data")
