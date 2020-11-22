@@ -1,8 +1,8 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import DashboardData from './SubadminData'
+import DashboardData from './DashboardData'
 
-function AdminDashboard() {
+function SubAdminDashboard() {
 
   return (
     <>
@@ -13,4 +13,4 @@ function AdminDashboard() {
   );
 }
 
-export default AdminDashboard;
+export default SubAdminDashboard;

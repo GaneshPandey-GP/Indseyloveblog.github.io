@@ -12,14 +12,13 @@ import {
     isAuthenticated: false,
     user: null,
     loading: false,
-    errorMessage: null
+    subjects: [],
+    errorMessage: null,
   };
 
 
   export const reducer = (initialState, action) => {
-    const {type, payload} = action
-    console.log(action)
-    switch(type) {
+    switch(action.type) {
         case START_LOADING:
           return {
             ...initialState,
@@ -33,7 +32,7 @@ import {
             // Document_ID: "payload.Document_ID",
           }
         case SIGNUP_SUCCESS:
-          localStorage.setItem('Document_ID', payload.Document_ID);
+          localStorage.setItem('Document_ID', action.payload.Document_ID);
           return {
             ...initialState,
             isAuthenticated: true
@@ -50,6 +49,14 @@ import {
             user: null,
             // errorMessage: error
           }
+        case 'GET_SUBJECTS':
+          return {
+            ...initialState,
+            subjects: action.subjects
+          };
+
+
+
         default:
           return initialState
     }

@@ -8,11 +8,9 @@ import { AuthProvider } from './context/context';
 import {reducer, initialState} from "../src/context/reducer"
 
 ReactDOM.render(
-  <React.StrictMode>
     <AuthProvider initialState={initialState} reducer={reducer}>
-    <App />
-    </AuthProvider>
-  </React.StrictMode>,
+      <App />
+    </AuthProvider>,
   document.getElementById('root')
 );
 

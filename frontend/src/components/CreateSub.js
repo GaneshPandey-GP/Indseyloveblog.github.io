@@ -1,16 +1,21 @@
 import React, { useState, useReducer } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import { reducer, initialState } from "../context/reducer";
-import { subjectCreate } from "../context";
+import { subjectCreate, useAuthState } from "../context";
+import {
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  TextField,
+  Button,
+} from "@material-ui/core";
+import QueueIcon from "@material-ui/icons/Queue";
 
 export default function CreateSub() {
   const [open, setOpen] = React.useState(false);
-  const [access, dispatch] = useReducer(reducer, initialState);
+  const [{isAuthenticated, loading}, dispatch] = useAuthState()
+
   const [sub, setSub] = useState("");
   const handleClickOpen = () => {
     setOpen(true);
@@ -21,20 +26,22 @@ export default function CreateSub() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    subjectCreate(dispatch,sub);
-
+    subjectCreate(dispatch, sub);
+    handleClose()
   };
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Create Subject
-      </Button>
+      <ListItem button onClick={handleClickOpen}>
+        <ListItemIcon>
+          <QueueIcon />
+        </ListItemIcon>
+        <ListItemText primary={"Create Subject"} />
+      </ListItem>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Create Subject</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
             <TextField
@@ -52,7 +59,7 @@ export default function CreateSub() {
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleSubmit} color="primary">
               Save
             </Button>
           </DialogActions>

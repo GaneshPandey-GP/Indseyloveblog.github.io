@@ -1,9 +1,8 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Input, Button, Card } from "@material-ui/core";
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { reducer, initialState } from "../context/reducer";
 import { loginUser, useAuthState } from "../context";
 
 function Login(props) {
@@ -12,7 +11,6 @@ function Login(props) {
     password: "",
   });
   const { username, password } = formData;
-  const [Document_ID, dispatch] = useReducer(reducer, initialState);
   const handleInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -21,7 +19,7 @@ function Login(props) {
     loginUser(dispatch, username, password);
   };
 
-  const [{isAuthenticated, loading}] = useAuthState()
+  const [{isAuthenticated, loading}, dispatch] = useAuthState()
   console.log(isAuthenticated)
   
   if (isAuthenticated)

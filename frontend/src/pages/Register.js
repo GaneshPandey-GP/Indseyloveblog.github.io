@@ -1,6 +1,6 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {Signup} from '../context';
+import {Signup, useAuthState} from '../context';
 import {
   Card,
   CardContent,
@@ -12,7 +12,6 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { reducer, initialState } from "../context/reducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,13 +44,13 @@ export default function Register() {
   });
   const [uid, setUid] = useState(0);
   const username = "testuser"
+  const [{isAuthenticated, loading}, dispatch] = useAuthState()
 
   const { fname, lname, contact, email, password, re_password } = formData;
 
   const handleInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const [access, dispatch] = useReducer(reducer, initialState);
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setUid(uid + 1);
