@@ -20,28 +20,15 @@ const useStyles = makeStyles((theme) => ({
 function TestView() {
   const classes = useStyles();
   const [value, setValue] = React.useState("");
-  const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("Choose wisely");
 
   const handleRadioChange = (event) => {
     setValue(event.target.value);
     setHelperText(" ");
-    setError(false);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (value === "best") {
-      setHelperText("You got it!");
-      setError(false);
-    } else if (value === "worst") {
-      setHelperText("Sorry, wrong answer!");
-      setError(true);
-    } else {
-      setHelperText("Please select an option.");
-      setError(true);
-    }
   };
   return (
     <div>
@@ -54,7 +41,6 @@ function TestView() {
             <form onSubmit={handleSubmit}>
               <FormControl
                 component="fieldset"
-                error={error}
                 className={classes.formControl}
               >
                 <RadioGroup
@@ -64,24 +50,24 @@ function TestView() {
                   onChange={handleRadioChange}
                 >
                   <FormControlLabel
-                    value="best"
+                    value="option1"
                     control={<Radio />}
-                    label="The best!"
+                    label="Option1"
                   />
                   <FormControlLabel
-                    value="worst"
+                    value="option2"
                     control={<Radio />}
-                    label="The worst."
+                    label="option2"
                   />
                   <FormControlLabel
-                    value="worst"
+                    value="option3"
                     control={<Radio />}
-                    label="The worst."
+                    label="option3"
                   />
                   <FormControlLabel
-                    value="worst"
+                    value="option4"
                     control={<Radio />}
-                    label="The worst."
+                    label="option4"
                   />
                 </RadioGroup>
                 <FormHelperText>{helperText}</FormHelperText>
@@ -91,7 +77,7 @@ function TestView() {
                   color="primary"
                   className={classes.button}
                 >
-                  Check Answer
+                  Save
                 </Button>
               </FormControl>
             </form>
