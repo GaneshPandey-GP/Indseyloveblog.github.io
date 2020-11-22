@@ -1,4 +1,4 @@
-###Examination System Documentation###
+### Examination System Documentation
 
 This currently the rough documentation for examination system.
 
@@ -58,3 +58,13 @@ This currently the rough documentation for examination system.
             
             API's created
             /createSubject
+
+### Pages till now..
+ - login (/login)
+ - register (/register)
+ - subadminlogin (/subadmlogin)
+ - subadmindashboard (/subadmdashboard)  ------> view subjects
+                                       ------> create subjects
+ - 404 page not found (/*) 
+ - createtest (/createtest)   //action pending..
+ viewtest (/test)           //action pending..

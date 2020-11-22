@@ -25,10 +25,10 @@ export const loginUser = async (dispatch, username, password) => {
     password,
   };
 
-  console.log(body);
+  // console.log(body)
   try {
     const res = await axios.post(`${baseURL}/login`, body, config);
-    console.log(res.data);
+    // console.log(res.data)
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
@@ -106,28 +106,48 @@ export const subjectCreate = async (dispatch, subname) => {
     },
   };
   const body = {
-    
-        database: "ExaminationSystem",
-        collection: "subjects",
-        document: {
-            subid:2,
-            subname,
-            createdBy: 1,
-            isActive:1
-    
-        }
-    };
+    database: "ExaminationSystem",
+    collection: "subjects",
+    document: {
+      subid: 2,
+      subname,
+      createdBy: 1,
+      isActive: 1,
+    },
+  };
 
   console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/createSubject`, body, config);
-    console.log(res.data);
+    await axios.post(`${baseURL}/createSubject`, body, config);
+    getSubjects(dispatch)
+  } catch (err) {
+    console.log(err);
     // dispatch({
-    //   type: LOGIN_SUCCESS,
-    //   payload: res.data,
+    //   type: LOGIN_FAIL,
     // });
+  }
+};
 
-    // dispatch(load_user());
+export const getSubjects = async (dispatch) => {
+  const subjects = []
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "subjects",
+  };
+  try {
+    const res = await axios.post(`${baseURL}/getSubjects`, body, config);
+    res.data.map((sub) => 
+      subjects.push(sub.subname)
+    )
+    dispatch({
+      type: 'GET_SUBJECTS',
+      subjects: subjects
+    })
   } catch (err) {
     console.log(err);
     // dispatch({
