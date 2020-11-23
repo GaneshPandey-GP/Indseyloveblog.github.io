@@ -1,13 +1,12 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import DashboardData from './DashboardData'
+import DashboardData from '../components/SubAdminDashboard/DashboardData'
 
 function SubAdminDashboard() {
 
   return (
     <>
       <div>
-      <DashboardData/>
+        <DashboardData/>
       </div>
     </>
   );

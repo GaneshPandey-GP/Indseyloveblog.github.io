@@ -25,13 +25,13 @@ export const loginUser = async (dispatch, username, password) => {
     password,
   };
 
-  // console.log(body)
+  console.log(body)
   try {
     const res = await axios.post(`${baseURL}/login`, body, config);
-    // console.log(res.data)
+    console.log(res.data)
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data,
+      // payload: res.data,
     });
 
     // dispatch(load_user());
