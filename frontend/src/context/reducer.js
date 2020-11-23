@@ -29,13 +29,16 @@ import {
           return {
             ...initialState,
             isAuthenticated: true,
+            loading: false
             // Document_ID: "payload.Document_ID",
           }
         case SIGNUP_SUCCESS:
           localStorage.setItem('Document_ID', action.payload.Document_ID);
           return {
             ...initialState,
-            isAuthenticated: true
+            isAuthenticated: true,
+            loading: false
+
             // Document_ID: payload.Document_ID,
           }
         case SIGNUP_FAIL:
@@ -47,15 +50,16 @@ import {
             Document_ID: null,
             isAuthenticated: false,
             user: null,
+            loading: false
+
             // errorMessage: error
           }
         case 'GET_SUBJECTS':
           return {
             ...initialState,
-            subjects: action.subjects
+            subjects: action.subjects,
+            loading: false
           };
-
-
 
         default:
           return initialState

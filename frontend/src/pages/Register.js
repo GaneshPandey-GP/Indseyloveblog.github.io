@@ -12,6 +12,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +44,7 @@ export default function Register() {
     created_on: "",
   });
   const [uid, setUid] = useState(0);
+  const [formError, setFormError] = useState('')
   const username = "testuser"
   const [{isAuthenticated, loading}, dispatch] = useAuthState()
 
@@ -55,11 +57,12 @@ export default function Register() {
     e.preventDefault();
     setUid(uid + 1);
     password === re_password ?
-    Signup(dispatch, username, fname, lname, contact, email, password, uid)
-    : console.log("password must match")
+      Signup(dispatch, username, fname, lname, contact, email, password, uid)
+    : setFormError("Passwords didn't match!")
   };
-
   const classes = useStyles();
+  if(loading) return (<Loading />)
+
   return (
     <Container component="main" className={classes.container}>
       <CssBaseline />
@@ -159,13 +162,14 @@ export default function Register() {
                 autoComplete="re_password"
                 onChange={(e) => handleInputChange(e)}
               />
+              {formError !== "" ? <p style={{color: 'red'}}>{formError}</p> : <p></p>}
               <Button
                 type="submit"
                 style={{ width: "38ch" }}
                 variant="contained"
                 color="primary"
                 className="submit__btn"
-                onSubmit={handleFormSubmit}
+                onClick={handleFormSubmit}
               >
                 Sign In
               </Button>

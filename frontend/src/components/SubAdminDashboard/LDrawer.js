@@ -12,19 +12,22 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Avatar,
 } from "@material-ui/core";
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import HomeIcon  from "@material-ui/icons/Home";
-import MenuTwoToneIcon from '@material-ui/icons/MenuTwoTone';
+import IconButton from "@material-ui/core/IconButton";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import HomeIcon from "@material-ui/icons/Home";
+import MenuTwoToneIcon from "@material-ui/icons/MenuTwoTone";
 import CreateIcon from "@material-ui/icons/Create";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
-import QueueIcon from "@material-ui/icons/Queue";
 import "bootstrap/dist/css/bootstrap.min.css";
-import CreateSub from '../CreateSub';
+import PersonIcon from "@material-ui/icons/Person";
+import CreateSub from "./CreateSub";
+import ViewSubjects from "./ViewSubjects";
+import TestForm from "./CreateTest";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -55,50 +58,49 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
-
 }));
 
 function LDrawer() {
-    const classes = useStyles();
-    const theme = useTheme();
-  
-    const [open, setOpen] = React.useState(false);
-    const [dialog, setDialog] = React.useState(false);
-  
-    const handleClose = () => {
-      setDialog(false);
-    };
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
+  const classes = useStyles();
+  const theme = useTheme();
+
+  const [open, setOpen] = React.useState(false);
+  const [dialog, setDialog] = React.useState(false);
+
+  const handleClose = () => {
+    setDialog(false);
+  };
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
   return (
-    <div >
-    <CssBaseline />
-    <AppBar
+    <div>
+      <CssBaseline />
+      <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-        [classes.appBarShift]: open,
+          [classes.appBarShift]: open,
         })}
-    >
+      >
         <Toolbar>
-        <IconButton
+          <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
-        >
-            <MenuTwoToneIcon/>
-        </IconButton>
-        <Typography variant="h6" noWrap>
+          >
+            <MenuTwoToneIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
             Welcome Sub_admin
-        </Typography>
+          </Typography>
         </Toolbar>
-    </AppBar>
+      </AppBar>
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -117,26 +119,18 @@ function LDrawer() {
             )}
           </IconButton>
         </div>
-        <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Home"} />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <CreateIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Create Test"} />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <VisibilityIcon />
-            </ListItemIcon>
-            <ListItemText primary={"View Test"} />
-          </ListItem>
+          <Avatar className="container">
+            <PersonIcon />
+          </Avatar>
+          <ListItemText
+            primary={"T3KRAJ"}
+            className="d-flex justify-content-center mb-2 mt-2"
+          />
+          <Divider />
+          <CreateSub />
+          <ViewSubjects />
+          <TestForm />
         </List>
         <Divider />
         <List>

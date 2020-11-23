@@ -62,9 +62,12 @@ This currently the rough documentation for examination system.
 ### Pages till now..
  - login (/login)
  - register (/register)
- - subadminlogin (/subadmlogin)
- - subadmindashboard (/subadmdashboard)  ------> view subjects
-                                       ------> create subjects
+ - subadminlogin (/sub-admin-login)
+ - subadmindashboard (/sub-admin-dashboard)  ------> view subjects
+
+                                              ------> create subjects
+
+                                              -------> create test
  - 404 page not found (/*) 
- - createtest (/createtest)   //action pending..
- viewtest (/test)           //action pending..
+ - createtest (/createtest)  
+ - viewtest (/test)           //action pending..

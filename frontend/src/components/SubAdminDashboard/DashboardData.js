@@ -1,21 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Button,
-  Paper,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Grid
-} from "@material-ui/core";
+import { Typography, Button, Paper, Grid } from "@material-ui/core";
 import "bootstrap/dist/css/bootstrap.min.css";
-import CreateSub from "../CreateSub";
+import CreateSub from "./CreateSub";
 import LDrawer from "./LDrawer";
-import QueueIcon from "@material-ui/icons/Queue";
 
 import ViewSubjects from "./ViewSubjects";
+import { useAuthState } from "../../context";
+import Loading from "../Loading";
+import TestForm from "./CreateTest";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -25,14 +19,13 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
   },
   drawerHeader: {
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: "flex-end",
   },
@@ -60,11 +53,16 @@ export default function DashboardData() {
 
   const [open, setOpen] = React.useState(false);
   const [dialog, setDialog] = React.useState(false);
+  const [{loading}, dispatch] = useAuthState()
 
   const handleClickOpen = () => {
     setDialog(true);
   };
-
+  console.log(loading)
+  if (loading)
+    return(
+      <Loading />
+  )  
   return (
     <div className={classes.root}>
       <LDrawer />
@@ -74,59 +72,30 @@ export default function DashboardData() {
         })}
       >
         <div className={classes.drawerHeader} />
-        <div className="container">
-          
-          {/* <ListItem button>
-            <ListItemIcon>
-              <QueueIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Create Subject"} />
-          </ListItem> */}
-          <CreateSub />
-          <ViewSubjects />
-        </div>
-          <Grid container spacing={3} className="mt-3">
-            <Grid item xs={12} sm={12} md={6}>
-              <Paper className={classes.paper}>
-              <Typography
+        <Grid container spacing={3} className="mt-3">
+          <Grid item xs={12} sm={12} md={6}>
+            <Paper className={classes.paper}>
+            <Typography
                 className={classes.title}
                 color="textPrimary"
                 gutterBottom
               >
-                Create Test for specific subject
+                Tests
               </Typography>
-              <Button
-                className={classes.btn}
-                variant="outlined"
-                color="primary"
-                onClick={handleClickOpen}
-                href="/createtest"
-              >
-                Create Test
-              </Button>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <Paper className={classes.paper}>
-              <Typography
-                className={classes.title}
-                color="textPrimary"
-                gutterBottom
-              >
-                View Previous Submissions
-              </Typography>
-              <Button
-                className={classes.btn}
-                variant="outlined"
-                color="primary"
-                onClick={handleClickOpen}
-                href="/createtest"
-              >
-                View Submissions
-              </Button>
-              </Paper>
-            </Grid>
+            </Paper>
           </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Paper className={classes.paper}>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                gutterBottom
+              >
+                Submissions
+              </Typography>
+            </Paper>
+          </Grid>
+        </Grid>
       </main>
     </div>
   );

@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { ListItemIcon } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import { initialState, reducer } from '../../context/reducer';
 import { getSubjects } from '../../context/actions';
 import { useAuthState } from '../../context';
 
@@ -23,7 +22,6 @@ const useStyles = makeStyles({
 
 export default function ViewSubjects() {
   const [{subjects}, dispatch] = useAuthState()
-  // const {subjects} = useAuthState()
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false,
@@ -49,7 +47,6 @@ export default function ViewSubjects() {
         [classes.fullList]: anchor === 'top' || anchor === 'bottom',
       })}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
