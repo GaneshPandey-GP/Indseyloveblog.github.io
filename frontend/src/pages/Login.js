@@ -25,8 +25,8 @@ function Login(props) {
   console.log("isAuthenticated =", isAuthenticated)
   
   if(loading) return (<Loading />)
- if (isAuthenticated)
-    return <Redirect to='/dashboard' />; 
+  if (isAuthenticated)
+    return <Redirect to='/stud-dashboard' />; 
   return (
     <>
       <Card>
