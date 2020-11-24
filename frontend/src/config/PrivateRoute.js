@@ -5,7 +5,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      localStorage.getItem("Document_ID") ? (
+      localStorage.getItem("user.level") ? (
         <Component {...props} />
       ) : (
         <Redirect

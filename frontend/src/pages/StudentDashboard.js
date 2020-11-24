@@ -11,6 +11,7 @@ import clsx from "clsx";
 import ActiveTest from "../components/StudentDashboard/Activetest";
 import PastsTest from "../components/StudentDashboard/PastsTest";
 import UpcommingTest from '../components/StudentDashboard/UpcommingTest';
+import { useAuthState } from "../context";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight:700,
   },
  
- 
   appBar: {
     background: "#3f51b5",
     transition: theme.transitions.create(["margin", "width"], {
@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StudentDashboard() {
   const classes = useStyles();
+  const [{isAuthenticated, loading, user}, dispatch] = useAuthState()
+  console.log(user)
 
   return (
     <>

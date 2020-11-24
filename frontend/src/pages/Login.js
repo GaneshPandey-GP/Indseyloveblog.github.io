@@ -20,13 +20,12 @@ function Login(props) {
     loginUser(dispatch, username, password);
   };
 
-  const [{isAuthenticated, loading}, dispatch] = useAuthState()
-
-  console.log("isAuthenticated =", isAuthenticated)
+  const [{isAuthenticated, loading, errorMessage}, dispatch] = useAuthState()
   
   if(loading) return (<Loading />)
   if (isAuthenticated)
-    return <Redirect to='/stud-dashboard' />; 
+    return <Redirect to='/stud-dashboard' />
+
   return (
     <>
       <Card>
@@ -63,7 +62,7 @@ function Login(props) {
               />
               <br />
             </div>
-
+            {errorMessage ? <p className="lead text-danger">{errorMessage}</p>: <p></p>}
             <Button
               className="btn mt-4 btn-primary"
               style={{

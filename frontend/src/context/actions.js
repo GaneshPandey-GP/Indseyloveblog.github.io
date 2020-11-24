@@ -9,6 +9,39 @@ import {
 
 const baseURL = "http://127.0.0.1:5001";
 
+export const adminlogin = async (dispatch, username, password) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "users",
+    username,
+    password,
+  };
+  try {
+    const res = await axios.post(`${baseURL}/login`, body, config);
+
+    res.data[0].level === 1
+      ? dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data,
+        })
+      : dispatch({
+          type: LOGIN_FAIL,
+        });
+  } catch (err) {
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};
+
 export const loginUser = async (dispatch, username, password) => {
   dispatch({
     type: "START_LOADING",
@@ -26,18 +59,20 @@ export const loginUser = async (dispatch, username, password) => {
   };
   try {
     const res = await axios.post(`${baseURL}/login`, body, config);
-    console.log(res.data)
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: res.data,
-    });
+    res.data = [{}]
+      ? res.data[0].level === 2
+        ? dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data,
+          })
+        : dispatch({
+            type: LOGIN_FAIL,
+          })
+      : dispatch({
+          type: LOGIN_FAIL,
+        });
 
-    // dispatch(load_user());
-  } catch (err) {
-    dispatch({
-      type: LOGIN_FAIL,
-    });
-  }
+  } catch (err) {}
 };
 
 export const Signup = async (
@@ -116,17 +151,14 @@ export const subjectCreate = async (dispatch, subname) => {
 
   try {
     await axios.post(`${baseURL}/createSubject`, body, config);
-    getSubjects(dispatch)
+    getSubjects(dispatch);
   } catch (err) {
     console.log(err);
-    // dispatch({
-    //   type: LOGIN_FAIL,
-    // });
   }
 };
 
 export const getSubjects = async (dispatch) => {
-  const subjects = [{name: '', id: ''}]
+  const subjects = [{ name: "", id: "" }];
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -138,18 +170,15 @@ export const getSubjects = async (dispatch) => {
   };
   try {
     const res = await axios.post(`${baseURL}/getSubjects`, body, config);
-    res.data.map(({subname, subid}) => 
-      subjects.push({name: subname, id: subid})
-    )
+    res.data.map(({ subname, subid }) =>
+      subjects.push({ name: subname, id: subid })
+    );
     dispatch({
-      type: 'GET_SUBJECTS',
-      subjects: subjects
-    })
+      type: "GET_SUBJECTS",
+      subjects: subjects,
+    });
   } catch (err) {
     console.log(err);
-    // dispatch({
-    //   type: LOGIN_FAIL,
-    // });
   }
 };
 
@@ -162,26 +191,21 @@ export const createTest = async (dispatch, testname, subname) => {
       "Content-Type": "application/json",
     },
   };
-  const body = 
-  {
-      database: "ExaminationSystem",
-      collection: "tests",
-      document : {
-          testid: 2,
-          testname,
-          subjecid: 2,
-          createdBy: 2,
-          isActive:1
-      }
-      
-  }
+  const body = {
+    database: "ExaminationSystem",
+    collection: "tests",
+    document: {
+      testid: 2,
+      testname,
+      subjecid: 2,
+      createdBy: 2,
+      isActive: 1,
+    },
+  };
 
   try {
     await axios.post(`${baseURL}/createTest`, body, config);
   } catch (err) {
     console.log(err);
-    // dispatch({
-    //   type: LOGIN_FAIL,
-    // });
   }
 };
