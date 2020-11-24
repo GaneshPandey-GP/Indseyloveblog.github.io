@@ -11,7 +11,7 @@ import {
   CssBaseline,
   Button,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Loading from "../components/Loading";
 
 const useStyles = makeStyles((theme) => ({
@@ -62,6 +62,8 @@ export default function Register() {
   };
   const classes = useStyles();
   if(loading) return (<Loading />)
+  if (isAuthenticated)
+    return <Redirect to='/login' />
 
   return (
     <Container component="main" className={classes.container}>
