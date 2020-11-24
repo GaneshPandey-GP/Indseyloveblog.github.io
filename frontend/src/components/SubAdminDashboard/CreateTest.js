@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -27,17 +27,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TestForm() {
+  const [formData, setFormData] = useState({
+    testname: "",
+    subject: "",
+  });
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [subject, setSubject] = React.useState('');
   const [{subjects}, dispatch] = useAuthState()
 
-    useEffect(() => {
-        getSubjects(dispatch)
-    }, [dispatch])
+  useEffect(() => {
+      getSubjects(dispatch)
+  }, [dispatch])
 
   const handleChange = (e) => {
     setSubject(e.target.value || '');
+  };
+
+  const handleInputChange = (e) =>
+  setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    // createTest(dispatch, testname, subject.id);
   };
 
   const handleClickOpen = () => {
@@ -58,39 +70,39 @@ export default function TestForm() {
       </ListItem>
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
 
-        <DialogTitle> Create a new test</DialogTitle>
-        <DialogContent>
-          <form className={classes.container}>
-            <FormControl className={classes.formControl}>
-              <TextField id="testName" label="Name of the test" />
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="select-subject-label">Subject</InputLabel>
-              <Select
-                labelId="select-subject-label"
-                id="select-subject"
-                value={subject}
-                onChange={handleChange}
-                input={<Input />}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {subjects.map((subject) => 
-                    <MenuItem value={subject}>{subject}</MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
+        <DialogTitle>Create a new test</DialogTitle>
+        <form className={classes.container}>
+          <DialogContent>
+              <FormControl className={classes.formControl}>
+                <TextField id="testName" label="Name of the test" />
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="select-subject-label">Subject</InputLabel>
+                <Select
+                  labelId="select-subject-label"
+                  id="select-subject"
+                  value={subject}
+                  onChange={handleChange}
+                  input={<Input />}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {subjects.map(({name, id}) => 
+                      <MenuItem key={id} value={name} onChange={(e) => handleInputChange(e)}>{name}</MenuItem>
+                  )}
+                </Select>
+              </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              Ok
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

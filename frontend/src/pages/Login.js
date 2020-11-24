@@ -22,11 +22,11 @@ function Login(props) {
 
   const [{isAuthenticated, loading}, dispatch] = useAuthState()
 
-  console.log(isAuthenticated)
+  console.log("isAuthenticated =", isAuthenticated)
   
   if(loading) return (<Loading />)
-  // if (isAuthenticated)
-  //   return <Redirect to='/dashboard' />;
+  if (isAuthenticated)
+    return <Redirect to='/stud-dashboard' />; 
   return (
     <>
       <Card>

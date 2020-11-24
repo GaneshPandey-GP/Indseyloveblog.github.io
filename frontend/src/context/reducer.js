@@ -10,9 +10,9 @@ import {
   export const initialState = {
     Document_ID: localStorage.getItem('Document_ID'),
     isAuthenticated: false,
-    user: null,
+    user: [],
     loading: false,
-    subjects: [],
+    subjects: [{}],
     errorMessage: null,
   };
 
@@ -29,8 +29,8 @@ import {
           return {
             ...initialState,
             isAuthenticated: true,
-            loading: false
-            // Document_ID: "payload.Document_ID",
+            loading: false,
+            user: action.payload
           }
         case SIGNUP_SUCCESS:
           localStorage.setItem('Document_ID', action.payload.Document_ID);
