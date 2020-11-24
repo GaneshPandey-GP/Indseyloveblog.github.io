@@ -4,6 +4,7 @@ import { Input, Button, Card } from "@material-ui/core";
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { loginUser, useAuthState } from "../context";
+import Loading from "../components/Loading";
 
 function Login(props) {
   const [formData, setFormData] = useState({
@@ -20,10 +21,12 @@ function Login(props) {
   };
 
   const [{isAuthenticated, loading}, dispatch] = useAuthState()
+
   console.log(isAuthenticated)
   
-  if (isAuthenticated)
-    return <Redirect to='/dashboard' />;
+  if(loading) return (<Loading />)
+  // if (isAuthenticated)
+  //   return <Redirect to='/dashboard' />;
   return (
     <>
       <Card>
