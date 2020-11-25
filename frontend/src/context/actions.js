@@ -9,7 +9,7 @@ import {
 
 const baseURL = "http://127.0.0.1:5001";
 
-export const adminlogin = async (dispatch, username, password) => {
+export const adminlogin = async (dispatch, {username, password}) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -42,7 +42,7 @@ export const adminlogin = async (dispatch, username, password) => {
   }
 };
 
-export const loginUser = async (dispatch, username, password) => {
+export const loginUser = async (dispatch,{ username, password}) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -77,12 +77,12 @@ export const loginUser = async (dispatch, username, password) => {
 
 export const Signup = async (
   dispatch,
-  username,
+  {username,
   fname,
   lname,
   contact,
   email,
-  password,
+  password},
   uid
 ) => {
   dispatch({

@@ -112,6 +112,22 @@ This currently the rough documentation for examination system.
                           "subid":1 (If no filter exists it will return all indexes)(filter is the complete '"subid":1' and can be anything according to requirement)
                       }
                   }
+                  
+            /updateTest
+            {
+                "database": "ExaminationSystem",
+                "collection": "subjects",
+                "Filter":{
+                    "testid":test id to be updated
+                },
+                "DataToBeUpdated": {
+                      "testid":1,
+                          "testname":"testname",
+                          "subid":2,
+                          "createdBy":currentUserID,
+                          "isActive":1
+                }
+            }
 
 ### Pages till now..
  - login (/login)
