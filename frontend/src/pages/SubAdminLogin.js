@@ -1,6 +1,6 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {Signup} from '../context';
+import {adminlogin, useAuthState} from '../context';
 import {
   Card,
   CardContent,
@@ -11,8 +11,8 @@ import {
   CssBaseline,
   Button,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { reducer, initialState } from "../context/reducer";
+import { Link, Redirect } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,25 +31,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SadminLogin() {
+export default function SubAdminLogin() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
   const { username, password } = formData;
+  const [{loading, isAuthenticated, errorMessage}, dispatch] = useAuthState()
 
   const handleInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    // loginaction()
-
+    adminlogin(dispatch, username, password)
   };
 
-  const classes = useStyles();
+ const classes = useStyles();
+  if(loading) return (<Loading />)
+  if (isAuthenticated)
+    return <Redirect to='/sub-admin-dashboard' />
+
+ 
   return (
     <Container component="main" maxWidth="xs" className={classes.container}>
       <CssBaseline />
@@ -89,6 +93,7 @@ export default function SadminLogin() {
                 autoComplete="current-password"
                 onChange={(e) => handleInputChange(e)}
               />
+              {errorMessage ? <p className="lead text-danger">{errorMessage}</p>: <p></p>}
               <Button
                 type="submit"
                 fullWidth

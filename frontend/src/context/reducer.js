@@ -8,11 +8,10 @@ import {
   } from './types';
 
   export const initialState = {
-    Document_ID: localStorage.getItem('Document_ID'),
     isAuthenticated: false,
-    user: null,
+    user: [{}],
     loading: false,
-    subjects: [],
+    subjects: [{}],
     errorMessage: null,
   };
 
@@ -25,15 +24,16 @@ import {
             loading: true
           };
         case LOGIN_SUCCESS:
-          // localStorage.setItem('Document_ID', payload.Document_ID);
+          localStorage.setItem('user.level', action.payload[0].level);
+          localStorage.setItem('user.uid', action.payload[0].uid);
           return {
             ...initialState,
             isAuthenticated: true,
-            loading: false
-            // Document_ID: "payload.Document_ID",
+            loading: false,
+            user: action.payload
           }
         case SIGNUP_SUCCESS:
-          localStorage.setItem('Document_ID', action.payload.Document_ID);
+          // localStorage.setItem('Document_ID', action.payload.Document_ID);
           return {
             ...initialState,
             isAuthenticated: true,
@@ -43,6 +43,15 @@ import {
           }
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
+          localStorage.removeItem('Document_ID');
+          return {
+            ...initialState,
+            Document_ID: null,
+            isAuthenticated: false,
+            user: null,
+            loading: false,
+            errorMessage: "Your creds didn't match! Try Again.."
+          }
         case LOGOUT:
           localStorage.removeItem('Document_ID');
           return {
@@ -50,9 +59,7 @@ import {
             Document_ID: null,
             isAuthenticated: false,
             user: null,
-            loading: false
-
-            // errorMessage: error
+            loading: false,
           }
         case 'GET_SUBJECTS':
           return {
