@@ -1,94 +1,123 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Input, Button, Card } from "@material-ui/core";
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { loginUser, useAuthState } from "../context";
 import Loading from "../components/Loading";
+import { useForm } from "react-hook-form";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Container,
+  CssBaseline,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-function Login(props) {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-  const { username, password } = formData;
-  const handleInputChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+function Login(props) {;
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      "& > *": {
+        margin: theme.spacing(1),
+      },
+    },
+    container: {
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      position: "absolute",
+    },
+    heading: {
+      paddingTop: "23px",
+    },
+  }));
+  const classes = useStyles();
+  const { register, handleSubmit, errors } = useForm();
+  const [{ isAuthenticated, loading, errorMessage }, dispatch] = useAuthState();
+  const onSubmit = (data, e) => {
 
-  const handleFormSubmit = (e) => {
     e.preventDefault();
-    loginUser(dispatch, username, password);
+    loginUser(dispatch, data);
+    console.log(data);
   };
 
-  const [{isAuthenticated, loading, errorMessage}, dispatch] = useAuthState()
-  
-  if(loading) return (<Loading />)
-  if (isAuthenticated)
-    return <Redirect to='/stud-dashboard' />
+  if (loading) return <Loading />;
+  if (isAuthenticated) return <Redirect to="/stud-dashboard" />;
 
   return (
     <>
       <Card>
-        <div className="login-box">
-          <form onSubmit={handleInputChange}>
-            <div className="head">Login</div>
-
-            <div className="textbox">
-              <i className="fa fa-envelope"></i>
-              <Input
-                type="text"
-                id="username"
-                placeholder="Enter Your Email.."
+         <Container component="main" maxWidth="xs" className={classes.container}>
+      <CssBaseline />
+      <Card>
+        <div style={{ backgroundColor: "#ffe" }}>
+          <Typography variant="h4" align="center" className={classes.heading}>
+           Login
+          </Typography>
+          <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
+            <div className="form-group">
+              <label htmlFor="inputForEmail">Email address</label>
+              <span className="mandatory">*</span>
+              <input
+                id="inputForEmail"
                 name="username"
-                required
-                autoComplete="username"
-                value={username || ""}
-                onChange={(e) => handleInputChange(e)}
+                autoComplete="off"
+                type="email"
+                className="form-control"
+                aria-describedby="Enter email address"
+                placeholder="Enter email address"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Please enter Your Email",
+                  },
+                })}
               />
+              {errors.username && (
+                <span>
+                  {errors.username.message}
+                </span>
+              )}
             </div>
-
-            <div className="textbox">
-              <i className="fas fa-lock"></i>
-              <Input
-                required
-                id="password"
-                className="input "
+            <div className="form-group">
+              <label htmlFor="inputForPassword">Password</label>
+              <span className="mandatory">*</span>
+              <input
                 type="password"
                 name="password"
-                placeholder="Enter Your Password.."
-                value={password || ""}
-                autoComplete="current-password"
-                onChange={(e) => handleInputChange(e)}
+                autoComplete="off"
+                className="form-control"
+                id="inputForPassword"
+                placeholder="Enter password"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Please enter password",
+                  },
+                })}
               />
-              <br />
+              {errors.password && (
+                <span>
+                  {errors.password.message}
+                </span>
+              )}
             </div>
             {errorMessage ? <p className="lead text-danger">{errorMessage}</p>: <p></p>}
-            <Button
-              className="btn mt-4 btn-primary"
-              style={{
-                background: "#0f0827",
-                color: "#d3cbee",
-                margin: "0px 15px",
-              }}
-              onClick={handleFormSubmit}
-            >
-              Login
-            </Button>
-            <br />
-            <div className="row mt-3 pt-2 text-capitalize">
-              <div className="col-sm-12">
-                <Link to="#" className="link1 col-sm-6">
-                  Forgot password?
-                </Link>
-              </div>
-              <div className="col-sm-12">
-                <Link to="/register" className="link1 col-sm-6">
-                  Don't have an Account, Sign Up"
-                </Link>
-              </div>
+            <div className="d-flex align-items-center">
+              <button type="submit" className="btn btn-outline-primary">
+                Login
+              </button>
+
+              <button className="btn btn-link ml-auto">
+                <Link to="/register">New User</Link>
+              </button>
             </div>
           </form>
+          </CardContent>
         </div>
+      </Card>
+    </Container>
       </Card>
     </>
   );

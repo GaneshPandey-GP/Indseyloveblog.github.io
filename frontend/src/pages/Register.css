@@ -1,0 +1,54 @@
+.Wrapper {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    max-width: 51ch;
+    margin-top:15;
+    color: #070404;
+    font-weight: 600;
+  }
+  
+  .loginFormContainer {
+    width: 24rem;
+   
+  }
+  
+  .loginFormLegend {
+    width: 14rem;
+    background: #dee2e6;
+  }
+  
+  .errorMessage {
+    font-size: 12px;
+    letter-spacing: 0.05rem;
+    padding-left: 0.25rem;
+   
+  }
+
+  @media screen and (max-width:789px){
+    .Wrapper{
+     
+        margin-top:10px;
+    }
+  }
+
+  @media screen and (max-width:390px){
+    .Wrapper{
+     
+        margin-top:20px;
+    }
+  }
+  @media screen and (max-width:320px){
+    .Wrapper{
+
+        margin-top:145px;
+    }
+  }
+  @media screen and (max-width:240px){
+    .Wrapper{
+    
+        margin-top:200px;
+       
+    }
+  }

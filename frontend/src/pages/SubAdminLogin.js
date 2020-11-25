@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {adminlogin, useAuthState} from '../context';
+import {useForm} from 'react-hook-form'
+
 import {
   Card,
   CardContent,
   Typography,
   Container,
-  Grid,
-  TextField,
   CssBaseline,
-  Button,
 } from "@material-ui/core";
 import { Link, Redirect } from "react-router-dom";
 import Loading from "../components/Loading";
@@ -32,21 +31,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SubAdminLogin() {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+    // const [formData, setFormData] = useState({
+  //   username: "",
+  //   password: "",
+  // });
+ const{register,handleSubmit,errors} = useForm();
+ // const { username, password } = formData;
 
-  const { username, password } = formData;
-  const [{loading, isAuthenticated, errorMessage}, dispatch] = useAuthState()
+ // const handleInputChange = (e) =>
+ //   setFormData({ ...formData, [e.target.name]: e.target.value });
+ const [{loading, isAuthenticated, errorMessage}, dispatch] = useAuthState()
+ const onSubmit = (data,e) => {
+   e.preventDefault();
+   adminlogin(dispatch, data)
+  console.log(data)
+   // loginaction()
 
-  const handleInputChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+ };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    adminlogin(dispatch, username, password)
-  };
+
+  
 
  const classes = useStyles();
   if(loading) return (<Loading />)
@@ -63,59 +67,65 @@ export default function SubAdminLogin() {
             Admin Login
           </Typography>
           <CardContent>
-            <form
-              className={classes.root}
-              noValidate
-              onSubmit={handleFormSubmit}
-            >
-              <TextField
-                required
-                fullWidth
-                id="username"
-                label="username "
+          <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
+            <div className="form-group">
+              <label htmlFor="inputForEmail">Email address</label>
+              <span className="mandatory">*</span>
+              <input
+                id="inputForEmail"
                 name="username"
-                type="username"
-                value={username || ""}
-                autoComplete="username"
-                variant="outlined"
-                autoFocus
-                onChange={(e) => handleInputChange(e)}
+                autoComplete="off"
+                type="email"
+                className="form-control"
+                aria-describedby="Enter email address"
+                placeholder="Enter email address"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Please enter Your Email",
+                  },
+                })}
               />
-              <TextField
-                required
-                name="password"
-                label="Password"
-                fullWidth
+              {errors.username && (
+                <span>
+                  {errors.username.message}
+                </span>
+              )}
+            </div>
+            <div className="form-group">
+              <label htmlFor="inputForPassword">Password</label>
+              <span className="mandatory">*</span>
+              <input
                 type="password"
-                id="password"
-                variant="outlined"
-                value={password || ""}
-                autoComplete="current-password"
-                onChange={(e) => handleInputChange(e)}
+                name="password"
+                autoComplete="off"
+                className="form-control"
+                id="inputForPassword"
+                placeholder="Enter password"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Please enter password",
+                  },
+                })}
               />
-              {errorMessage ? <p className="lead text-danger">{errorMessage}</p>: <p></p>}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className="submit__btn"
-                onClick={handleFormSubmit}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item>
-                  <Link to="/login" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                  <br />
-                  <Link to="/forgotpassword" variant="body2">
-                    {"Forgot password"}
-                  </Link>
-                </Grid>
-              </Grid>
-            </form>
+              {errors.password && (
+                <span>
+                  {errors.password.message}
+                </span>
+              )}
+            </div>
+            {errorMessage ? <p className="lead text-danger">{errorMessage}</p>: <p></p>}
+            <div className="d-flex align-items-center">
+              <button type="submit" className="btn btn-outline-primary">
+                Login
+              </button>
+
+              <button className="btn btn-link ml-auto">
+                <Link to="/register">New User</Link>
+              </button>
+            </div>
+          </form>
           </CardContent>
         </div>
       </Card>
