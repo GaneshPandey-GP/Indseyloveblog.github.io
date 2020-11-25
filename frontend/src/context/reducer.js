@@ -12,6 +12,7 @@ import {
     user: [{}],
     loading: false,
     subjects: [],
+    tests: [],
     errorMessage: null,
   };
 
@@ -66,14 +67,23 @@ import {
             ...initialState,
             subjects: action.subjects,
             loading: false
-          };
-        case 'GET_SUBJECTS':
+          }
+        case 'GET_TESTS':
           return {
             ...initialState,
-            subjects: action.subjects,
+            tests: action.tests,
             loading: false
           }
-
+        case 'ACTION_SUCCESS':
+          return {
+            ...initialState,
+            loading: false
+          }
+        case 'ACTION_FAIL':
+          return {
+            ...initialState,
+            loading: false
+          }
         default:
           return initialState
     }

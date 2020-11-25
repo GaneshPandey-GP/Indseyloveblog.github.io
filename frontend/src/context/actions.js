@@ -72,10 +72,12 @@ export const loginUser = async (dispatch,{ username, password}) => {
     : dispatch({
       type: LOGIN_FAIL,
     })
-
-
-  } catch (err) {}
-};
+  } catch (err) {
+    dispatch({
+      type: LOGIN_FAIL
+  })
+}
+}
 
 export const Signup = async (
   dispatch,
@@ -157,6 +159,9 @@ export const subjectCreate = async (dispatch, subname) => {
 };
 
 export const getSubjects = async (dispatch) => {
+  dispatch({
+    type: "START_LOADING",
+  });
   const subjects = [];
   const config = {
     headers: {
@@ -178,9 +183,54 @@ export const getSubjects = async (dispatch) => {
       subjects: subjects,
     });
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: 'ACTION_FAIL'
+    })
   }
-};
+}
+
+
+export const updateSubject = async (dispatch, subid, subname) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "subjects",
+    Filter:{
+        subid
+    },
+    DataToBeUpdated: {
+        createdBy: localStorage.getItem("user.uid"),
+        isActive: 1,
+        subid,
+        subname
+    }
+}
+console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/updateSubject`, body, config)
+    console.log(res.data)
+    res.data.status === '1'?
+    dispatch({
+      type: "ACTION_SUCCESS"
+    }) : 
+    dispatch({
+      type: "ACTION_FAIL"
+    })
+    getSubjects(dispatch)
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL"
+    })
+  }
+}
+
 
 export const createTest = async (dispatch, testname, subjectid) => {
   dispatch({
@@ -200,12 +250,51 @@ export const createTest = async (dispatch, testname, subjectid) => {
       subjectid,
       createdBy: localStorage.getItem("user.uid"),
       isActive: 1,
-    },
-  };
+    }
+  }
 
   try {
-    await axios.post(`${baseURL}/createTest`, body, config);
+    await axios.post(`${baseURL}/createTest`, body, config)
+    dispatch({
+      type: "ACTION_SUCCESS"
+    })
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: "ACTION_FAIL"
+    })
   }
-};
+}
+
+export const getTests = async (dispatch, testname, subjectid) => {
+  const tests = []
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+      database: "ExaminationSystem",
+      collection: "tests",
+      Filter:{
+          // subid:1
+      }
+  }
+
+  try {
+    const res = await axios.post(`${baseURL}/getTests`, body, config)
+    res.data.map(( test ) =>
+    tests.push(test)
+    );
+    dispatch({
+      type: "GET_TESTS",
+      tests: tests,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL"
+    })
+  }
+}

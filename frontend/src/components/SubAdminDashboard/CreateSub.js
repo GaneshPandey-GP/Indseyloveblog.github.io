@@ -26,7 +26,7 @@ export default function CreateSub() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    subjectCreate(dispatch, sub);
+    if (sub !== '') subjectCreate(dispatch, sub);
     handleClose()
   };
   return (
@@ -42,7 +42,7 @@ export default function CreateSub() {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{minWidth: 300}}>
           <DialogContent>
             <TextField
               autoFocus
