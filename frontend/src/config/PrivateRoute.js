@@ -1,11 +1,26 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+export const AdmPrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      localStorage.getItem("user.level") ? (
+      localStorage.getItem("user.level") === '1' ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{ pathname: "/sub-admin-login" }}
+        />
+      )
+    }
+  />
+);
+
+export const StudPrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      localStorage.getItem("user.level") === '2' ? (
         <Component {...props} />
       ) : (
         <Redirect

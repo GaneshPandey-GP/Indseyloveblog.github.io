@@ -32,17 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Register() {
-  // const [formData, setFormData] = useState({
-  //   fname: "",
-  //   lname: "",
-  //   contact: "",
-  //   email: "",
-  //   password: "",
-  //   re_password: "",
-  //   created_on: "",
-  // });
   const [formError, setFormError] = useState("");
-  const [uid, setUid] = useState(0);
   const { register, handleSubmit, errors } = useForm();
 
   
@@ -50,9 +40,8 @@ export default function Register() {
   const onSubmit = (data, e) => {
     console.log(data);
     e.preventDefault();
-    setUid(uid + 1);
     data.password === data.re_password
-      ? Signup(dispatch, data, uid)
+      ? Signup(dispatch, data)
       : setFormError("Passwords didn't match!");
   };
 

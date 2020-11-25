@@ -11,7 +11,7 @@ import {
     isAuthenticated: false,
     user: [{}],
     loading: false,
-    subjects: [{}],
+    subjects: [],
     errorMessage: null,
   };
 
@@ -67,6 +67,7 @@ import {
             subjects: action.subjects,
             loading: false
           };
+
         case 'UPDATE_SUBJECT': 
         return {
           ...initialState,

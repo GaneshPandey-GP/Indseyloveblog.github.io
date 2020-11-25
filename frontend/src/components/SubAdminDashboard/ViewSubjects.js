@@ -1,14 +1,8 @@
-import React, { useReducer, useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import { List, ListItem, Drawer, ListItemText, ListItemIcon, makeStyles} from '@material-ui/core';
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
-import { ListItemIcon } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import { getSubjects } from '../../context/actions';
 import { useAuthState } from '../../context';
 
 const useStyles = makeStyles({
@@ -27,12 +21,7 @@ export default function ViewSubjects() {
     right: false,
   });
 
-  useEffect(() => {
-    getSubjects(dispatch)
-  }, [dispatch])
 
-
-  console.log(subjects)
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -50,9 +39,9 @@ export default function ViewSubjects() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {subjects.map((text, index) => (
-          <ListItem button key={index}>
-            <ListItemText primary={text} />
+        {subjects.map(({subname, subid}) => (
+          <ListItem button key={subid}>
+            <ListItemText primary={subname} />
             <EditOutlinedIcon />
           </ListItem>
         ))}

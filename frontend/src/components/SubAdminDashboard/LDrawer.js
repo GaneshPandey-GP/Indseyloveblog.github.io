@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -17,17 +17,16 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import HomeIcon from "@material-ui/icons/Home";
 import MenuTwoToneIcon from "@material-ui/icons/MenuTwoTone";
-import CreateIcon from "@material-ui/icons/Create";
-import VisibilityIcon from "@material-ui/icons/Visibility";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PersonIcon from "@material-ui/icons/Person";
 import CreateSub from "./CreateSub";
 import ViewSubjects from "./ViewSubjects";
-import TestForm from "./CreateTest";
+import CreateTest from "./CreateTest";
+import { getSubjects } from "../../context/actions";
+import { useAuthState } from "../../context";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -63,15 +62,12 @@ const useStyles = makeStyles((theme) => ({
 function LDrawer() {
   const classes = useStyles();
   const theme = useTheme();
-
   const [open, setOpen] = React.useState(false);
-  const [dialog, setDialog] = React.useState(false);
+  const [{subjects}, dispatch] = useAuthState()
 
-  const handleClose = () => {
-    setDialog(false);
-  };
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpen(true)
+    getSubjects(dispatch)
   };
 
   const handleDrawerClose = () => {
@@ -130,7 +126,7 @@ function LDrawer() {
           <Divider />
           <CreateSub />
           <ViewSubjects />
-          <TestForm />
+          <CreateTest />
         </List>
         <Divider />
         <List>

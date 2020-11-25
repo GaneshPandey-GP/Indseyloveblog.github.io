@@ -59,25 +59,30 @@ export const loginUser = async (dispatch, { username, password }) => {
   };
   try {
     const res = await axios.post(`${baseURL}/login`, body, config);
-    res.data = [{}]
-      ? res.data[0].level === 2
-        ? dispatch({
-            type: LOGIN_SUCCESS,
-            payload: res.data,
-          })
-        : dispatch({
-            type: LOGIN_FAIL,
-          })
-      : dispatch({
-          type: LOGIN_FAIL,
-        });
+    console.log(res.data)
+    res.data === [{}] ?
+      res.data[0].level === 2 || res.data[1].level === 2
+          ? dispatch({
+              type: LOGIN_SUCCESS,
+              payload: res.data,
+            })
+          : dispatch({
+              type: LOGIN_FAIL,
+            })
+    : dispatch({
+      type: LOGIN_FAIL,
+    })
   } catch (err) {}
 };
 
 export const Signup = async (
   dispatch,
-  { username, fname, lname, contact, email, password },
-  uid
+  {username,
+  fname,
+  lname,
+  contact,
+  email,
+  password}
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -99,8 +104,7 @@ export const Signup = async (
       password: password,
       createdBy: -1,
       isActive: 1,
-      level: 2,
-      uid: uid,
+      level: 2
     },
   };
   try {
@@ -136,9 +140,8 @@ export const subjectCreate = async (dispatch, subname) => {
     database: "ExaminationSystem",
     collection: "subjects",
     document: {
-      subid: 2,
       subname,
-      createdBy: 1,
+      createdBy: localStorage.getItem("user.uid"),
       isActive: 1,
     },
   };
@@ -152,7 +155,7 @@ export const subjectCreate = async (dispatch, subname) => {
 };
 
 export const getSubjects = async (dispatch) => {
-  const subjects = [{ name: "", id: "" }];
+  const subjects = [];
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -164,8 +167,9 @@ export const getSubjects = async (dispatch) => {
   };
   try {
     const res = await axios.post(`${baseURL}/getSubjects`, body, config);
-    res.data.map(({ subname, subid }) =>
-      subjects.push({ name: subname, id: subid })
+    // console.log(res.data)
+    res.data.map(( subject ) =>
+      subjects.push(subject)
     );
     dispatch({
       type: "GET_SUBJECTS",
@@ -176,7 +180,7 @@ export const getSubjects = async (dispatch) => {
   }
 };
 
-export const createTest = async (dispatch, testname, subname) => {
+export const createTest = async (dispatch, testname, subjectid) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -191,8 +195,8 @@ export const createTest = async (dispatch, testname, subname) => {
     document: {
       testid: 2,
       testname,
-      subjecid: 2,
-      createdBy: 2,
+      subjectid,
+      createdBy: localStorage.getItem("user.uid"),
       isActive: 1,
     },
   };
