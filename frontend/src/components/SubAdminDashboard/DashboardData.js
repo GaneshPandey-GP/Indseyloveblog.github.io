@@ -1,15 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Paper, Grid } from "@material-ui/core";
-import "bootstrap/dist/css/bootstrap.min.css";
-import CreateSub from "./CreateSub";
+import { Typography, Paper, Grid } from "@material-ui/core";
 import LDrawer from "./LDrawer";
-
-import ViewSubjects from "./ViewSubjects";
 import { useAuthState } from "../../context";
 import Loading from "../Loading";
-import TestForm from "./CreateTest";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -51,14 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DashboardData() {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
-  const [dialog, setDialog] = React.useState(false);
   const [{loading}, dispatch] = useAuthState()
-
-  const handleClickOpen = () => {
-    setDialog(true);
-  };
-  console.log(loading)
   if (loading)
     return(
       <Loading />
@@ -68,7 +56,7 @@ export default function DashboardData() {
       <LDrawer />
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: open,
+          [classes.contentShift]: false,
         })}
       >
         <div className={classes.drawerHeader} />

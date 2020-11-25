@@ -100,7 +100,7 @@ export default function SubAdminLogin() {
                 variant="contained"
                 color="primary"
                 className="submit__btn"
-                onSubmit={handleFormSubmit}
+                onClick={handleFormSubmit}
               >
                 Sign In
               </Button>

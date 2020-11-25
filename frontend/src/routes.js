@@ -7,7 +7,7 @@ import CreateTest from "./components/CreateTest";
 import StudentDashboard from './pages/StudentDashboard'
 import TestView from './components/TestView/TestView';
 import SubAdminDashboard from "./pages/SubAdminDashboard";
-import { PrivateRoute } from "./config/PrivateRoute";
+import { AdmPrivateRoute, StudPrivateRoute  } from "./config/PrivateRoute";
 import SubAdminLogin from "./pages/SubAdminLogin";
 
 const BaseRouter = () => (
@@ -19,8 +19,8 @@ const BaseRouter = () => (
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/testview" component={TestView} /> 
                 <Route exact path="/register" component={Register} />
-                <PrivateRoute exact path="/sub-admin-dashboard" component={SubAdminDashboard} />
-                <PrivateRoute exact path="/stud-dashboard" component={StudentDashboard} />
+                <AdmPrivateRoute exact path="/sub-admin-dashboard" component={SubAdminDashboard} />
+                <StudPrivateRoute exact path="/stud-dashboard" component={StudentDashboard} />
                 <Route exact path="*" component={NotFound} />
             </Switch>
     </Router>

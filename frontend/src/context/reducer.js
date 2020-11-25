@@ -11,7 +11,7 @@ import {
     isAuthenticated: false,
     user: [{}],
     loading: false,
-    subjects: [{}],
+    subjects: [],
     errorMessage: null,
   };
 
@@ -67,6 +67,12 @@ import {
             subjects: action.subjects,
             loading: false
           };
+        case 'GET_SUBJECTS':
+          return {
+            ...initialState,
+            subjects: action.subjects,
+            loading: false
+          }
 
         default:
           return initialState

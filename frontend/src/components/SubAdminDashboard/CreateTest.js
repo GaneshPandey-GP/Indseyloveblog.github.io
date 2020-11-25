@@ -10,7 +10,7 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { ListItem, ListItemIcon, ListItemText, TextField } from '@material-ui/core';
+import { ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core';
 import { useAuthState } from '../../context';
 import { getSubjects } from '../../context/actions';
 import EditIcon from '@material-ui/icons/Edit';
@@ -18,38 +18,37 @@ import EditIcon from '@material-ui/icons/Edit';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
+    minwidth: 400,
     flexWrap: 'wrap',
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 200,
   },
 }));
 
-export default function TestForm() {
-  const [formData, setFormData] = useState({
-    testname: "",
-    subject: "",
-  });
+export default function CreateTest() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [subject, setSubject] = React.useState('');
   const [{subjects}, dispatch] = useAuthState()
+  const [testName, setTestName] = useState('')
+  const [subjectId, setSubjectId] = useState('')
 
-  useEffect(() => {
-      getSubjects(dispatch)
-  }, [dispatch])
-
-  const handleChange = (e) => {
-    setSubject(e.target.value || '');
+  const handleInputChange = (e) => {
+    setSubject(e.target.value || '')
+    // console.log()
+    console.log(subject)
   };
 
-  const handleInputChange = (e) =>
-  setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleTestNameChange = (e) =>
+    setTestName(e.target.value);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // createTest(dispatch, testname, subject.id);
+    handleClose()
+    console.log("testName =",testName, "subjectId=", subjectId)
   };
 
   const handleClickOpen = () => {
@@ -69,40 +68,48 @@ export default function TestForm() {
         <ListItemText primary={"Create Test"} />
       </ListItem>
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-
+        <form className={classes.container} id="test-form">
         <DialogTitle>Create a new test</DialogTitle>
-        <form className={classes.container}>
+
           <DialogContent>
               <FormControl className={classes.formControl}>
-                <TextField id="testName" label="Name of the test" />
+                <TextField
+                  required
+                  id="testName"
+                  label="Name of the test"
+                  name="testName"
+                  type="text"
+                  value={testName || ""}
+                  autoComplete="testName"
+                  autoFocus
+                  onChange={(e) => handleTestNameChange(e)}
+                />
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel id="select-subject-label">Subject</InputLabel>
+                <InputLabel htmlFor="select-subject-label">Subject</InputLabel>
                 <Select
                   labelId="select-subject-label"
                   id="select-subject"
                   value={subject}
-                  onChange={handleChange}
-                  input={<Input />}
+                  onChange={(e) => handleInputChange(e)}
+                  input={<Input id="select-subject-label" />}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {subjects.map(({name, id}) => 
-                      <MenuItem key={id} value={name} onChange={(e) => handleInputChange(e)}>{name}</MenuItem>
+                  {subjects.map(({subname, subid}) => 
+                    <MenuItem key={subid} value={subname}>{subname}</MenuItem>
                   )}
                 </Select>
               </FormControl>
           </DialogContent>
+          </form>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleFormSubmit} color="primary" form="test-form">
               Ok
             </Button>
           </DialogActions>
-        </form>
+        
       </Dialog>
     </div>
   );
