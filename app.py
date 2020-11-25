@@ -136,7 +136,7 @@ def get_subjects():
                     status=200,
                     mimetype='application/json')
 @app.route('/updateSubject', methods=['POST'])
-def mongo_update():
+def update_subject():
     data = request.json
     if data is None or data == {} or 'DataToBeUpdated' not in data:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
@@ -156,6 +156,18 @@ def get_tests():
                         mimetype='application/json')
     obj1 = MongoAPI(data)
     response = obj1.readWithFilter()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/updateTest', methods=['POST'])
+def update_test():
+    data = request.json
+    if data is None or data == {} or 'DataToBeUpdated' not in data:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.update()
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
