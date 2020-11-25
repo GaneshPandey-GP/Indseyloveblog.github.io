@@ -9,7 +9,7 @@ import {
 
 const baseURL = "http://127.0.0.1:5001";
 
-export const adminlogin = async (dispatch, {username, password}) => {
+export const adminlogin = async (dispatch, { username, password }) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -42,7 +42,7 @@ export const adminlogin = async (dispatch, {username, password}) => {
   }
 };
 
-export const loginUser = async (dispatch,{ username, password}) => {
+export const loginUser = async (dispatch, { username, password }) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -71,18 +71,12 @@ export const loginUser = async (dispatch,{ username, password}) => {
       : dispatch({
           type: LOGIN_FAIL,
         });
-
   } catch (err) {}
 };
 
 export const Signup = async (
   dispatch,
-  {username,
-  fname,
-  lname,
-  contact,
-  email,
-  password},
+  { username, fname, lname, contact, email, password },
   uid
 ) => {
   dispatch({
@@ -206,6 +200,42 @@ export const createTest = async (dispatch, testname, subname) => {
   try {
     await axios.post(`${baseURL}/createTest`, body, config);
   } catch (err) {
+    console.log(err);
+  }
+};
+
+export const Updatesub = async (dispatch, subid, subname) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "subjects",
+    Filter: {
+      subid,
+    },
+    DataToBeUpdated: {
+      createdBy: 1,
+      isActive: 1,
+      subid,
+      subname,
+    },
+  };
+
+  try {
+    await axios.post(`${baseURL}/updateSubject`, body, config);
+    dispatch({
+      type: "UPDATE_SUBJECT",
+    })
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAILED",
+    })
     console.log(err);
   }
 };
