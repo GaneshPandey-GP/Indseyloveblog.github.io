@@ -39,6 +39,12 @@ class MongoAPI:
         documents = self.collection.find()
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
         return output
+    def readWithFilter(self):
+        filt = self.data['Filter']
+        print(self.data)
+        documents = self.collection.find(filt)
+        output = [{item: data[item] for item in data if item != '_id'} for data in documents]
+        return output
     def readUsers(self):
         print(self.data)
         documents = self.collection.find()
@@ -48,6 +54,13 @@ class MongoAPI:
         print(self.data)
         documents = self.collection.find({"email": self.data['username'],"password":self.data['password'],"isActive":1},{'createdBy':0,'createdOn':0,'isActive':0,'password':0,'email':0,'contact':0,'fname':0,'lname':0})
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
+        print(output)
+        return output
+    def update(self):
+        filt = self.data['Filter']
+        updated_data = {"$set": self.data['DataToBeUpdated']}
+        response = self.collection.update_one(filt, updated_data)
+        output = {'Status': '1' if response.modified_count > 0 else "Nothing was updated."}
         return output
 app = Flask(__name__)
 @app.route('/register', methods=['POST'])
@@ -66,7 +79,6 @@ def register():
 def read_users():
     data = request.json
     if data is None or data == {}:
-        print("No data")
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
@@ -79,7 +91,6 @@ def read_users():
 def login_class():
     data = request.json
     if data is None or data == {}:
-        print("No data")
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
@@ -116,7 +127,6 @@ def create_test():
 def get_subjects():
     data = request.json
     if data is None or data == {}:
-        print("No data")
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
@@ -124,7 +134,43 @@ def get_subjects():
     response = obj1.read()
     return Response(response=json.dumps(response),
                     status=200,
-                    mimetype='application/json') 
+                    mimetype='application/json')
+@app.route('/updateSubject', methods=['POST'])
+def update_subject():
+    data = request.json
+    if data is None or data == {} or 'DataToBeUpdated' not in data:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.update()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/getTests', methods=['POST'])
+def get_tests():
+    data = request.json
+    if data is None or data == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.readWithFilter()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/updateTest', methods=['POST'])
+def update_test():
+    data = request.json
+    if data is None or data == {} or 'DataToBeUpdated' not in data:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.update()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
 if __name__ == '__main__':
     data={}
     app.run(use_reloader=False, debug=True, port=5001, host='127.0.0.1')

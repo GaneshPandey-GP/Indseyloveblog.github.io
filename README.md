@@ -57,7 +57,77 @@ This currently the rough documentation for examination system.
             View Test Submissions(Subject Wise and Test Wise)
             
             API's created
+            
             /createSubject
+            {
+                "database": "ExaminationSystem",
+                "collection": "subjects",
+                "document": {
+                    "createdBy": CurrentUserID,
+                    "isActive": 1,
+                    "subid": 2,
+                    "subname": "Test Subject2"
+                }
+            }
+            
+            /getSubjects
+            {
+                "database":"ExaminationSystem",
+                "collection":"subjects"
+            }
+            
+            /updateSubject
+            {
+                "database": "ExaminationSystem",
+                "collection": "subjects",
+                "Filter":{
+                    "subid":2
+                },
+                "DataToBeUpdated": {
+                    "createdBy": 1,
+                    "isActive": 1,
+                    "subid": 2,
+                    "subname": "Test Subject2"
+                }
+            }
+            
+            /createTest
+            {
+                "database": "ExaminationSystem",
+                "collection": "tests",
+                "document": {
+                    "testid":1,
+                    "testname":"testname",
+                    "subid":2,
+                    "createdBy":currentUserID,
+                    "isActive":1
+                }
+            }
+            
+            /viewTests
+                  {
+                      "database": "ExaminationSystem",
+                      "collection": "tests",
+                      "Filter":{
+                          "subid":1 (If no filter exists it will return all indexes)(filter is the complete '"subid":1' and can be anything according to requirement)
+                      }
+                  }
+                  
+            /updateTest
+            {
+                "database": "ExaminationSystem",
+                "collection": "subjects",
+                "Filter":{
+                    "testid":test id to be updated
+                },
+                "DataToBeUpdated": {
+                      "testid":1,
+                          "testname":"testname",
+                          "subid":2,
+                          "createdBy":currentUserID,
+                          "isActive":1
+                }
+            }
 
 ### Pages till now..
  - login (/login)
