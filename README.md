@@ -57,6 +57,7 @@ This currently the rough documentation for examination system.
             View Test Submissions(Subject Wise and Test Wise)
             
             API's created
+            
             /createSubject
             {
                 "database": "ExaminationSystem",
@@ -68,11 +69,13 @@ This currently the rough documentation for examination system.
                     "subname": "Test Subject2"
                 }
             }
+            
             /getSubjects
             {
                 "database":"ExaminationSystem",
                 "collection":"subjects"
             }
+            
             /updateSubject
             {
                 "database": "ExaminationSystem",
@@ -87,6 +90,7 @@ This currently the rough documentation for examination system.
                     "subname": "Test Subject2"
                 }
             }
+            
             /createTest
             {
                 "database": "ExaminationSystem",
@@ -99,12 +103,13 @@ This currently the rough documentation for examination system.
                     "isActive":1
                 }
             }
+            
             /viewTests
                   {
                       "database": "ExaminationSystem",
                       "collection": "tests",
                       "Filter":{
-                          "subid":1
+                          "subid":1 (If no filter exists it will return all indexes)(filter is the complete '"subid":1' and can be anything according to requirement)
                       }
                   }
 
