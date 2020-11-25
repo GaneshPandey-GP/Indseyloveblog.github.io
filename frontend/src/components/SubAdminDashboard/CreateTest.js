@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,9 +10,8 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core';
+import { ListItem, ListItemIcon, ListItemText, TextField } from '@material-ui/core';
 import { useAuthState } from '../../context';
-import { getSubjects } from '../../context/actions';
 import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,8 +36,6 @@ export default function CreateTest() {
 
   const handleInputChange = (e) => {
     setSubject(e.target.value || '')
-    // console.log()
-    console.log(subject)
   };
 
   const handleTestNameChange = (e) =>
@@ -46,9 +43,10 @@ export default function CreateTest() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setSubjectId(subject)
+    console.log(testName, subjectId)
     // createTest(dispatch, testname, subject.id);
     handleClose()
-    console.log("testName =",testName, "subjectId=", subjectId)
   };
 
   const handleClickOpen = () => {
@@ -86,16 +84,20 @@ export default function CreateTest() {
                 />
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="select-subject-label">Subject</InputLabel>
+                <InputLabel id="select-subject-label">Subject</InputLabel>
                 <Select
                   labelId="select-subject-label"
                   id="select-subject"
+                  defaultValue=""
                   value={subject}
-                  onChange={(e) => handleInputChange(e)}
+                  onChange={handleInputChange}
                   input={<Input id="select-subject-label" />}
                 >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
                   {subjects.map(({subname, subid}) => 
-                    <MenuItem key={subid} value={subname}>{subname}</MenuItem>
+                    <MenuItem key={subid} value={subid}>{subname}</MenuItem>
                   )}
                 </Select>
               </FormControl>

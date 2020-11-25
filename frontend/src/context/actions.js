@@ -84,8 +84,7 @@ export const Signup = async (
   lname,
   contact,
   email,
-  password},
-  uid
+  password}
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -107,8 +106,7 @@ export const Signup = async (
       password: password,
       createdBy: -1,
       isActive: 1,
-      level: 2,
-      uid: uid,
+      level: 2
     },
   };
   try {
@@ -184,7 +182,7 @@ export const getSubjects = async (dispatch) => {
   }
 };
 
-export const createTest = async (dispatch, testname, subname) => {
+export const createTest = async (dispatch, testname, subjectid) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -199,8 +197,8 @@ export const createTest = async (dispatch, testname, subname) => {
     document: {
       testid: 2,
       testname,
-      subjecid: 2,
-      createdBy: 2,
+      subjectid,
+      createdBy: localStorage.getItem("user.uid"),
       isActive: 1,
     },
   };
