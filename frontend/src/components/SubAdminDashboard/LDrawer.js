@@ -66,7 +66,7 @@ function LDrawer() {
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    setOpen(true)
+    setOpen(true)};
   const [{subjects}, dispatch] = useAuthState()
 
   const handleDrawerClose = () => {
