@@ -25,6 +25,9 @@ import PersonIcon from "@material-ui/icons/Person";
 import CreateSub from "./CreateSub";
 import ViewSubjects from "./ViewSubjects";
 import CreateTest from "./CreateTest";
+import { getSubjects } from "../../context/actions";
+import { useAuthState } from "../../context";
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -63,8 +66,8 @@ function LDrawer() {
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    setOpen(true)
-  };
+    setOpen(true)};
+  const [{subjects}, dispatch] = useAuthState()
 
   const handleDrawerClose = () => {
     setOpen(false);

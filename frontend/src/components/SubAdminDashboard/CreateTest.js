@@ -18,7 +18,7 @@ import { createTest } from '../../context/actions';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
-    minwidth: 400,
+    minwidth: 100,
     flexWrap: 'wrap',
   },
   formControl: {
@@ -33,6 +33,7 @@ export default function CreateTest() {
   const [subjectid, setSubjectid] = React.useState('');
   const [{subjects}, dispatch] = useAuthState()
   const [testName, setTestName] = useState('')
+  const [testTime, setTestTime] = React.useState(0)
 
   const handleInputChange = (e) => {
     setSubjectid(e.target.value || '')
@@ -41,10 +42,13 @@ export default function CreateTest() {
   const handleTestNameChange = (e) =>
     setTestName(e.target.value);
 
+  const handleTestTimeChange = (e) =>
+    setTestTime(e.target.value);
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log(testName, subjectid)
-    createTest(dispatch, testName, subjectid);
+    createTest(dispatch, testName, subjectid, testTime);
     handleClose()
   };
 
@@ -91,13 +95,27 @@ export default function CreateTest() {
                   onChange={handleInputChange}
                   input={<Input id="select-subject-label" />}
                 >
-                  {/* <MenuItem value="">
+                  <MenuItem value="">
                     <em>None</em>
-                  </MenuItem> */}
-                  {subjects.map(({subname, subid}) => 
+                  </MenuItem>
+                  {subjects.map(({subname, subid}) =>
                     <MenuItem key={subid} value={subid}>{subname}</MenuItem>
                   )}
                 </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <TextField
+                  required
+                  id="testTime"
+                  label="Time limit"
+                  helperText="(in minutes)"
+                  name="testTime"
+                  type="number"
+                  value={testTime || ""}
+                  autoComplete="testTime"
+                  autoFocus
+                  onChange={(e) => handleTestTimeChange(e)}
+                />
               </FormControl>
           </DialogContent>
           </form>
@@ -109,9 +127,8 @@ export default function CreateTest() {
               Ok
             </Button>
           </DialogActions>
-        
+
       </Dialog>
     </div>
   );
 }
-

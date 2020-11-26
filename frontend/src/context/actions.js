@@ -219,7 +219,7 @@ console.log(body)
     res.data.status === '1'?
     dispatch({
       type: "ACTION_SUCCESS"
-    }) : 
+    }) :
     dispatch({
       type: "ACTION_FAIL"
     })
@@ -232,7 +232,7 @@ console.log(body)
 }
 
 
-export const createTest = async (dispatch, testname, subjectid) => {
+export const createTest = async (dispatch, testname, subjectid, testtime) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -245,10 +245,11 @@ export const createTest = async (dispatch, testname, subjectid) => {
     database: "ExaminationSystem",
     collection: "tests",
     document: {
-      testid: 2,
+      // testid: 4,
       testname,
       subjectid,
-      createdBy: localStorage.getItem("user.uid"),
+      testtime,
+      createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
     }
   }

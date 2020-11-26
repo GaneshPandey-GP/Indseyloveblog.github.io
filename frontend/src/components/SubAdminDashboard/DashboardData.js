@@ -1,10 +1,11 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Paper, Grid } from "@material-ui/core";
+import { Typography, Paper, Grid, Divider } from "@material-ui/core";
 import LDrawer from "./LDrawer";
 import { useAuthState } from "../../context";
 import Loading from "../Loading";
+import ViewTests from './ViewTests'
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -65,12 +66,14 @@ export default function DashboardData() {
             <Paper className={classes.paper}>
             <Typography
                 className={classes.title}
+                varient="h2"
                 color="textPrimary"
                 gutterBottom
               >
                 Tests
               </Typography>
-              
+              <Divider />
+              <ViewTests />
             </Paper>
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
