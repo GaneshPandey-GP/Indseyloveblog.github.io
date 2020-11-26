@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardData from '../components/SubAdminDashboard/DashboardData'
+import { useAuthState } from "../context";
+import { getSubjects, getTests } from "../context/actions";
 
 function SubAdminDashboard() {
-
+  const [{subjects}, dispatch] = useAuthState()
+  useEffect(() => {
+    getSubjects(dispatch)
+    getTests(dispatch)
+  }, [])
   return (
     <>
       <div>

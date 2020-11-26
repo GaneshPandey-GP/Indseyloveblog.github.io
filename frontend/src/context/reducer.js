@@ -12,6 +12,7 @@ import {
     user: [{}],
     loading: false,
     subjects: [],
+    tests: [],
     errorMessage: null,
   };
 
@@ -43,7 +44,7 @@ import {
           }
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
-          localStorage.removeItem('Document_ID');
+//           localStorage.removeItem('Document_ID');
           return {
             ...initialState,
             Document_ID: null,
@@ -53,7 +54,7 @@ import {
             errorMessage: "Your creds didn't match! Try Again.."
           }
         case LOGOUT:
-          localStorage.removeItem('Document_ID');
+//           localStorage.removeItem('Document_ID');
           return {
             ...initialState,
             Document_ID: null,
@@ -66,8 +67,23 @@ import {
             ...initialState,
             subjects: action.subjects,
             loading: false
-          };
-
+          }
+        case 'GET_TESTS':
+          return {
+            ...initialState,
+            tests: action.tests,
+            loading: false
+          }
+        case 'ACTION_SUCCESS':
+          return {
+            ...initialState,
+            loading: false
+          }
+        case 'ACTION_FAIL':
+          return {
+            ...initialState,
+            loading: false
+          }
         case 'UPDATE_SUBJECT': 
         return {
           ...initialState,

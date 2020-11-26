@@ -13,6 +13,7 @@ import Select from '@material-ui/core/Select';
 import { ListItem, ListItemIcon, ListItemText, TextField } from '@material-ui/core';
 import { useAuthState } from '../../context';
 import EditIcon from '@material-ui/icons/Edit';
+import { createTest } from '../../context/actions';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -29,13 +30,12 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateTest() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [subject, setSubject] = React.useState('');
+  const [subjectid, setSubjectid] = React.useState('');
   const [{subjects}, dispatch] = useAuthState()
   const [testName, setTestName] = useState('')
-  const [subjectId, setSubjectId] = useState('')
 
   const handleInputChange = (e) => {
-    setSubject(e.target.value || '')
+    setSubjectid(e.target.value || '')
   };
 
   const handleTestNameChange = (e) =>
@@ -43,9 +43,8 @@ export default function CreateTest() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setSubjectId(subject)
-    console.log(testName, subjectId)
-    // createTest(dispatch, testname, subject.id);
+    console.log(testName, subjectid)
+    createTest(dispatch, testName, subjectid);
     handleClose()
   };
 
@@ -66,7 +65,7 @@ export default function CreateTest() {
         <ListItemText primary={"Create Test"} />
       </ListItem>
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-        <form className={classes.container} id="test-form">
+        <form className={classes.container} id="test-form"  noValidate autoComplete="off">
         <DialogTitle>Create a new test</DialogTitle>
 
           <DialogContent>
@@ -86,16 +85,15 @@ export default function CreateTest() {
               <FormControl className={classes.formControl}>
                 <InputLabel id="select-subject-label">Subject</InputLabel>
                 <Select
-                  labelId="select-subject-label"
                   id="select-subject"
                   defaultValue=""
-                  value={subject}
+                  value={subjectid}
                   onChange={handleInputChange}
                   input={<Input id="select-subject-label" />}
                 >
-                  <MenuItem value="">
+                  {/* <MenuItem value="">
                     <em>None</em>
-                  </MenuItem>
+                  </MenuItem> */}
                   {subjects.map(({subname, subid}) => 
                     <MenuItem key={subid} value={subid}>{subname}</MenuItem>
                   )}
