@@ -44,7 +44,7 @@ import {
           }
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
-          localStorage.removeItem('Document_ID');
+//           localStorage.removeItem('Document_ID');
           return {
             ...initialState,
             Document_ID: null,
@@ -54,7 +54,7 @@ import {
             errorMessage: "Your creds didn't match! Try Again.."
           }
         case LOGOUT:
-          localStorage.removeItem('Document_ID');
+//           localStorage.removeItem('Document_ID');
           return {
             ...initialState,
             Document_ID: null,
@@ -84,6 +84,16 @@ import {
             ...initialState,
             loading: false
           }
+        case 'UPDATE_SUBJECT': 
+        return {
+          ...initialState,
+          loading: false
+        };
+        case 'ACTION_FAILED': 
+        return {
+          ...initialState,
+          loading: false
+        };
         default:
           return initialState
     }
