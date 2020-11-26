@@ -69,6 +69,8 @@ def register():
     print(obj2.getSequences()[0].get('userSequence'))
     cid=(obj2.getSequences()[0].get('userSequence'))
     print(cid)
+    
+    data['document']['uid']=cid
     if data is None or data == {}:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
@@ -137,6 +139,7 @@ def create_test():
     print(obj2.getSequences()[0].get('testSequence'))
     cid=(obj2.getSequences()[0].get('testSequence'))
     print(cid)
+    data['document']['testid']=cid
     if data is None or data == {}:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
