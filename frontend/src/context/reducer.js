@@ -89,11 +89,6 @@ import {
           ...initialState,
           loading: false
         };
-        case 'ACTION_FAILED': 
-        return {
-          ...initialState,
-          loading: false
-        };
         default:
           return initialState
     }
