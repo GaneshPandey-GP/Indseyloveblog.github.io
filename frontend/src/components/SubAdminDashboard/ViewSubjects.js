@@ -24,9 +24,6 @@ export default function ViewSubjects() {
 
 
   const toggleDrawer = (anchor, open) => (event) => {
-    // if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-    //   return;
-    // }
     setState({ ...state, [anchor]: open });
   };
 
@@ -37,7 +34,6 @@ export default function ViewSubjects() {
         [classes.fullList]: anchor === 'top' || anchor === 'bottom',
       })}
       role="presentation"
-      // onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
         {subjects.map(({subname, subid}) => 

@@ -18,7 +18,7 @@ import { createTest } from '../../context/actions';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
-    minwidth: 400,
+    minwidth: 100,
     flexWrap: 'wrap',
   },
   formControl: {
@@ -33,7 +33,7 @@ export default function CreateTest() {
   const [subjectid, setSubjectid] = React.useState('');
   const [{subjects}, dispatch] = useAuthState()
   const [testName, setTestName] = useState('')
-  const [testTime, setTestTime] = React.useState('')
+  const [testTime, setTestTime] = React.useState(0)
 
   const handleInputChange = (e) => {
     setSubjectid(e.target.value || '')
@@ -95,9 +95,9 @@ export default function CreateTest() {
                   onChange={handleInputChange}
                   input={<Input id="select-subject-label" />}
                 >
-                  {/* <MenuItem value="">
+                  <MenuItem value="">
                     <em>None</em>
-                  </MenuItem> */}
+                  </MenuItem>
                   {subjects.map(({subname, subid}) =>
                     <MenuItem key={subid} value={subid}>{subname}</MenuItem>
                   )}
@@ -107,7 +107,8 @@ export default function CreateTest() {
                 <TextField
                   required
                   id="testTime"
-                  label="Time limit of test (in minutes)"
+                  label="Time limit"
+                  helperText="(in minutes)"
                   name="testTime"
                   type="number"
                   value={testTime || ""}
