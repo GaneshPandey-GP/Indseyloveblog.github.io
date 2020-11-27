@@ -22,12 +22,14 @@ const useStyles = makeStyles((theme) => ({
 export default function UpdateSub({subname, subid}) {
   const [sub, setSub] = useState("");
   const [{isAuthenticated, loading}, dispatch] = useAuthState()
+  const [valueError, setValueError] = React.useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(sub)
-    updateSubject(dispatch, subid, subname=sub);
-    // handleClose()
+    if (sub === '')
+      setValueError("Enter the subject name!")
+    else
+      updateSubject(dispatch, subid, subname=sub);
   }
 
   const classes = useStyles();
@@ -45,6 +47,8 @@ export default function UpdateSub({subname, subid}) {
         <TextField id={subname} label={subname} onChange={(e) => setSub(e.target.value)}/>
         </AccordionDetails>
         <AccordionActions>
+          {valueError ? <p className="text-small text-danger ml-4">{valueError}</p>: <p></p>}
+
           <Button size="small" color="primary" type="submit" onClick={handleSubmit}>
             Save
           </Button>
