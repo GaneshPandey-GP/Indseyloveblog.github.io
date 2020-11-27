@@ -180,7 +180,6 @@ export const getSubjects = async (dispatch) => {
     const res = await axios.post(`${baseURL}/getSubjects`, body, config);
     res.data.map(( subject ) =>
       subjects.push(subject)
-      // subject.subname = getSubName(subject.subname)
     )
     dispatch({
       type: "GET_SUBJECTS",
@@ -190,25 +189,6 @@ export const getSubjects = async (dispatch) => {
     dispatch({
       type: 'ACTION_FAIL'
     })
-  }
-}
-export const getSubName =  async (subid) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  const body = {
-    database: "ExaminationSystem",
-    collection: "subjects",
-    Filter:{
-      subid
-  }}
-  try {
-    const res = await axios.post(`${baseURL}/getSubjects`, body, config);
-   return(res.data[0].subname)
-  } catch (err) {
-    console.log("went Wrong")
   }
 }
 
@@ -309,8 +289,7 @@ export const getTests = async (dispatch, subjectid) => {
 
   try {
     const res = await axios.post(`${baseURL}/getTests`, body, config)
-    res.data.map(async( test ) => {
-      test.subname = await getSubName(test.subjectid)
+    res.data.map(( test ) => {
       tests.push(test)
     })
     dispatch({
