@@ -235,6 +235,41 @@ console.log(body)
 }
 
 
+export const getTests = async (dispatch, subname) => {
+  const tests = []
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+      database: "ExaminationSystem",
+      collection: "tests",
+      Filter:{
+          subname
+      }
+  }
+
+  try {
+    const res = await axios.post(`${baseURL}/getTests`, body, config)
+    console.log(res.data)
+    res.data.map(( test ) => {
+      return tests.push(test)
+    })
+    dispatch({
+      type: "GET_TESTS",
+      tests: tests,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL"
+    })
+  }
+}
+
 export const createTest = async (dispatch, testname, subjectid, testtime) => {
   dispatch({
     type: "START_LOADING",
@@ -269,8 +304,8 @@ export const createTest = async (dispatch, testname, subjectid, testtime) => {
   }
 }
 
-export const getTests = async (dispatch, subjectid) => {
-  const tests = []
+
+export const updateTest = async (dispatch, testname, testid, testtime, subid, ) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -280,21 +315,26 @@ export const getTests = async (dispatch, subjectid) => {
     },
   };
   const body = {
-      database: "ExaminationSystem",
-      collection: "tests",
-      Filter:{
-          subjectid
-      }
-  }
+    database: "ExaminationSystem",
+    collection: "tests",
+    Filter:{
+        testid: parseInt(testid)
+    },
+    DataToBeUpdated: {
+            testid: parseInt(testid), 
+            testname,
+            testtime,
+            subid: parseInt(subid),
+            createdBy: parseInt(localStorage.getItem("user.uid")),
+            isActive: 1
+    }
+}
 
   try {
-    const res = await axios.post(`${baseURL}/getTests`, body, config)
-    res.data.map(( test ) => {
-      tests.push(test)
-    })
+    const res = await axios.post(`${baseURL}/updateTest`, body, config)
+    getTests(dispatch)
     dispatch({
-      type: "GET_TESTS",
-      tests: tests,
+      type: "ACTION_SUCCESS",
     });
   } catch (err) {
     dispatch({

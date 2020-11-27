@@ -10,10 +10,11 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { ListItem, ListItemIcon, ListItemText, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { useAuthState } from '../../context';
 import EditIcon from '@material-ui/icons/Edit';
-import { createTest } from '../../context/actions';
+import { updateTest } from '../../context';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -27,32 +28,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateTest() {
+export default function UpdateTest({initialTestTime, initialSubjectid, initialTestName, testid}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [subjectid, setSubjectid] = React.useState('');
+  const [subid, setSubid] = React.useState(parseInt(initialSubjectid));
   const [{subjects}, dispatch] = useAuthState()
-  const [testName, setTestName] = useState('')
-  const [testTime, setTestTime] = React.useState(0)
-  const [valueError, setValueError] = React.useState('')
+  const [testname, setTestname] = useState(initialTestName)
+  const [testtime, setTesttime] = React.useState(initialTestTime)
+  const [valueError, setValueError] = React.useState()
 
   const handleInputChange = (e) => {
-    setSubjectid(String(e.target.value) || '');
+    setSubid(String(e.target.value) || '');
   };
 
-  const handleTestNameChange = (e) =>{
-    setTestName(e.target.value);
+  const handleTestnameChange = (e) =>{
+    setTestname(e.target.value);
   }
 
-  const handleTestTimeChange = (e) =>
-    setTestTime(e.target.value);
+  const handleTesttimeChange = (e) =>
+    setTesttime(e.target.value);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if ( testName === '' || subjectid === '' || testTime === 0 ) 
+    if ( testname === '' || subid === '' || testtime === 0 ) 
       setValueError("Enter all the values!")
       else {
-        createTest(dispatch, testName, subjectid, testTime)
+        updateTest(dispatch, testname, testid, testtime, subid)
       }
     if (valueError === '')
       handleClose()    
@@ -68,12 +69,7 @@ export default function CreateTest() {
 
   return (
     <div>
-      <ListItem button onClick={handleClickOpen}>
-        <ListItemIcon>
-          <EditIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Create Test"} />
-      </ListItem>
+      <EditOutlinedIcon onClick={handleClickOpen} style={{cursor: 'pointer'}}/>
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
         <form className={classes.container} id="test-form"  noValidate autoComplete="off">
         <DialogTitle>Create a new test</DialogTitle>
@@ -82,14 +78,14 @@ export default function CreateTest() {
               <FormControl className={classes.formControl}>
                 <TextField
                   required
-                  id="testName"
+                  id="testname"
                   label="Name of the test"
-                  name="testName"
+                  name="testname"
                   type="text"
-                  value={testName || ""}
-                  autoComplete="testName"
+                  value={testname}
+                  autoComplete="testname"
                   autoFocus
-                  onChange={(e) => handleTestNameChange(e)}
+                  onChange={(e) => handleTestnameChange(e)}
                 />
               </FormControl>
               <FormControl className={classes.formControl}>
@@ -97,7 +93,7 @@ export default function CreateTest() {
                 <Select
                   id="select-subject"
                   defaultValue=""
-                  value={subjectid}
+                  value={subid}
                   onChange={(e) => handleInputChange(e)}
                   input={<Input id="select-subject-label" />}
                 >
@@ -112,15 +108,15 @@ export default function CreateTest() {
               <FormControl className={classes.formControl}>
                 <TextField
                   required
-                  id="testTime"
+                  id="testtime"
                   label="Time limit"
                   helperText="(in minutes)"
-                  name="testTime"
+                  name="testtime"
                   type="number"
-                  value={testTime || ""}
-                  autoComplete="testTime"
+                  value={testtime}
+                  autoComplete="testtime"
                   autoFocus
-                  onChange={(e) => handleTestTimeChange(e)}
+                  onChange={(e) => handleTesttimeChange(e)}
                 />
               </FormControl>
           </DialogContent>

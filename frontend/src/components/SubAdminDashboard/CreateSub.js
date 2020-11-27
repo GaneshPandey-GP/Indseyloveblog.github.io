@@ -15,6 +15,7 @@ import QueueIcon from "@material-ui/icons/Queue";
 export default function CreateSub() {
   const [open, setOpen] = React.useState(false);
   const [{isAuthenticated, loading}, dispatch] = useAuthState()
+  const [valueError, setValueError] = React.useState('')
 
   const [sub, setSub] = useState("");
   const handleClickOpen = () => {
@@ -26,8 +27,12 @@ export default function CreateSub() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (sub !== '') subjectCreate(dispatch, sub);
-    handleClose()
+    if (sub === '')
+      setValueError("Enter the subject name!")
+    else
+      subjectCreate(dispatch, sub);
+    if (valueError === '')
+      handleClose()    
   };
   return (
     <div>
@@ -55,6 +60,7 @@ export default function CreateSub() {
               onChange={(e) => setSub(e.target.value)}
             />
           </DialogContent>
+          {valueError ? <p className="text-small text-danger ml-4">{valueError}</p>: <p></p>}
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Cancel
