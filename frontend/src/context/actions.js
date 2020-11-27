@@ -245,7 +245,6 @@ export const createTest = async (dispatch, testname, subjectid, testtime) => {
     database: "ExaminationSystem",
     collection: "tests",
     document: {
-      // testid: 4,
       testname,
       subjectid,
       testtime,
@@ -256,6 +255,7 @@ export const createTest = async (dispatch, testname, subjectid, testtime) => {
 
   try {
     await axios.post(`${baseURL}/createTest`, body, config)
+    getTests(dispatch)
     dispatch({
       type: "ACTION_SUCCESS"
     })
@@ -266,7 +266,7 @@ export const createTest = async (dispatch, testname, subjectid, testtime) => {
   }
 }
 
-export const getTests = async (dispatch, testname, subjectid) => {
+export const getTests = async (dispatch, subjectid) => {
   const tests = []
   dispatch({
     type: "START_LOADING",
@@ -280,12 +280,13 @@ export const getTests = async (dispatch, testname, subjectid) => {
       database: "ExaminationSystem",
       collection: "tests",
       Filter:{
-          // subid:1
+          subjectid
       }
   }
 
   try {
     const res = await axios.post(`${baseURL}/getTests`, body, config)
+    console.log(res.data)
     res.data.map(( test ) =>
     tests.push(test)
     );

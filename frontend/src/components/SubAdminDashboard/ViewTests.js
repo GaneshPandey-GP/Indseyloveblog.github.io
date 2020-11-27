@@ -1,110 +1,75 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import { useAuthState } from "../../context";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { Button, IconButton, Tooltip, Typography } from '@material-ui/core';
+import { useAuthState } from '../../context';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import SubjectFilter from './SubjectFilter';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    display: "flex",
-    height: 225,
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
   },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-  },
-}));
+  header: {
+    fontWeight: 'bold'
+  }
+
+});
+
 
 export default function ViewTests() {
+  const [{tests, subjects}, dispatch] = useAuthState()
+  console.log(tests)
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const [{tests}, dispatch] = useAuthState()
-console.log(tests)
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
-    <div className={classes.root}>
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
-        {tests.map((test) => (
-            <Tab label={test.testname} key={test.testid} {...a11yProps(test.testid)} />
-        ))}
-        {/* <Tab label="Item One" {...a11yProps(0)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
-        <Tab label="Item Three" {...a11yProps(2)} />
-        <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} /> */}
-      </Tabs>
-      {tests.map((test) => (
-        <SubjectPanel value={test.testname} key={test.testid} index={test.testid}>
-            {test.testname}
-        </SubjectPanel>
-      ))}
-
-      {/* <SubjectPanel value={value} index={1}>
-        Item Two
-      </SubjectPanel>
-      <SubjectPanel value={value} index={2}>
-        Item Three
-      </SubjectPanel>
-      <SubjectPanel value={value} index={3}>
-        Item Four
-      </SubjectPanel>
-      <SubjectPanel value={value} index={4}>
-        Item Five
-      </SubjectPanel>
-      <SubjectPanel value={value} index={5}>
-        Item Six
-      </SubjectPanel>
-      <SubjectPanel value={value} index={6}>
-        Item Seven
-      </SubjectPanel> */}
+    <>
+    <div className="d-flex justify-content-between">
+      <Typography variant="h6" id="tableTitle" component="div">
+        Tests
+      </Typography>
+      {/* <Tooltip title="Filter list">
+        <IconButton aria-label="filter list">
+          <FilterListIcon />
+        </IconButton>
+      </Tooltip> */}
+      <SubjectFilter />
     </div>
+    
+    <TableContainer>
+
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell className={classes.header}>Name of the test</TableCell>
+            <TableCell className={classes.header}>Subject</TableCell>
+            <TableCell className={classes.header}>Duration(mins)</TableCell>
+            <TableCell ></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {tests.map(({testname, testid, subjectid, testtime}) => (
+            <TableRow key={testid}>
+              <TableCell component="th" scope="row">
+                {testname}
+              </TableCell>
+              <TableCell component="th" scope="row">{subjectid}</TableCell>
+              <TableCell component="th" scope="row">{testtime}</TableCell>
+              <TableCell component="th" scope="row">
+               <button type="button" className="btn btn-outline-info">Questions</button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </>
   );
 }
-
-function SubjectPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-subjectPanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-subjectPanel-${index}`,
-  };
-}
-
-SubjectPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};

@@ -64,15 +64,6 @@ export default function DashboardData() {
         <Grid container spacing={3} className="mt-3">
           <Grid item xs={12} sm={12} md={6}>
             <Paper className={classes.paper}>
-            <Typography
-                className={classes.title}
-                varient="h2"
-                color="textPrimary"
-                gutterBottom
-              >
-                Tests
-              </Typography>
-              <Divider />
               <ViewTests />
             </Paper>
           </Grid>
