@@ -161,7 +161,7 @@ def get_subjects():
                         status=400,
                         mimetype='application/json')
     obj1 = MongoAPI(data)
-    response = obj1.read()
+    response = obj1.readWithFilter()
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
