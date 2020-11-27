@@ -134,6 +134,12 @@ def create_subject():
 @app.route('/createTest', methods=['POST'])
 def create_test():
     data = request.json
+    print(data)
+    data4=json.loads('{"database":"ExaminationSystem","collection":"subjects","Filter":{"subid":'+data["document"]["subjectid"]+'}}')
+    obj4 = MongoAPI(data4)
+    subname=(obj4.readWithFilter()[0].get('subname'))
+    data['document']['subname']=subname
+    print(data)
     data2=json.loads('{"database":"ExaminationSystem","collection":"sequences"}')
     obj2 = MongoAPI(data2)
     print(obj2.getSequences()[0].get('testSequence'))
