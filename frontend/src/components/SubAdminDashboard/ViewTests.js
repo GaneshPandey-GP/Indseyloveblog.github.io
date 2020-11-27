@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button, IconButton, Tooltip, Typography } from '@material-ui/core';
-import { getSubName, useAuthState } from '../../context';
+import {  useAuthState } from '../../context';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import SubjectFilter from './SubjectFilter';
 import axios from "axios";
@@ -77,12 +77,12 @@ export default function ViewTests() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tests.map(async({testname, testid, subname, testtime}) => (
+          {tests.map(({testname, testid, subid, testtime}) => (
             <TableRow key={testid}>
               <TableCell component="th" scope="row">
                 {testname}
               </TableCell>
-              <TableCell component="th" scope="row">{subname}</TableCell>
+              <TableCell component="th" scope="row">{subid}</TableCell>
               <TableCell component="th" scope="row">{testtime}</TableCell>
               <TableCell component="th" scope="row">
                <button type="button" className="btn btn-outline-info">Questions</button>
