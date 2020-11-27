@@ -8,9 +8,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button, IconButton, Tooltip, Typography } from '@material-ui/core';
-import { useAuthState } from '../../context';
+import { getSubName, useAuthState } from '../../context';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import SubjectFilter from './SubjectFilter';
+import axios from "axios";
 
 
 const useStyles = makeStyles({
@@ -27,6 +28,32 @@ const useStyles = makeStyles({
 export default function ViewTests() {
   const [{tests, subjects}, dispatch] = useAuthState()
   console.log(tests)
+
+
+
+
+
+  // const getSubjectName = async(subid) => {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+  //   const body = {
+  //     database: "ExaminationSystem",
+  //     collection: "subjects",
+  //     Filter:{
+  //       subid
+  //   }}
+  //   try {
+  //     const res = await axios.post("http://127.0.0.1:5001/getSubjects", body, config);
+  //    return(res.data[0].subname)
+  //   } catch (err) {
+  //     console.log("went Wrong")
+  //   }
+  // }
+
+
   const classes = useStyles();
 
   return (
@@ -35,11 +62,6 @@ export default function ViewTests() {
       <Typography variant="h6" id="tableTitle" component="div">
         Tests
       </Typography>
-      {/* <Tooltip title="Filter list">
-        <IconButton aria-label="filter list">
-          <FilterListIcon />
-        </IconButton>
-      </Tooltip> */}
       <SubjectFilter />
     </div>
     
@@ -55,12 +77,12 @@ export default function ViewTests() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tests.map(({testname, testid, subjectid, testtime}) => (
+          {tests.map(async({testname, testid, subname, testtime}) => (
             <TableRow key={testid}>
               <TableCell component="th" scope="row">
                 {testname}
               </TableCell>
-              <TableCell component="th" scope="row">{subjectid}</TableCell>
+              <TableCell component="th" scope="row">{subname}</TableCell>
               <TableCell component="th" scope="row">{testtime}</TableCell>
               <TableCell component="th" scope="row">
                <button type="button" className="btn btn-outline-info">Questions</button>
