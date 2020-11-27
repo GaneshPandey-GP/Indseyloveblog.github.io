@@ -36,11 +36,12 @@ export default function CreateTest() {
   const [testTime, setTestTime] = React.useState(0)
 
   const handleInputChange = (e) => {
-    setSubjectid(e.target.value || '')
+    setSubjectid(String(e.target.value) || '');
   };
 
-  const handleTestNameChange = (e) =>
+  const handleTestNameChange = (e) =>{
     setTestName(e.target.value);
+  }
 
   const handleTestTimeChange = (e) =>
     setTestTime(e.target.value);
@@ -92,14 +93,14 @@ export default function CreateTest() {
                   id="select-subject"
                   defaultValue=""
                   value={subjectid}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange(e)}
                   input={<Input id="select-subject-label" />}
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
                   {subjects.map(({subname, subid}) =>
-                    <MenuItem key={subid} value={subid}>{subname}</MenuItem>
+                    <MenuItem key={subid} value={subid} >{subname}</MenuItem>
                   )}
                 </Select>
               </FormControl>
