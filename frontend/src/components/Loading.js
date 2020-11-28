@@ -1,24 +1,41 @@
-import React from 'react';
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
-    opacity: 0.3,
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(3),
+    },
+  },
+  loading: {
+    display: "flex",
+    justifyContent: "center",
+    left: "50%",
+    textAlign: "center",
+    alignSelf: "center",
   },
 }));
 
-export default function Loading() {
+export const NavLoading = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <Backdrop className={classes.backdrop} open={true}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+    <div className={classes.root}>
+      <LinearProgress />
+      {/* <LinearProgress color="secondary" /> */}
     </div>
   );
-}
+};
+
+export const Loading = () => {
+  return (
+  <div class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  )
+};

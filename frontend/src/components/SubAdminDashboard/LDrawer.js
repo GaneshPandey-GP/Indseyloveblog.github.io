@@ -27,6 +27,7 @@ import ViewSubjects from "./ViewSubjects";
 import CreateTest from "./CreateTest";
 import { getSubjects } from "../../context/actions";
 import { useAuthState } from "../../context";
+import { NavLoading } from "../Loading";
 
 
 const drawerWidth = 240;
@@ -67,7 +68,7 @@ function LDrawer() {
 
   const handleDrawerOpen = () => {
     setOpen(true)};
-  const [{subjects}, dispatch] = useAuthState()
+  const [{subjects, loading}, dispatch] = useAuthState()
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -82,6 +83,7 @@ function LDrawer() {
         })}
       >
         <Toolbar>
+        {/* {loading ? <NavLoading /> : <></>} */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -95,7 +97,10 @@ function LDrawer() {
             Welcome Sub_admin
           </Typography>
         </Toolbar>
+        {loading ? <NavLoading /> : <></>}
       </AppBar>
+      
+
       <Drawer
         className={classes.drawer}
         variant="persistent"

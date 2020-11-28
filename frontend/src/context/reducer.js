@@ -77,7 +77,6 @@ export const reducer = (initialState, action) => {
       case 'ACTION_SUCCESS':
         return {
           ...initialState,
-          loading: false
         }
       case 'ACTION_FAIL':
         return {

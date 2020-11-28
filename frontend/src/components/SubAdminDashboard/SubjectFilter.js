@@ -32,7 +32,7 @@ function SubjectList(props) {
         <ListItemText primary="All" />
         </ListItem>
         {subjects.map(({subname, subid}) => (
-          <ListItem button onClick={(e) => handleListItemClick(e, subname)} key={subid}>
+          <ListItem button onClick={(e) => handleListItemClick(e, subid)} key={subid}>
             <ListItemText primary={subname} />
           </ListItem>
         ))}
