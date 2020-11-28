@@ -14,6 +14,7 @@ import { ListItem, ListItemIcon, ListItemText, TextField } from '@material-ui/co
 import { useAuthState } from '../../context';
 import EditIcon from '@material-ui/icons/Edit';
 import { createTest } from '../../context/actions';
+import Loading from '../Loading';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -49,8 +50,8 @@ export default function CreateTest() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if ( testName === '' || subjectid === '' || testTime === 0 ) 
-      setValueError("Enter all the values!")
+    if ( testName === '' || subjectid === '' || testTime <= 0 ) 
+      setValueError("Enter the valid values!")
       else {
         createTest(dispatch, testName, subjectid, testTime)
       }
@@ -65,7 +66,6 @@ export default function CreateTest() {
   const handleClose = () => {
     setOpen(false);
   };
-
   return (
     <div>
       <ListItem button onClick={handleClickOpen}>

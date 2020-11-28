@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { loginUser, useAuthState } from "../context";
-import Loading from "../components/Loading";
+import {Loading} from "../components/Loading";
 import { useForm } from "react-hook-form";
 import {
   Card,

@@ -11,6 +11,7 @@ import {  useAuthState } from '../../context';
 import SubjectFilter from './SubjectFilter';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import UpdateTest from './UpdateTest';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 
 const useStyles = makeStyles({
@@ -25,8 +26,10 @@ const useStyles = makeStyles({
 
 
 export default function ViewTests() {
-  const [{tests, subjects}, dispatch] = useAuthState()
+  const [{tests, subjects, loading}, dispatch] = useAuthState()
   const classes = useStyles();
+
+  if (loading) return (<><Skeleton variant="rect" height={30}/><br/><Skeleton variant="rect" height={165} /></>)
 
   return (
     <>

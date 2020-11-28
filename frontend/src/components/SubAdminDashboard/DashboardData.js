@@ -48,10 +48,10 @@ export default function DashboardData() {
   const classes = useStyles();
 
   const [{loading}, dispatch] = useAuthState()
-  if (loading)
-    return(
-      <Loading />
-  )  
+  // if (loading)
+  //   return(
+  //     <Loading />
+  // )  
   return (
     <div className={classes.root}>
       <LDrawer />

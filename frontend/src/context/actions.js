@@ -172,7 +172,6 @@ export const getSubjects = async (dispatch) => {
     database: "ExaminationSystem",
     collection: "subjects",
     Filter:{
-      // createdBy: parseInt(localStorage.getItem("user.uid"))
   },
 
   };
@@ -218,7 +217,7 @@ export const updateSubject = async (dispatch, subid, subname) => {
 console.log(body)
   try {
     const res = await axios.post(`${baseURL}/updateSubject`, body, config)
-    console.log(res.data)
+      getTests(dispatch)
     res.data.status === '1'?
     dispatch({
       type: "ACTION_SUCCESS"
@@ -235,7 +234,7 @@ console.log(body)
 }
 
 
-export const getTests = async (dispatch, subname) => {
+export const getTests = async (dispatch, subid) => {
   const tests = []
   dispatch({
     type: "START_LOADING",
@@ -249,7 +248,7 @@ export const getTests = async (dispatch, subname) => {
       database: "ExaminationSystem",
       collection: "tests",
       Filter:{
-          subname
+          subid
       }
   }
 
@@ -323,16 +322,16 @@ export const updateTest = async (dispatch, testname, testid, testtime, subid, ) 
     DataToBeUpdated: {
             testid: parseInt(testid), 
             testname,
-            testtime,
+            testtime: parseInt(testtime),
             subid: parseInt(subid),
             createdBy: parseInt(localStorage.getItem("user.uid")),
             isActive: 1
     }
 }
-
+console.log(body)
   try {
     const res = await axios.post(`${baseURL}/updateTest`, body, config)
-    getTests(dispatch)
+    getTests(dispatch, subid)
     dispatch({
       type: "ACTION_SUCCESS",
     });
