@@ -6,6 +6,7 @@ import { loginUser, useAuthState } from "../context";
 import { Loading } from "../components/Loading";
 import { useForm } from "react-hook-form";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import Alert from "@material-ui/lab/Alert";
 
 function Login(props) {
   const { register, handleSubmit, errors } = useForm();
@@ -28,7 +29,7 @@ function Login(props) {
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
           <div className="form-group textbox">
-            <i class="fas fa-envelope"></i>
+            <i className="fas fa-envelope"></i>
             <input
               required
               id="inputForEmail"
@@ -47,13 +48,13 @@ function Login(props) {
             />
 
             {errors.username && (
-              <span className="errorMessage text-capitalize">
-                <ErrorOutlineIcon /> {errors.username.message}
-              </span>
+              <Alert  severity="warning" className="errorMessage text-capitalize ml-5">
+               {errors.username.message}
+              </Alert>
             )}
           </div>
           <div className="form-group textbox">
-            <i class="fas fa-lock"></i>
+            <i className="fas fa-lock"></i>
             <input
               type="password"
               name="password"
@@ -67,12 +68,12 @@ function Login(props) {
                   message: "Please  Enter Your password",
                 },
               })}
-            />
+            /><br/>
 
             {errors.password && (
-              <span className="errorMessage text-capitalize">
-                <ErrorOutlineIcon /> {errors.password.message}
-              </span>
+              <Alert severity="warning"  className="errorMessage text-capitalize ml-5">
+                {errors.password.message}
+              </Alert>
             )}
           </div>
           {errorMessage ? (
@@ -81,7 +82,7 @@ function Login(props) {
             <p></p>
           )}
           <div className="d-flex align-items-center">
-            <button type="submit" className="btn btn-primary btn">
+            <button type="submit" className="btn btn-success btns">
               Login
             </button>
           </div>

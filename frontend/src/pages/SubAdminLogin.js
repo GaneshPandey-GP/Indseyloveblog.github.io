@@ -29,7 +29,7 @@ export default function SubAdminLogin() {
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
         <div className="form-group textbox">
-          <i class="fas fa-envelope"></i>
+          <i className="fas fa-envelope"></i>
           <input
             required
             id="inputForEmail"
@@ -54,7 +54,7 @@ export default function SubAdminLogin() {
           )}
         </div>
         <div className="form-group textbox">
-          <i class="fas fa-lock"></i>
+          <i className="fas fa-lock"></i>
           <input
             type="password"
             name="password"

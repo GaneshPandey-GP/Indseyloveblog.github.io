@@ -1,54 +1,98 @@
+@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
 .Wrapper {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    max-width: 51ch;
-    margin-top:15;
-    color: #070404;
-    font-weight: 600;
-  }
+  height: 100vh; 
+  width: 420px;
+  /* height: 600px; */
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #100d18;
+  font-family: 'Times New Roman', Times, serif;
+}
+.btns {
+  width: 100%;
+  /* background: none; */
+  border: 2px solid #e1ece2;
+  color: #e9e5e5;
+  font-weight: 900;
+  padding: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 15px 2px;
+  border-radius:12px;
+}
+.Wrapper input {
+  border: none;
   
-  .loginFormContainer {
-    width: 24rem;
-   
-  }
-  
-  .loginFormLegend {
-    width: 14rem;
-    background: #dee2e6;
-  }
-  
-  .errorMessage {
-    font-size: 12px;
-    letter-spacing: 0.05rem;
-    padding-left: 0.25rem;
-   
-  }
+  background: none;
+  color: #0a0909;
+  font-size: 18px;
+  font-weight: 400;
+  width: 80%;
+  float: left;
+  margin: 0 10px;
+  border-bottom: 1px solid #222;
+}
+.registrationFormContainer {
+  width: 94rem;
+  border-radius: 12px;
+  box-shadow: 2px 3px 9px #580139c4;
+}
+.box i {
+  margin-top: 10px;
+  margin-left: 12px;
+  width: 29px;
+  float: left;
+  text-align: center;
+}
 
-  @media screen and (max-width:789px){
-    .Wrapper{
-     
-        margin-top:10px;
-    }
+.registrationFormLegend {
+  width: 14rem;
+    border-radius: 12px;
+  background: #dee2e6;
+}
+.errorMessage {
+  font-size: 10px;
+  letter-spacing: 0.09rem;
+  padding-left: 0.25rem;
+}
+.box{
+  width: 100%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 8px 0;
+  margin: 8px 0;
+}
+.Rlinks{
+  margin-left: 110px;
+  text-emphasis: none;
+}
+@media screen and (max-width: 789px) {
+  .Wrapper {
+    margin-top: 10px;
   }
+}
+.header{
+  border-bottom: 1px solid transparent;
+  margin-top:-18px;
+  border-radius: 12px;
+  background-color: rgba(34, 34, 34, 0.075);
+}
 
-  @media screen and (max-width:390px){
-    .Wrapper{
-     
-        margin-top:20px;
-    }
+@media screen and (max-width: 390px) {
+  .Wrapper {
+    margin-top: 20px;
   }
-  @media screen and (max-width:320px){
-    .Wrapper{
-
-        margin-top:145px;
-    }
+}
+@media screen and (max-width: 320px) {
+  .Wrapper {
+    margin-top: 145px;
   }
-  @media screen and (max-width:240px){
-    .Wrapper{
-    
-        margin-top:200px;
-       
-    }
+}
+@media screen and (max-width: 240px) {
+  .Wrapper {
+    margin-top: 200px;
   }
+}
