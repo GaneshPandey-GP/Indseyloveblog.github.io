@@ -9,7 +9,7 @@ import {
 
 const baseURL = "http://127.0.0.1:5001";
 
-export const adminlogin = async (dispatch, {username, password}) => {
+export const adminlogin = async (dispatch, { username, password }) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -42,7 +42,7 @@ export const adminlogin = async (dispatch, {username, password}) => {
   }
 };
 
-export const loginUser = async (dispatch,{ username, password}) => {
+export const loginUser = async (dispatch, { username, password }) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -59,34 +59,29 @@ export const loginUser = async (dispatch,{ username, password}) => {
   };
   try {
     const res = await axios.post(`${baseURL}/login`, body, config);
-    console.log(res.data)
-    res.data === [{}] ?
-      res.data[0].level === 2 || res.data[1].level === 2
-          ? dispatch({
-              type: LOGIN_SUCCESS,
-              payload: res.data,
-            })
-          : dispatch({
-              type: LOGIN_FAIL,
-            })
-    : dispatch({
-      type: LOGIN_FAIL,
-    })
+    console.log(res.data);
+    res.data === [{}]
+      ? res.data[0].level === 2 || res.data[1].level === 2
+        ? dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data,
+          })
+        : dispatch({
+            type: LOGIN_FAIL,
+          })
+      : dispatch({
+          type: LOGIN_FAIL,
+        });
   } catch (err) {
     dispatch({
-      type: LOGIN_FAIL
-  })
-}
-}
+      type: LOGIN_FAIL,
+    });
+  }
+};
 
 export const Signup = async (
   dispatch,
-  {username,
-  fname,
-  lname,
-  contact,
-  email,
-  password}
+  { username, fname, lname, contact, email, password }
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -108,7 +103,7 @@ export const Signup = async (
       password: password,
       createdBy: -1,
       isActive: 1,
-      level: 2
+      level: 2,
     },
   };
   try {
@@ -171,26 +166,21 @@ export const getSubjects = async (dispatch) => {
   const body = {
     database: "ExaminationSystem",
     collection: "subjects",
-    Filter:{
-  },
-
+    Filter: {},
   };
   try {
     const res = await axios.post(`${baseURL}/getSubjects`, body, config);
-    res.data.map(( subject ) =>
-      subjects.push(subject)
-    )
+    res.data.map((subject) => subjects.push(subject));
     dispatch({
       type: "GET_SUBJECTS",
       subjects: subjects,
     });
   } catch (err) {
     dispatch({
-      type: 'ACTION_FAIL'
-    })
+      type: "ACTION_FAIL",
+    });
   }
-}
-
+};
 
 export const updateSubject = async (dispatch, subid, subname) => {
   dispatch({
@@ -204,38 +194,37 @@ export const updateSubject = async (dispatch, subid, subname) => {
   const body = {
     database: "ExaminationSystem",
     collection: "subjects",
-    Filter:{
-        subid
+    Filter: {
+      subid,
     },
     DataToBeUpdated: {
-        createdBy: localStorage.getItem("user.uid"),
-        isActive: 1,
-        subid,
-        subname
-    }
-}
-console.log(body)
+      createdBy: localStorage.getItem("user.uid"),
+      isActive: 1,
+      subid,
+      subname,
+    },
+  };
+  console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/updateSubject`, body, config)
-      getTests(dispatch)
-    res.data.status === '1'?
-    dispatch({
-      type: "ACTION_SUCCESS"
-    }) :
-    dispatch({
-      type: "ACTION_FAIL"
-    })
-    getSubjects(dispatch)
+    const res = await axios.post(`${baseURL}/updateSubject`, body, config);
+    getTests(dispatch);
+    res.data.status === "1"
+      ? dispatch({
+          type: "ACTION_SUCCESS",
+        })
+      : dispatch({
+          type: "ACTION_FAIL",
+        });
+    getSubjects(dispatch);
   } catch (err) {
     dispatch({
-      type: "ACTION_FAIL"
-    })
+      type: "ACTION_FAIL",
+    });
   }
-}
-
+};
 
 export const getTests = async (dispatch, subid) => {
-  const tests = []
+  const tests = [];
   dispatch({
     type: "START_LOADING",
   });
@@ -245,29 +234,29 @@ export const getTests = async (dispatch, subid) => {
     },
   };
   const body = {
-      database: "ExaminationSystem",
-      collection: "tests",
-      Filter:{
-          subid
-      }
-  }
+    database: "ExaminationSystem",
+    collection: "tests",
+    Filter: {
+      subid,
+    },
+  };
 
   try {
-    const res = await axios.post(`${baseURL}/getTests`, body, config)
-    console.log(res.data)
-    res.data.map(( test ) => {
-      return tests.push(test)
-    })
+    const res = await axios.post(`${baseURL}/getTests`, body, config);
+    console.log(res.data);
+    res.data.map((test) => {
+      return tests.push(test);
+    });
     dispatch({
       type: "GET_TESTS",
       tests: tests,
     });
   } catch (err) {
     dispatch({
-      type: "ACTION_FAIL"
-    })
+      type: "ACTION_FAIL",
+    });
   }
-}
+};
 
 export const createTest = async (dispatch, testname, subjectid, testtime) => {
   dispatch({
@@ -287,24 +276,29 @@ export const createTest = async (dispatch, testname, subjectid, testtime) => {
       testtime,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
-    }
-  }
+    },
+  };
 
   try {
-    await axios.post(`${baseURL}/createTest`, body, config)
-    getTests(dispatch)
+    await axios.post(`${baseURL}/createTest`, body, config);
+    getTests(dispatch);
     dispatch({
-      type: "ACTION_SUCCESS"
-    })
+      type: "ACTION_SUCCESS",
+    });
   } catch (err) {
     dispatch({
-      type: "ACTION_FAIL"
-    })
+      type: "ACTION_FAIL",
+    });
   }
-}
+};
 
-
-export const updateTest = async (dispatch, testname, testid, testtime, subid, ) => {
+export const updateTest = async (
+  dispatch,
+  testname,
+  testid,
+  testtime,
+  subid
+) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -316,28 +310,73 @@ export const updateTest = async (dispatch, testname, testid, testtime, subid, ) 
   const body = {
     database: "ExaminationSystem",
     collection: "tests",
-    Filter:{
-        testid: parseInt(testid)
+    Filter: {
+      testid: parseInt(testid),
     },
     DataToBeUpdated: {
-            testid: parseInt(testid), 
-            testname,
-            testtime: parseInt(testtime),
-            subid: parseInt(subid),
-            createdBy: parseInt(localStorage.getItem("user.uid")),
-            isActive: 1
-    }
-}
-console.log(body)
+      testid: parseInt(testid),
+      testname,
+      testtime: parseInt(testtime),
+      subid: parseInt(subid),
+      createdBy: parseInt(localStorage.getItem("user.uid")),
+      isActive: 1,
+    },
+  };
+  console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/updateTest`, body, config)
-    getTests(dispatch, subid)
+    const res = await axios.post(`${baseURL}/updateTest`, body, config);
+    getTests(dispatch, subid);
     dispatch({
       type: "ACTION_SUCCESS",
     });
   } catch (err) {
     dispatch({
-      type: "ACTION_FAIL"
-    })
+      type: "ACTION_FAIL",
+    });
   }
-}
+};
+
+export const Addquestion = async (
+  dispatch,
+  testid,
+  question,
+  option1,
+  option2,
+  option3,
+  option4,
+  correctans
+) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "questions",
+    document: {
+      createdBy: parseInt(localStorage.getItem("user.uid")),
+      isActive: 1,
+      testid,
+      question,
+      option1,
+      option2,
+      option3,
+      option4,
+      correctans,
+    },
+  };
+  try {
+    await axios.post(`${baseURL}/createQuestion`, body, config);
+    dispatch({
+      type: "QUESTION_CREATED",
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};
