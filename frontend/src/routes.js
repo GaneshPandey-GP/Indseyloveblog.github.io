@@ -8,14 +8,14 @@ import TestView from './components/TestView/TestView';
 import SubAdminDashboard from "./pages/SubAdminDashboard";
 import { AdmPrivateRoute, StudPrivateRoute  } from "./config/PrivateRoute";
 import SubAdminLogin from "./pages/SubAdminLogin";
-import AddQns from "./pages/AddQns";
+import Questions from "./pages/Questions";
 
 const BaseRouter = () => (
     <Router>
             <Switch>
                 <Route exact path="/login" component={Login} /> 
                 <Route exact path="/sub-admin-login" component={SubAdminLogin} />
-                <Route exact path="/add-questions" component={AddQns} />
+                <Route exact path="/add-questions" component={Questions} />
               
                 <Route exact path="/testview" component={TestView} /> 
                 <Route exact path="/register" component={Register} />
