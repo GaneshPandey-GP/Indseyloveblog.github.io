@@ -331,7 +331,7 @@ export const updateTest = async (dispatch, testname, testid, testtime, subid, ) 
 console.log(body)
   try {
     const res = await axios.post(`${baseURL}/updateTest`, body, config)
-    getTests(dispatch, subid)
+    getTests(dispatch)
     dispatch({
       type: "ACTION_SUCCESS",
     });

@@ -47,11 +47,8 @@ const useStyles = makeStyles((theme) => ({
 export default function DashboardData() {
   const classes = useStyles();
 
-  const [{loading}, dispatch] = useAuthState()
-  // if (loading)
-  //   return(
-  //     <Loading />
-  // )  
+  // const [{loading}, dispatch] = useAuthState()
+ 
   return (
     <div className={classes.root}>
       <LDrawer />

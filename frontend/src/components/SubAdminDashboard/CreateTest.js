@@ -53,6 +53,7 @@ export default function CreateTest() {
     if ( testName === '' || subjectid === '' || testTime <= 0 ) 
       setValueError("Enter the valid values!")
       else {
+        setValueError("")
         createTest(dispatch, testName, subjectid, testTime)
       }
     if (valueError === '')

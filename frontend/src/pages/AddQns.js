@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // import Fab from "@material-ui/core/Fab";
 // import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import { Button, Paper, TextField } from "@material-ui/core";
+import { Button, MenuItem, Paper, Select, TextField } from "@material-ui/core";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QnForm() {
+export default function AddQns() {
   const [qnData, setQnData] = useState({
     question: "",
     option1: "",
@@ -115,13 +115,19 @@ export default function QnForm() {
               className={classes.option}
               onChange={(e) => handleInputChange(e)}
             />
-            <TextField
-              id="correct_answer"
-              label="Correct answer"
-              variant="outlined"
-              className={classes.option}
-              onChange={(e) => handleInputChange(e)}
-            />
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              // open={open}
+              // onClose={handleClose}
+              // onOpen={handleOpen}
+              // value={age}
+              // onChange={handleChange}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
 
             <Button
               type="submit"
