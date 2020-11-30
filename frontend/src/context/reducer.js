@@ -93,6 +93,11 @@ export const reducer = (initialState, action) => {
         ...initialState,
         loading: false
       };
+      case 'QUESTION_CREATED': 
+      return {
+        ...initialState,
+        loading: false
+      };
       default:
         return initialState
   }

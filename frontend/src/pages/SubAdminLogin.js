@@ -82,7 +82,7 @@ export default function SubAdminLogin() {
           <p></p>
         )}
         <div className="d-flex align-items-center">
-          <button type="submit" className="btn btn-primary btn">
+          <button type="submit" className="btn btn-primary btns">
             Login
           </button>
         </div>

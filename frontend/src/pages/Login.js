@@ -82,7 +82,7 @@ function Login(props) {
             <p></p>
           )}
           <div className="d-flex align-items-center">
-            <button type="submit" className="btn btn-success btns">
+            <button type="submit" className="btn btn-primary btns">
               Login
             </button>
           </div>
