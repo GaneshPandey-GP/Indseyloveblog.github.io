@@ -134,10 +134,12 @@ def create_subject():
 @app.route('/createTest', methods=['POST'])
 def create_test():
     data = request.json
+    print(data)
     data4=json.loads('{"database":"ExaminationSystem","collection":"subjects","Filter":{"subid":'+data["document"]["subjectid"]+'}}')
     obj4 = MongoAPI(data4)
     subname=(obj4.readWithFilter()[0].get('subname'))
     data['document']['subname']=subname
+    print(data)
     data2=json.loads('{"database":"ExaminationSystem","collection":"sequences"}')
     obj2 = MongoAPI(data2)
     print(obj2.getSequences()[0].get('testSequence'))
@@ -202,6 +204,28 @@ def update_test():
                         mimetype='application/json')
     obj1 = MongoAPI(data)
     response = obj1.update()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/createQuestion', methods=['POST'])
+def create_question():
+    data = request.json
+    data2=json.loads('{"database":"ExaminationSystem","collection":"sequences"}')
+    obj2 = MongoAPI(data2)
+    print(obj2.getSequences()[0].get('questionSequence'))
+    cid=(obj2.getSequences()[0].get('questionSequence'))
+    print(cid)
+    data['document']['qid']=cid
+    if data is None or data == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.write(data)
+    cid2=cid+1
+    data3=json.loads('{"database":"ExaminationSystem","collection":"sequences","Filter":{"questionSequence":'+str(cid)+'},"DataToBeUpdated":{"questionSequence":'+str(cid2)+'}}')
+    obj3 = MongoAPI(data3)
+    obj3.update()
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
