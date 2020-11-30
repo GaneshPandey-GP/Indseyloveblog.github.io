@@ -324,8 +324,8 @@ export const updateTest = async (
   };
   console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/updateTest`, body, config);
-    getTests(dispatch, subid);
+    await axios.post(`${baseURL}/updateTest`, body, config)
+    getTests(dispatch)
     dispatch({
       type: "ACTION_SUCCESS",
     });
@@ -336,15 +336,15 @@ export const updateTest = async (
   }
 };
 
-export const Addquestion = async (
+export const addQuestion = async (
   dispatch,
   testid,
   question,
-  option1,
-  option2,
-  option3,
-  option4,
-  correctans
+  optionA,
+  optionB,
+  optionC,
+  optionD,
+  correctAns
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -362,15 +362,17 @@ export const Addquestion = async (
       isActive: 1,
       testid,
       question,
-      option1,
-      option2,
-      option3,
-      option4,
-      correctans,
+      optionA,
+      optionB,
+      optionC,
+      optionD,
+      correctAns,
     },
-  };
+  }
+  console.log(body)
   try {
-    await axios.post(`${baseURL}/createQuestion`, body, config);
+    const res = await axios.post(`${baseURL}/createQuestion`, body, config)
+    console.log(res.data)
     dispatch({
       type: "QUESTION_CREATED",
     });

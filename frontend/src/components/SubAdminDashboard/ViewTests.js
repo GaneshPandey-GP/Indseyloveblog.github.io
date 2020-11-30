@@ -9,9 +9,9 @@ import TableRow from '@material-ui/core/TableRow';
 import { Typography } from '@material-ui/core';
 import {  useAuthState } from '../../context';
 import SubjectFilter from './SubjectFilter';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import UpdateTest from './UpdateTest';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
@@ -20,6 +20,9 @@ const useStyles = makeStyles({
   },
   header: {
     fontWeight: 'bold'
+  },
+  link: {
+    textDecoration: 'none',
   }
 
 });
@@ -61,7 +64,7 @@ export default function ViewTests() {
               <TableCell component="th" scope="row">{subname}</TableCell>
               <TableCell component="th" scope="row">{testtime}</TableCell>
               <TableCell component="th" scope="row">
-               <button type="button" className="btn btn-outline-info">Questions</button>
+               <Link to={{pathname: "/add-questions", testid }} ><button type="button" className="btn btn-outline-info">Questions</button></Link> 
               </TableCell>
               <TableCell component="th" scope="row">
                <UpdateTest initialTestName={testname} initialSubjectid={subjectid} initialTestTime={testtime} testid={testid}/>

@@ -25,7 +25,6 @@ import PersonIcon from "@material-ui/icons/Person";
 import CreateSub from "./CreateSub";
 import ViewSubjects from "./ViewSubjects";
 import CreateTest from "./CreateTest";
-import { getSubjects } from "../../context/actions";
 import { useAuthState } from "../../context";
 import { NavLoading } from "../Loading";
 
