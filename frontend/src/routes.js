@@ -16,7 +16,6 @@ const BaseRouter = () => (
                 <Route exact path="/login" component={Login} /> 
                 <Route exact path="/sub-admin-login" component={SubAdminLogin} />
                 <Route exact path="/add-questions" component={Questions} />
-              
                 <Route exact path="/testview" component={TestView} /> 
                 <Route exact path="/register" component={Register} />
                 <AdmPrivateRoute exact path="/sub-admin-dashboard" component={SubAdminDashboard} />
