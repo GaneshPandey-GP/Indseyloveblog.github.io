@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import "./Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,6 +9,14 @@ import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import Alert from "@material-ui/lab/Alert";
 
 function Login(props) {
+  useEffect(() => {
+    try{
+      localStorage.removeItem("user.uid")
+      localStorage.removeItem("user.level")
+    } catch(err) {
+      console.log(err)
+    }
+  },[])
   const { register, handleSubmit, errors } = useForm();
   const [{ isAuthenticated, loading, errorMessage }, dispatch] = useAuthState();
   const onSubmit = (data, e) => {

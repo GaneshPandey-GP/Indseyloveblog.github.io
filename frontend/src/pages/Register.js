@@ -42,9 +42,9 @@ export default function Register() {
   const onSubmit = (data, e) => {
     console.log(data);
     e.preventDefault();
-    data.password === data.re_password
-      ? Signup(dispatch, data)
-      : setFormError("Passwords didn't match!");
+    // data.password === data.re_password
+      Signup(dispatch, data)
+      // : setFormError("Passwords didn't match!");
   };
 
   const [{ isAuthenticated, loading }, dispatch] = useAuthState();
@@ -66,7 +66,6 @@ export default function Register() {
           <ScopedCssBaseline />
           <form
             onSubmit={handleSubmit(onSubmit)}
-            Validate
             autoComplete="off"
             className="row"
           >
@@ -235,7 +234,7 @@ export default function Register() {
                 ref={register({
                   required: {
                     value: true,
-                    message: "Please enter confirm password",
+                    message: "Please confirm your password",
                   },
                   minLength: {
                     value: 8,

@@ -59,19 +59,16 @@ export const loginUser = async (dispatch, { username, password }) => {
   };
   try {
     const res = await axios.post(`${baseURL}/login`, body, config);
-    console.log(res.data);
-    res.data === [{}]
-      ? res.data[0].level === 2 || res.data[1].level === 2
-        ? dispatch({
-            type: LOGIN_SUCCESS,
-            payload: res.data,
-          })
-        : dispatch({
-            type: LOGIN_FAIL,
-          })
+    console.log(res.data[0].level);
+    res.data[0].level === 2
+      ? dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data,
+        })
       : dispatch({
           type: LOGIN_FAIL,
-        });
+        })
+
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
@@ -375,6 +372,81 @@ export const addQuestion = async (
     console.log(res.data)
     dispatch({
       type: "QUESTION_CREATED",
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}
+
+export const viewQuestions = async (dispatch, testid) => {
+  const questions = []
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "questions",
+    Filter:{
+        testid
+    }
+}
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/viewQuestions`, body, config)
+    console.log(res.data)
+    res.data.map((question) => {
+      return questions.push(question);
+    });
+    dispatch({
+      type: "GET_QUESTIONS",
+      questions: questions
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}
+
+export const updateQuestion = async (dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, testid) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "questions",
+    Filter:{
+        qid
+    },
+    DataToBeUpdated: {
+      question,
+      optionA,
+      optionB,
+      optionC,
+      optionD,
+      correctAns,
+    }
+}
+
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/updateQuestion`, body, config)
+    console.log(res.data)
+    viewQuestions(dispatch, testid)
+    dispatch({
+      type: "QUESTION_CREATED"
     });
   } catch (err) {
     dispatch({
