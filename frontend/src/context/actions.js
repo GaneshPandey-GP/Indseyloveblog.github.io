@@ -59,19 +59,16 @@ export const loginUser = async (dispatch, { username, password }) => {
   };
   try {
     const res = await axios.post(`${baseURL}/login`, body, config);
-    console.log(res.data);
-    res.data === [{}]
-      ? res.data[0].level === 2 || res.data[1].level === 2
-        ? dispatch({
-            type: LOGIN_SUCCESS,
-            payload: res.data,
-          })
-        : dispatch({
-            type: LOGIN_FAIL,
-          })
+    console.log(res.data[0].level);
+    res.data[0].level === 2
+      ? dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data,
+        })
       : dispatch({
           type: LOGIN_FAIL,
-        });
+        })
+
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
