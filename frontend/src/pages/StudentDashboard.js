@@ -11,11 +11,11 @@ import clsx from "clsx";
 import ActiveTest from "../components/StudentDashboard/Activetest";
 import PastsTest from "../components/StudentDashboard/PastsTest";
 import UpcommingTest from "../components/StudentDashboard/UpcommingTest";
-import {TestCard} from '../components/StudentDashboard/TestCard';
+import { TestCard } from "../components/StudentDashboard/TestCard";
 import { useAuthState } from "../context";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyCard: {
     display: "flex",
-   
+
     flexWrap: "wrap",
     "& > *": {
       margin: theme.spacing(0.1),
@@ -58,17 +58,17 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "left",
     fontWeight: 900,
-    background:"transparent",
-    borderBottom:"1px solid #fff",
+    background: "transparent",
+    borderBottom: "1px solid #fff",
 
     color: theme.palette.text.secondary,
     "&:hover": {
       boxShadow: "7px 8px 10px #3f51b5",
     },
   },
-wrapper:{
-  borderRadius:"6px",
-},
+  wrapper: {
+    borderRadius: "6px",
+  },
   appBar: {
     background: "#3f51b5",
     transition: theme.transitions.create(["margin", "width"], {
@@ -155,60 +155,96 @@ export default function StudentDashboard() {
         <div className={classes.bodyCard}>
           <Paper elevation={3} className={classes.wrapper}>
             <Grid container spacing={3}>
-              <Grid item xs={12} >
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Algorithms</Typography>
+              <Grid item xs={12}>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Algorithms
+                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Computer Network</Typography>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Computer Network
+                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Data Structure</Typography>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Data Structure
+                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Python</Typography>
-              </Grid>
-            </Grid>
-          </Paper>
-          <Paper elevation={3} className={classes.wrapper}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Data Structure</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Computer Network</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Algorithms </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Python</Typography>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Python
+                </Typography>
               </Grid>
             </Grid>
           </Paper>
           <Paper elevation={3} className={classes.wrapper}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-          <Typography className={classes.paper}><LibraryBooksIcon/>  Python</Typography>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Data Structure
+                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Computer Network</Typography>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Computer Network
+                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Data Structure</Typography>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Algorithms{" "}
+                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography className={classes.paper}> <LibraryBooksIcon/> Algorithms</Typography>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Python
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+          <Paper elevation={3} className={classes.wrapper}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Typography className={classes.paper}>
+                  <LibraryBooksIcon /> Python
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Computer Network
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Data Structure
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography className={classes.paper}>
+                  {" "}
+                  <LibraryBooksIcon /> Algorithms
+                </Typography>
               </Grid>
             </Grid>
           </Paper>
         </div>
-       <div className="row mt-5 display-1">
-       <h1 className="col-sm-12 text-capitalize text-center card-header">Tests</h1>
-       <TestCard/>
-       <TestCard/>
-
-       </div>
-        
+        <div className="row mt-5 display-1">
+          <h1 className="col-sm-12 text-capitalize text-center card-header">
+            Tests
+          </h1>
+          <TestCard />
+          <TestCard />
+          <TestCard />
+        </div>
       </div>
     </>
   );
