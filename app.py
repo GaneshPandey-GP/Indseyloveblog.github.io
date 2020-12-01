@@ -229,6 +229,30 @@ def create_question():
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
+@app.route('/updateQuestion', methods=['POST'])
+def update_question():
+    data = request.json
+    if data is None or data == {} or 'DataToBeUpdated' not in data:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.update()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/viewQuestions', methods=['POST'])
+def get_questions():
+    data = request.json
+    if data is None or data == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.readWithFilter()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
 if __name__ == '__main__':
     data={}
     app.run(use_reloader=False, debug=True, port=5001, host='127.0.0.1')
