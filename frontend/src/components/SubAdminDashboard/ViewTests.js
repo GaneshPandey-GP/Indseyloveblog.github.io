@@ -64,7 +64,7 @@ export default function ViewTests() {
               <TableCell component="th" scope="row">{subname}</TableCell>
               <TableCell component="th" scope="row">{testtime}</TableCell>
               <TableCell component="th" scope="row">
-               <Link to={{pathname: "/add-questions", testid }} ><button type="button" className="btn btn-outline-info">Questions</button></Link> 
+               <Link to={{pathname: "/add-questions", testid, testname }} ><button type="button" className="btn btn-info">Questions</button></Link> 
               </TableCell>
               <TableCell component="th" scope="row">
                <UpdateTest initialTestName={testname} initialSubjectid={subjectid} initialTestTime={testtime} testid={testid}/>

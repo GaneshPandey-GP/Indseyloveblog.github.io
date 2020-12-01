@@ -7,8 +7,8 @@ import Slide from '@material-ui/core/Slide';
 // import { makeStyles } from '@material-ui/core/styles';
 import {useLocation} from "react-router-dom";
 import { Button, FormControl, InputLabel, ListItem, ListItemIcon, ListItemText, MenuItem, Paper, Select, TextField } from "@material-ui/core";
-import { addQuestion, useAuthState } from '../../context';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { addQuestion, updateQuestion, useAuthState } from '../../context';
+import EditIcon from '@material-ui/icons/Edit';
 // import axios from "axios";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -16,12 +16,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-export default function AddQns(props) {
+export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns}) {
   let data = useLocation();
-  console.log(data)
   const testid = data.testid
   const [open, setOpen] = React.useState(false);
-  const [correctAns, setCorrectAns] = useState('')
+  const [correctAns, setCorrectAns] = useState(icorrectAns)
   const [valueError, setValueError] = React.useState('')
   const [{loading}, dispatch] = useAuthState()
 
@@ -33,11 +32,11 @@ export default function AddQns(props) {
     setOpen(false);
   }
   const [qnData, setQnData] = useState({
-    question: "",
-    optionA: "",
-    optionB: "",
-    optionC: "",
-    optionD: ""
+    question: iquestion,
+    optionA: ioptionA,
+    optionB: ioptionB,
+    optionC: ioptionC,
+    optionD: ioptionD
   });
   // const [pic, setPic] = useState(null);
   const {
@@ -80,22 +79,22 @@ export default function AddQns(props) {
       setValueError("Enter all the values!")
       else {
         setValueError("")
-        addQuestion(dispatch, testid, question, optionA, optionB, optionC, optionD, correctAns)
+        updateQuestion(dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, testid)
         handleClose()
       }      
   }
 
   // const classes = useStyles()
   return (
-    <div className="d-flex justify-content-center mt-5 mb-5">
-      <Button 
+    <div>
+      <Button
         onClick={handleClickOpen}
         variant="contained"
-        color="primary"
-        startIcon={<AddCircleIcon />}
-      >
-        Add Question
-      </Button>
+        color="text-primary"
+        startIcon={<EditIcon />}
+        >
+            Update
+        </Button>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Add Question
       </Button> */}
@@ -107,7 +106,7 @@ export default function AddQns(props) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Add new Question"}</DialogTitle>
+        <DialogTitle>{"Update Question"}</DialogTitle>
         <DialogContent>
           <form  autoComplete="off" id="addQuestion" onSubmit={handleFormSubmit}>
             {/* <input type="file" onChange={fileChangedHandler} /> */}

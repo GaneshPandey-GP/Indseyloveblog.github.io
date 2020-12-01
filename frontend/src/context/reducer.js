@@ -13,6 +13,7 @@ export const initialState = {
   loading: false,
   subjects: [],
   tests: [],
+  questions: [],
   errorMessage: null,
 };
 
@@ -72,6 +73,12 @@ export const reducer = (initialState, action) => {
         return {
           ...initialState,
           tests: action.tests,
+          loading: false
+        }
+      case 'GET_QUESTIONS':
+        return {
+          ...initialState,
+          questions: action.questions,
           loading: false
         }
       case 'ACTION_SUCCESS':
