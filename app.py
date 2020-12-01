@@ -253,6 +253,52 @@ def get_questions():
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
+@app.route('/createCategory', methods=['POST'])
+def create_category():
+    data = request.json
+    data2=json.loads('{"database":"ExaminationSystem","collection":"sequences"}')
+    obj2 = MongoAPI(data2)
+    print(obj2.getSequences()[0].get('categorySequence'))
+    cid=(obj2.getSequences()[0].get('categorySequence'))
+    print(cid)
+    data['document']['categoryid']=cid
+    if data is None or data == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.write(data)
+    cid2=cid+1
+    data3=json.loads('{"database":"ExaminationSystem","collection":"sequences","Filter":{"categorySequence":'+str(cid)+'},"DataToBeUpdated":{"categorySequence":'+str(cid2)+'}}')
+    obj3 = MongoAPI(data3)
+    obj3.update()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/updateCategory', methods=['POST'])
+def update_category():
+    data = request.json
+    if data is None or data == {} or 'DataToBeUpdated' not in data:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.update()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/viewCategory', methods=['POST'])
+def get_category():
+    data = request.json
+    if data is None or data == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.readWithFilter()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
 if __name__ == '__main__':
     data={}
     app.run(use_reloader=False, debug=True, port=5001, host='127.0.0.1')
