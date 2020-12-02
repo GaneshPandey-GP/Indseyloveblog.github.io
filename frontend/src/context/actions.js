@@ -337,13 +337,13 @@ export const addQuestion = async (
   dispatch,
   testid,
   question,
+  marks,
+  type,
   optionA,
   optionB,
   optionC,
   optionD,
-  correctAns,
-  marks,
-  type
+  correctAns
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -361,13 +361,13 @@ export const addQuestion = async (
       isActive: 1,
       testid,
       question,
+      marks,
+      type,
       optionA,
       optionB,
       optionC,
       optionD,
       correctAns,
-      marks,
-      type
     },
   }
   console.log(body)
@@ -460,7 +460,7 @@ export const viewQuestions = async (dispatch, testid) => {
   }
 }
 
-export const updateQuestion = async (dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, testid) => {
+export const updateQuestion = async (dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, testid, marks) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -482,6 +482,7 @@ export const updateQuestion = async (dispatch, qid, question, optionA, optionB, 
       optionC,
       optionD,
       correctAns,
+      marks
     }
 }
 

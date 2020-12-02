@@ -131,7 +131,7 @@ export default function AddQns(props) {
       setValueError("Enter all the values!")
       else {
           setValueError("")
-          addQuestion2(dispatch, testid, question, marks, type)
+          addQuestion(dispatch, testid, question, marks, type)
           handleClose2()
       }
   }
