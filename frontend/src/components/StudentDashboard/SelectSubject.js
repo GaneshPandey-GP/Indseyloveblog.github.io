@@ -42,16 +42,16 @@ const useStyles = makeStyles((theme) => ({
 
     flexWrap: "wrap",
     "& > *": {
-      margin: theme.spacing(0.1),
+      margin: theme.spacing(0),
       width: theme.spacing(46),
-      height: theme.spacing(40),
+      height: theme.spacing(10),
     },
   },
   main: {
     flexGrow: 1,
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(4),
     // textAlign: "left",
     fontWeight: 900,
     background: "transparent",
@@ -77,7 +77,8 @@ const useStyles = makeStyles((theme) => ({
 function SelectSubject() {
   const classes = useStyles();
   const [{ isAuthenticated, loading, subjects }, dispatch] = useAuthState();
-
+  const subject =["Daa","CN","DS","DAA","OS","DBMS","Daa","CN","DS"] 
+ 
   return (
     <>
       <div className={classes.root}>
@@ -125,21 +126,23 @@ function SelectSubject() {
           <h3>Subjects</h3>
         </div>
         <div className={classes.bodyCard}>
-          
-        <Grid container spacing={3}>
+        {subject.map(({subname})=>  
+       (  <Grid container spacing={3}>
+        
             <Grid item xs={12}>
+              
             <Paper className={classes.paper}>
-                <Grid container spacing={3}>
-                    {subjects.map(({subname})=>
-                    (<Grid item xs={12}>
+               <Grid container spacing={3}>
+                  
+                    <Grid item xs={12} style={{"height":10,}}>
                         <Typography>
-                            {subname}
+                            <LibraryBooksIcon/>{subname}
                         </Typography>
-                    </Grid>))}
+                    </Grid>
                 </Grid>
             </Paper>
             </Grid>
-        </Grid>
+        </Grid>))}
         </div>
       </div>
     </>
