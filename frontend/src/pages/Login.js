@@ -25,7 +25,6 @@ function Login(props) {
     console.log(data);
   };
 
-  if (loading) return <Loading />;
   if (isAuthenticated) return <Redirect to="/stud-dashboard" />;
 
   return (
@@ -91,7 +90,7 @@ function Login(props) {
           )}
           <div className="d-flex align-items-center">
             <button type="submit" className="btn btn-primary btns">
-              Login
+            {loading? <Loading />: "Login"}
             </button>
           </div>
           <div className="links">

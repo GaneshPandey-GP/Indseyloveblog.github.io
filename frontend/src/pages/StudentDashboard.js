@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StudentDashboard() {
   const classes = useStyles();
-  const [{isAuthenticated, loading, user}, dispatch] = useAuthState()
+  const [{loading, user}, dispatch] = useAuthState()
   console.log(user)
 
   return (
