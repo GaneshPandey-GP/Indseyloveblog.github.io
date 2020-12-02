@@ -454,3 +454,111 @@ export const updateQuestion = async (dispatch, qid, question, optionA, optionB, 
     });
   }
 };
+export const createCategory = async (dispatch, categoryName) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+      database: "ExaminationSystem",
+      collection: "category",
+      document: {
+        categoryName,
+        createdBy: localStorage.getItem("user.uid"),
+        isActive: 1
+      }
+    
+  }
+
+  try {
+    await axios.post(`${baseURL}/createCategory`, body, config);
+    viewCategory(dispatch)
+    dispatch({
+      type: "ACTION_SUCCESS",
+    
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateCategory = async (dispatch, categoryid, categoryName) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "category",
+    Filter: {
+      categoryid,
+    },
+    DataToBeUpdated: {
+      createdBy: localStorage.getItem("user.uid"),
+      isActive: 1,
+      categoryid,
+      categoryName,
+    },
+  };
+  console.log(body);
+  try {
+    const res = await axios.post(`${baseURL}/updateCategory`, body, config);
+    viewCategory(dispatch)
+    res.data.status === 1
+      ? dispatch({
+          type: "ACTION_SUCCESS",
+        })
+      : dispatch({
+          type: "ACTION_FAIL",
+        });
+    
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};
+
+
+export const viewCategory = async (dispatch, categoryid) => {
+  const categories = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "category",
+    Filter: {
+      categoryid,
+    },
+  };
+
+  try {
+    const res = await axios.post(`${baseURL}/viewCategory`, body, config);
+    console.log(res.data);
+    res.data.map((category) => {
+      return categories.push(category);
+    });
+    dispatch({
+      type: "GET_CATEGORY",
+      categories: categories,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};

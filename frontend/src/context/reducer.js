@@ -12,6 +12,7 @@ export const initialState = {
   user: [{}],
   loading: false,
   subjects: [],
+  categories:[],
   tests: [],
   questions: [],
   errorMessage: null,
@@ -103,6 +104,12 @@ export const reducer = (initialState, action) => {
       case 'QUESTION_CREATED': 
       return {
         ...initialState,
+        loading: false
+      };
+      case 'GET_CATEGORY': 
+      return {
+        ...initialState,
+        categories: action.categories,
         loading: false
       };
       default:
