@@ -16,7 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns}) {
+export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns, imarks}) {
   let data = useLocation();
   const testid = data.testid
   const [open, setOpen] = React.useState(false);
@@ -33,6 +33,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
   }
   const [qnData, setQnData] = useState({
     question: iquestion,
+    marks: imarks,
     optionA: ioptionA,
     optionB: ioptionB,
     optionC: ioptionC,
@@ -41,6 +42,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
   // const [pic, setPic] = useState(null);
   const {
     question,
+    marks,
     optionA,
     optionB,
     optionC,
@@ -75,13 +77,13 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
     // });
     e.preventDefault()
     // console.log("submitted")
-    if ( question === '' || optionA === '' || optionB === '' || optionC === '' || optionD === '') 
+    if ( question === '' || optionA === '' || optionB === '' || optionC === '' || optionD === '' || marks === '')
       setValueError("Enter all the values!")
       else {
         setValueError("")
-        updateQuestion(dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, testid)
+        updateQuestion(dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, testid, marks)
         handleClose()
-      }      
+      }
   }
 
   // const classes = useStyles()
@@ -120,6 +122,18 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
                 variant="outlined"
                 className="mt-3 "
                 value={question}
+                onChange={(e) => handleInputChange(e)}
+              />
+              <TextField
+                required
+                id="marks"
+                label="Marks"
+                name="marks"
+                fullWidth
+                type="number"
+                variant="outlined"
+                className="mt-3 "
+                value={marks}
                 onChange={(e) => handleInputChange(e)}
               />
             <div className="ml-5 mr-5">
@@ -189,5 +203,3 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
     </div>
   );
 }
-
-
