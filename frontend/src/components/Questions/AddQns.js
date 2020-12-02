@@ -132,7 +132,7 @@ export default function AddQns(props) {
       else {
           setValueError("")
           addQuestion2(dispatch, testid, question, marks, type)
-          handleClose()
+          handleClose2()
       }
   }
 
