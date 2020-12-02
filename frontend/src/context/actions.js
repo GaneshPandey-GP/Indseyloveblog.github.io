@@ -341,7 +341,9 @@ export const addQuestion = async (
   optionB,
   optionC,
   optionD,
-  correctAns
+  correctAns,
+  marks,
+  type
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -364,6 +366,49 @@ export const addQuestion = async (
       optionC,
       optionD,
       correctAns,
+      marks,
+      type
+    },
+  }
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/createQuestion`, body, config)
+    console.log(res.data)
+    dispatch({
+      type: "QUESTION_CREATED",
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}
+/// Code by Ayush do check
+export const addQuestion2 = async (
+  dispatch,
+  testid,
+  question,
+  marks,
+  type
+) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "questions",
+    document: {
+      createdBy: parseInt(localStorage.getItem("user.uid")),
+      isActive: 1,
+      testid,
+      question,
+      marks,
+      type
     },
   }
   console.log(body)

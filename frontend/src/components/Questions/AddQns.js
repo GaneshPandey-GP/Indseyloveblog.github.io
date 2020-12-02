@@ -7,7 +7,7 @@ import Slide from '@material-ui/core/Slide';
 // import { makeStyles } from '@material-ui/core/styles';
 import {useLocation} from "react-router-dom";
 import { Button, FormControl, InputLabel, ListItem, ListItemIcon, ListItemText, MenuItem, Paper, Select, TextField } from "@material-ui/core";
-import { addQuestion, useAuthState } from '../../context';
+import { addQuestion, addQuestion2, useAuthState } from '../../context';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 // import axios from "axios";
 
@@ -21,6 +21,7 @@ export default function AddQns(props) {
   console.log(data)
   const testid = data.testid
   const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
   const [correctAns, setCorrectAns] = useState('')
   const [valueError, setValueError] = React.useState('')
   const [{loading}, dispatch] = useAuthState()
@@ -32,27 +33,49 @@ export default function AddQns(props) {
   const handleClose = () => {
     setOpen(false);
   }
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  }
   const [qnData, setQnData] = useState({
+    type:1,
     question: "",
+    marks:"",
     optionA: "",
     optionB: "",
     optionC: "",
     optionD: ""
   });
+  const [qnData2, setQnData2]=useState({
+    type:2,
+    question:"",
+    marks:""
+  });
   // const [pic, setPic] = useState(null);
   const {
+    type,
     question,
+    marks,
     optionA,
     optionB,
     optionC,
     optionD,
   } = qnData;
+  const{
+    type2,
+    question2,
+    marks2
+  }=qnData2;
 
   // const fileChangedHandler = (event) => {
   //   setPic(event.target.files[0]);
   // };
 
   const handleInputChange = (e) => setQnData({ ...qnData, [e.target.name]: e.target.value });
+  const handleInputChange2 = (e) => setQnData2({ ...qnData2, [e.target.name]: e.target.value });
   const handleChange = (event) => {
     setCorrectAns(event.target.value);
   }
@@ -76,25 +99,62 @@ export default function AddQns(props) {
     // });
     e.preventDefault()
     // console.log("submitted")
-    if ( question === '' || optionA === '' || optionB === '' || optionC === '' || optionD === '') 
+    if ( question === '' || optionA === '' || optionB === '' || optionC === '' || optionD === '' || marks === '')
       setValueError("Enter all the values!")
       else {
-        setValueError("")
-        addQuestion(dispatch, testid, question, optionA, optionB, optionC, optionD, correctAns)
-        handleClose()
-      }      
+          setValueError("")
+          addQuestion(dispatch, testid, question, optionA, optionB, optionC, optionD, correctAns, marks, type)
+          handleClose()
+      }
   }
+
+  const handleFormSubmit2 = (e) => {
+    // const file = new FormData();
+    // file.append("myFile", pic, pic.name);
+    // const formData = {
+    //   // file,
+    //   question,
+    //   optionA,
+    //   optionB,
+    //   optionC,
+    //   optionD,
+    //
+    // }
+    // axios.post("api/", formData, {
+    //   onUploadProgress: (progressEvent) => {
+    //     console.log(progressEvent.loaded / progressEvent.total);
+    //   },
+    // });
+    e.preventDefault()
+    // console.log("submitted")
+    if ( question === '' || marks === '')
+      setValueError("Enter all the values!")
+      else {
+          setValueError("")
+          addQuestion2(dispatch, testid, question, marks, type)
+          handleClose()
+      }
+  }
+
 
   // const classes = useStyles()
   return (
     <div className="d-flex justify-content-center mt-5 mb-5">
-      <Button 
+      <Button
         onClick={handleClickOpen}
         variant="contained"
         color="primary"
         startIcon={<AddCircleIcon />}
       >
-        Add Question
+        Add MCQ Question
+      </Button>
+      <Button
+        onClick={handleClickOpen2}
+        variant="contained"
+        color="primary"
+        startIcon={<AddCircleIcon />}
+      >
+        Add Descriptive Question
       </Button>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Add Question
@@ -111,6 +171,18 @@ export default function AddQns(props) {
         <DialogContent>
           <form  autoComplete="off" id="addQuestion" onSubmit={handleFormSubmit}>
             {/* <input type="file" onChange={fileChangedHandler} /> */}
+              <TextField
+                required
+                id="marks"
+                label="Marks"
+                name="marks"
+                fullWidth
+                type="number"
+                variant="outlined"
+                className="mt-3 "
+                value={marks}
+                onChange={(e) => handleInputChange(e)}
+              />
               <TextField
                 required
                 id="question"
@@ -187,8 +259,52 @@ export default function AddQns(props) {
           </Button>
         </DialogActions>
       </Dialog>
+<Dialog
+  open={open2}
+  TransitionComponent={Transition}
+  keepMounted
+  onClose={handleClose2}
+  aria-labelledby="alert-dialog-slide-title"
+  aria-describedby="alert-dialog-slide-description"
+>
+  <DialogTitle>{"Add new Question"}</DialogTitle>
+  <DialogContent>
+    <form  autoComplete="off" id="addQuestion2" onSubmit={handleFormSubmit2}>
+      {/* <input type="file" onChange={fileChangedHandler} /> */}
+        <TextField
+          required
+          id="marks"
+          label="Marks"
+          name="marks"
+          fullWidth
+          type="number"
+          variant="outlined"
+          className="mt-3 "
+          value={marks}
+          onChange={(e) => handleInputChange(e)}
+        />
+        <TextField
+          required
+          id="question"
+          label="Question"
+          name="question"
+          fullWidth
+          type="text"
+          variant="outlined"
+          className="mt-3 "
+          value={question}
+          onChange={(e) => handleInputChange(e)}
+        />
+    </form>
+  </DialogContent>
+  {valueError ? <p className="text-small text-danger ml-4">{valueError}</p>: <p></p>}
+  <DialogActions>
+    <Button onClick={handleFormSubmit2} color="primary" form="addQuestion2">
+      Save
+    </Button>
+  </DialogActions>
+</Dialog>
+
     </div>
   );
 }
-
-
