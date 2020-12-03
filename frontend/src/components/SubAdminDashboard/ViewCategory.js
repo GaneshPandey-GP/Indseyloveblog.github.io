@@ -36,7 +36,7 @@ export default function ViewCategory() {
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
   };
-
+  console.log(categories)
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {

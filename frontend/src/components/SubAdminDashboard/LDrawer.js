@@ -129,8 +129,8 @@ function LDrawer() {
           />
           <Divider />
           <CreateCategory/>
-          <ViewCategory/>
           <CreateSub />
+          <ViewCategory/>
           <ViewSubjects />
           <CreateTest />
         </List>

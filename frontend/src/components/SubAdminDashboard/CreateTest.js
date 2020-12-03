@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CreateTest() {
-  const classes = useStyles();
+  const classes = useStyles()
   const [open, setOpen] = React.useState(false);
   const [subjectid, setSubjectid] = React.useState('');
   const [{subjects}, dispatch] = useAuthState()
@@ -39,7 +39,7 @@ export default function CreateTest() {
 
   const handleInputChange = (e) => {
     setSubjectid(String(e.target.value) || '');
-  };
+  }
 
   const handleTestNameChange = (e) =>{
     setTestName(e.target.value);
