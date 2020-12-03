@@ -123,7 +123,7 @@ export const logout = (dispatch) => {
   dispatch({ type: LOGOUT });
 };
 
-export const subjectCreate = async (dispatch, subname) => {
+export const subjectCreate = async (dispatch, subname, categoryid) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -137,6 +137,7 @@ export const subjectCreate = async (dispatch, subname) => {
     collection: "subjects",
     document: {
       subname,
+      categoryid,
       createdBy: localStorage.getItem("user.uid"),
       isActive: 1,
     },
@@ -337,13 +338,12 @@ export const addQuestion = async (
   dispatch,
   testid,
   question,
-  marks,
-  type,
   optionA,
   optionB,
   optionC,
   optionD,
-  correctAns
+  correctAns,
+  marks
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -362,7 +362,7 @@ export const addQuestion = async (
       testid,
       question,
       marks,
-      type,
+      type: 1,
       optionA,
       optionB,
       optionC,
@@ -373,7 +373,7 @@ export const addQuestion = async (
   console.log(body)
   try {
     const res = await axios.post(`${baseURL}/createQuestion`, body, config)
-    console.log(res.data)
+    viewQuestions(dispatch, testid)
     dispatch({
       type: "QUESTION_CREATED",
     });
@@ -389,7 +389,6 @@ export const addQuestion2 = async (
   testid,
   question,
   marks,
-  type
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -403,18 +402,18 @@ export const addQuestion2 = async (
     database: "ExaminationSystem",
     collection: "questions",
     document: {
-      createdBy: parseInt(localStorage.getItem("user.uid")),
-      isActive: 1,
       testid,
       question,
       marks,
-      type
+      createdBy: parseInt(localStorage.getItem("user.uid")),
+      isActive: 1,
+      type: 2
     },
   }
   console.log(body)
   try {
     const res = await axios.post(`${baseURL}/createQuestion`, body, config)
-    console.log(res.data)
+    viewQuestions(dispatch, testid)
     dispatch({
       type: "QUESTION_CREATED",
     });
@@ -460,7 +459,7 @@ export const viewQuestions = async (dispatch, testid) => {
   }
 }
 
-export const updateQuestion = async (dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, testid, marks) => {
+export const updateQuestion = async (dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, marks, testid) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -486,20 +485,55 @@ export const updateQuestion = async (dispatch, qid, question, optionA, optionB, 
     }
 }
 
-  console.log(body)
   try {
     const res = await axios.post(`${baseURL}/updateQuestion`, body, config)
-    console.log(res.data)
     viewQuestions(dispatch, testid)
     dispatch({
-      type: "QUESTION_CREATED"
+      type: "ACTION_SUCCESS"
     });
   } catch (err) {
     dispatch({
       type: "ACTION_FAIL",
     });
   }
-};
+}
+
+export const updateQuestion2 = async (dispatch, qid, question, marks, testid) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "questions",
+    Filter:{
+        qid
+    },
+    DataToBeUpdated: {
+      question,
+      marks
+    }
+}
+
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/updateQuestion`, body, config)
+    console.log(res.data)
+    viewQuestions(dispatch, testid)
+    dispatch({
+      type: "ACTION_SUCCESS"
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}
+
 export const createCategory = async (dispatch, categoryName) => {
   dispatch({
     type: "START_LOADING",
@@ -522,10 +556,9 @@ export const createCategory = async (dispatch, categoryName) => {
 
   try {
     await axios.post(`${baseURL}/createCategory`, body, config);
-    viewCategory(dispatch)
+    getCategories(dispatch)
     dispatch({
       type: "ACTION_SUCCESS",
-    
     });
   } catch (err) {
     console.log(err);
@@ -557,7 +590,7 @@ export const updateCategory = async (dispatch, categoryid, categoryName) => {
   console.log(body);
   try {
     const res = await axios.post(`${baseURL}/updateCategory`, body, config);
-    viewCategory(dispatch)
+    getCategories(dispatch)
     res.data.status === 1
       ? dispatch({
           type: "ACTION_SUCCESS",
@@ -574,7 +607,7 @@ export const updateCategory = async (dispatch, categoryid, categoryName) => {
 };
 
 
-export const viewCategory = async (dispatch, categoryid) => {
+export const getCategories = async (dispatch, categoryid) => {
   const categories = [];
   dispatch({
     type: "START_LOADING",

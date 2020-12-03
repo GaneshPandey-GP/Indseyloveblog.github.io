@@ -4,12 +4,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-// import { makeStyles } from '@material-ui/core/styles';
 import {useLocation} from "react-router-dom";
-import { Button, FormControl, InputLabel, ListItem, ListItemIcon, ListItemText, MenuItem, Paper, Select, TextField } from "@material-ui/core";
-import { addQuestion, updateQuestion, useAuthState } from '../../context';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@material-ui/core";
+import { updateQuestion, updateQuestion2, useAuthState } from '../../context';
 import EditIcon from '@material-ui/icons/Edit';
-// import axios from "axios";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -21,6 +19,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
   const testid = data.testid
   const [open, setOpen] = React.useState(false);
   const [correctAns, setCorrectAns] = useState(icorrectAns)
+  
   const [valueError, setValueError] = React.useState('')
   const [{loading}, dispatch] = useAuthState()
 
@@ -39,7 +38,6 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
     optionC: ioptionC,
     optionD: ioptionD
   });
-  // const [pic, setPic] = useState(null);
   const {
     question,
     marks,
@@ -49,34 +47,13 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
     optionD,
   } = qnData;
 
-  // const fileChangedHandler = (event) => {
-  //   setPic(event.target.files[0]);
-  // };
 
   const handleInputChange = (e) => setQnData({ ...qnData, [e.target.name]: e.target.value });
   const handleChange = (event) => {
     setCorrectAns(event.target.value);
   }
-  // console.log(data.testid)
   const handleFormSubmit = (e) => {
-    // const file = new FormData();
-    // file.append("myFile", pic, pic.name);
-    // const formData = {
-    //   // file,
-    //   question,
-    //   optionA,
-    //   optionB,
-    //   optionC,
-    //   optionD,
-    //
-    // }
-    // axios.post("api/", formData, {
-    //   onUploadProgress: (progressEvent) => {
-    //     console.log(progressEvent.loaded / progressEvent.total);
-    //   },
-    // });
     e.preventDefault()
-    // console.log("submitted")
     if ( question === '' || optionA === '' || optionB === '' || optionC === '' || optionD === '' || marks === '')
       setValueError("Enter all the values!")
       else {
@@ -86,7 +63,6 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
       }
   }
 
-  // const classes = useStyles()
   return (
     <div>
       <Button
@@ -97,9 +73,6 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
         >
             Update
         </Button>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Add Question
-      </Button> */}
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -111,7 +84,6 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
         <DialogTitle>{"Update Question"}</DialogTitle>
         <DialogContent>
           <form  autoComplete="off" id="addQuestion" onSubmit={handleFormSubmit}>
-            {/* <input type="file" onChange={fileChangedHandler} /> */}
               <TextField
                 required
                 id="question"
@@ -124,7 +96,8 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
                 value={question}
                 onChange={(e) => handleInputChange(e)}
               />
-              <TextField
+            <div className="ml-5 mr-5">
+            <TextField
                 required
                 id="marks"
                 label="Marks"
@@ -136,7 +109,6 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
                 value={marks}
                 onChange={(e) => handleInputChange(e)}
               />
-            <div className="ml-5 mr-5">
               <TextField
                 id="answer_optionA"
                 label="optionA"
@@ -190,6 +162,101 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
                   <MenuItem value="d">d</MenuItem>
                 </Select>
               </FormControl>
+            </div>
+          </form>
+        </DialogContent>
+        {valueError ? <p className="text-small text-danger ml-4">{valueError}</p>: <p></p>}
+        <DialogActions>
+          <Button onClick={handleFormSubmit} color="primary" form="addQuestion">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  )
+}
+
+export const UpdateQn2 = ({iquestion, qid, imarks}) => {
+    let data = useLocation();
+    const testid = data.testid
+    const [open, setOpen] = React.useState(false);
+    const [valueError, setValueError] = React.useState('')
+    const [{loading}, dispatch] = useAuthState()
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    }
+    const [qnData, setQnData] = useState({
+      question: iquestion,
+      marks: imarks,
+    });
+    const {
+      question,
+      marks,
+    } = qnData;
+  
+  
+    const handleInputChange = (e) => setQnData({ ...qnData, [e.target.name]: e.target.value });
+    const handleFormSubmit = (e) => {
+      e.preventDefault()
+      if ( question === '' || marks === '' || marks <= 0)
+        setValueError("Enter valid values!")
+        else {
+          setValueError("")
+          updateQuestion2(dispatch, qid, question, marks, testid)
+          handleClose()
+        }
+    }
+  return (
+    <div>
+      <Button
+        onClick={handleClickOpen}
+        variant="contained"
+        color="text-primary"
+        startIcon={<EditIcon />}
+        >
+            Update
+        </Button>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Update Question"}</DialogTitle>
+        <DialogContent>
+          <form  autoComplete="off" id="addQuestion" onSubmit={handleFormSubmit}>
+              <TextField
+                required
+                id="question"
+                label="Question"
+                name="question"
+                fullWidth
+                type="text"
+                variant="outlined"
+                className="mt-3 "
+                value={question}
+                onChange={(e) => handleInputChange(e)}
+              />
+            <div className="ml-5 mr-5">
+              <TextField
+                required
+                id="marks"
+                label="Marks"
+                name="marks"
+                fullWidth
+                type="number"
+                variant="outlined"
+                className="mt-3 "
+                value={marks}
+                onChange={(e) => handleInputChange(e)}
+              />
             </div>
           </form>
         </DialogContent>
