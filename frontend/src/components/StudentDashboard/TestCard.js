@@ -5,6 +5,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { useAuthState } from "../../context";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,54 +30,52 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 12,
   },
 }));
-const Tcard = () => {
+export const TestCard = () => {
+  const [{ tests }, dispatch] = useAuthState();
   const classes = useStyles();
 
   return (
     <>
-      <Card className={classes.root} variant="outlined">
-        <CardContent>
-          <Typography
-            className={classes.title}
-            variant="h5"
-            component="h4"
-            gutterBottom
-          >
-            Test Name
-          </Typography>
-          <Typography color="textSecondary" className={classes.data}>
-            Subject : Python
-          </Typography>
-          <Typography color="textSecondary" className={classes.data}>
-            Ends On : 01/12/2020
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button
-            className="text-center"
-            variant="outlined"
-            color="primary"
-            fullWidth
-          >
-            Start
-          </Button>
-        </CardActions>
-      </Card>
-    </>
-  );
-};
-export const TestCard = () => {
-  return (
-    <>
-      <div className="col-sm-4 mb-4 mt-3">
-        <Tcard />
-      </div>
-      <div className="col-sm-4 mb-4 mt-3">
-        <Tcard />
-      </div>
-      <div className="col-sm-4 mb-4 mt-3">
-        <Tcard />
+      <div className="container">
+        <div className="row mt-5 display-1">
+          <h1 className="col-sm-12 text-capitalize text-center card-header">
+            Tests
+          </h1>
+          <div className="col-sm-4 mb-4 mt-3">
+            {tests.map(() => (
+              <Card className={classes.root} variant="outlined">
+                <CardContent>
+                  <Typography
+                    className={classes.title}
+                    variant="h5"
+                    component="h4"
+                    gutterBottom
+                  >
+                    Test Name
+                  </Typography>
+                  <Typography color="textSecondary" className={classes.data}>
+                    Subject : Python
+                  </Typography>
+                  <Typography color="textSecondary" className={classes.data}>
+                    Ends On : 01/12/2020
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    className="text-center"
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                  >
+                    Start
+                  </Button>
+                </CardActions>
+              </Card>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
 };
+

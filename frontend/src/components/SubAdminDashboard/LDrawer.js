@@ -27,7 +27,8 @@ import ViewSubjects from "./ViewSubjects";
 import CreateTest from "./CreateTest";
 import { useAuthState } from "../../context";
 import { NavLoading } from "../Loading";
-
+import CreateCategory from "./CreateCategory";
+import ViewCategory from "./ViewCategory";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -127,6 +128,8 @@ function LDrawer() {
             className="d-flex justify-content-center mb-2 mt-2"
           />
           <Divider />
+          <CreateCategory/>
+          <ViewCategory/>
           <CreateSub />
           <ViewSubjects />
           <CreateTest />

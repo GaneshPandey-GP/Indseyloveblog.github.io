@@ -12,6 +12,7 @@ export const initialState = {
   user: [{}],
   loading: false,
   subjects: [],
+  categories:[],
   tests: [],
   questions: [],
   errorMessage: null,
@@ -35,17 +36,13 @@ export const reducer = (initialState, action) => {
           user: action.payload
         }
       case SIGNUP_SUCCESS:
-        // localStorage.setItem('Document_ID', action.payload.Document_ID);
         return {
           ...initialState,
           isAuthenticated: true,
           loading: false
-
-          // Document_ID: payload.Document_ID,
         }
       case SIGNUP_FAIL:
       case LOGIN_FAIL:
-//           localStorage.removeItem('Document_ID');
         return {
           ...initialState,
           Document_ID: null,
@@ -55,7 +52,8 @@ export const reducer = (initialState, action) => {
           errorMessage: "Your creds didn't match! Try Again.."
         }
       case LOGOUT:
-//           localStorage.removeItem('Document_ID');
+        // localStorage.removeItem('user.level', action.payload[0].level);
+        // localStorage.removeItem('user.uid', action.payload[0].uid);
         return {
           ...initialState,
           Document_ID: null,
@@ -103,6 +101,12 @@ export const reducer = (initialState, action) => {
       case 'QUESTION_CREATED': 
       return {
         ...initialState,
+        loading: false
+      };
+      case 'GET_CATEGORY': 
+      return {
+        ...initialState,
+        categories: action.categories,
         loading: false
       };
       default:

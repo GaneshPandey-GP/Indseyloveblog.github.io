@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Signup, useAuthState } from "../context";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useForm } from "react-hook-form";
-import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
-import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
-import HttpsOutlinedIcon from "@material-ui/icons/HttpsOutlined";
-import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
-import "./Register.css";
-import Alert from "@material-ui/lab/Alert";
-import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline";
+import React, { useEffect, useRef, useState } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import { Signup, useAuthState } from "../context"
+import "bootstrap/dist/css/bootstrap.min.css"
+import { useForm } from "react-hook-form"
+import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid"
+import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined"
+import HttpsOutlinedIcon from "@material-ui/icons/HttpsOutlined"
+import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined"
+import "./Register.css"
+import Alert from "@material-ui/lab/Alert"
+import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline"
 
-import { Link, Redirect } from "react-router-dom";
-import { Loading } from "../components/Loading";
+import { Link, Redirect } from "react-router-dom"
+import { Loading } from "../components/Loading"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,25 +32,33 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     paddingTop: "23px",
   },
-}));
+}))
 
 export default function Register() {
-  const [formError, setFormError] = useState("");
-  const { register, handleSubmit, errors } = useForm();
+  const isMounted = useRef(null);
+  const [formError, setFormError] = useState("")
+  const { register, handleSubmit, errors } = useForm()
+  const [message, setMessage] = useState()
 
-  const [message, setMessage] = useState();
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    }
+  }, [])
+
   const onSubmit = (data, e) => {
-    console.log(data);
-    e.preventDefault();
-    // data.password === data.re_password
+    console.log(data)
+    setFormError("")
+    e.preventDefault()
+    data.password === data.Confirmpassword ?
       Signup(dispatch, data)
-      // : setFormError("Passwords didn't match!");
-  };
+      : setFormError("Passwords didn't match!")
+  }
 
-  const [{ isAuthenticated, loading }, dispatch] = useAuthState();
-  const classes = useStyles();
-  if (loading) return <Loading />;
-  if (isAuthenticated) return <Redirect to="/login" />;
+  const [{ isAuthenticated, loading }, dispatch] = useAuthState()
+  const classes = useStyles()
+  if (isAuthenticated) return <Redirect to="/login" />
 
   return (
     <div className="Wrapper container d-flex align-items-center justify-content-center">
@@ -102,7 +110,6 @@ export default function Register() {
               </i>
               <input
                 required
-                id="inputForEmail"
                 type="text"
                 name="lname"
                 className="form-control"
@@ -229,7 +236,7 @@ export default function Register() {
                 type="password"
                 name="Confirmpassword"
                 className="form-control"
-                id="inputForPassword"
+                id="inputForConfirmPassword"
                 placeholder="Confirm Password"
                 ref={register({
                   required: {
@@ -258,7 +265,7 @@ export default function Register() {
               <p></p>
             )}
             <button type="submit" className="btn btn-primary col-sm-12 btns">
-              Submit
+            {loading? <Loading />: "Register"}
             </button>
             <span className="ml-5">
               <Link
@@ -273,5 +280,5 @@ export default function Register() {
         </fieldset>
       </div>
     </div>
-  );
+  )
 }

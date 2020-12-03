@@ -18,7 +18,6 @@ export default function SubAdminLogin() {
   };
 
 
-  if (loading) return <Loading />;
   if (isAuthenticated) return <Redirect to="/sub-admin-dashboard" />;
 
   return (
@@ -83,7 +82,7 @@ export default function SubAdminLogin() {
         )}
         <div className="d-flex align-items-center">
           <button type="submit" className="btn btn-primary btns">
-            Login
+          {loading? <Loading />: "Login"}
           </button>
         </div>
         <div className="links">
