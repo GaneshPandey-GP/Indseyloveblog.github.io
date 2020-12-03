@@ -18,10 +18,9 @@ from pymongo import MongoClient
 ### collection:"name",
 ### username:"username",
 ### password:"password"
-
 class MongoAPI:
     def __init__(self, data):
-        self.client = MongoClient("mongodb+srv://allplayertest:qwerty1234@examinationsystem.sqwfq.mongodb.net/Examinatipn?retryWrites=true&w=majority")
+        self.client = MongoClient("mongodb+srv://allplayertest:qwerty1234@ayushparida.sqwfq.mongodb.net/ExaminationSystem?retryWrites=true&w=majority")
         database = data['database']
         collection = data['collection']
         cursor = self.client.get_database(database)
