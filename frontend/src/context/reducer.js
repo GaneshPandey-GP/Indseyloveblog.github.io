@@ -13,6 +13,7 @@ export const initialState = {
   loading: false,
   subjects: [],
   categories:[],
+  categoryid:"",
   tests: [],
   questions: [],
   errorMessage: null,
@@ -108,6 +109,11 @@ export const reducer = (initialState, action) => {
         ...initialState,
         categories: action.categories,
         loading: false
+      };
+      case 'SET_CATEGORY_ID': 
+      return {
+        ...initialState,
+        categoryid:action.categoryid,
       };
       default:
         return initialState

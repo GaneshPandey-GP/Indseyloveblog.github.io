@@ -25,25 +25,32 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     fontWidth: 900,
   },
+  main:{
+    marginTop:150,
+  },
   data: {
     padding: theme.spacing(1),
     marginBottom: 12,
   },
 }));
 export const TestCard = () => {
-  const [{ tests }, dispatch] = useAuthState();
+  const [{ tests, loading }, dispatch] = useAuthState();
   const classes = useStyles();
-
+  
+  tests.map((testname)=>console.log(testname))
   return (
-    <>
-      <div className="container">
-        <div className="row mt-5 display-1">
+    <>{loading ? (
+       <p></p>
+    ) : (
+      <div className={classes.main}>
+      <div className="container mt-5">
+        <div className="row mt-5">
           <h1 className="col-sm-12 text-capitalize text-center card-header">
             Tests
-          </h1>
+          </h1>{tests.map(({testname, testid, subname, testtime}) => (
           <div className="col-sm-4 mb-4 mt-3">
-            {tests.map(() => (
-              <Card className={classes.root} variant="outlined">
+            
+              <Card className={classes.root} variant="outlined" key ={testid}>
                 <CardContent>
                   <Typography
                     className={classes.title}
@@ -51,13 +58,13 @@ export const TestCard = () => {
                     component="h4"
                     gutterBottom
                   >
-                    Test Name
+                    Test Name : {testname}
                   </Typography>
                   <Typography color="textSecondary" className={classes.data}>
-                    Subject : Python
+                    Subject :  {subname}
                   </Typography>
                   <Typography color="textSecondary" className={classes.data}>
-                    Ends On : 01/12/2020
+                    Ends On : {testtime} min
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -71,10 +78,11 @@ export const TestCard = () => {
                   </Button>
                 </CardActions>
               </Card>
-            ))}
-          </div>
+         
+          </div>   ))}
         </div>
       </div>
+      </div>)}
     </>
   );
 };

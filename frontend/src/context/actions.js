@@ -67,8 +67,7 @@ export const loginUser = async (dispatch, { username, password }) => {
         })
       : dispatch({
           type: LOGIN_FAIL,
-        })
-
+        });
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
@@ -151,7 +150,7 @@ export const subjectCreate = async (dispatch, subname, categoryid) => {
   }
 };
 
-export const getSubjects = async (dispatch) => {
+export const getSubjects = async (dispatch,categoryid) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -164,10 +163,12 @@ export const getSubjects = async (dispatch) => {
   const body = {
     database: "ExaminationSystem",
     collection: "subjects",
-    Filter: {},
+    Filter: {categoryid},
   };
+  console.log(body)
   try {
     const res = await axios.post(`${baseURL}/getSubjects`, body, config);
+    console.log(res.data)
     res.data.map((subject) => subjects.push(subject));
     dispatch({
       type: "GET_SUBJECTS",
@@ -241,7 +242,7 @@ export const getTests = async (dispatch, subid) => {
 
   try {
     const res = await axios.post(`${baseURL}/getTests`, body, config);
-    console.log(res.data);
+
     res.data.map((test) => {
       return tests.push(test);
     });
@@ -322,8 +323,8 @@ export const updateTest = async (
   };
   console.log(body);
   try {
-    await axios.post(`${baseURL}/updateTest`, body, config)
-    getTests(dispatch)
+    await axios.post(`${baseURL}/updateTest`, body, config);
+    getTests(dispatch);
     dispatch({
       type: "ACTION_SUCCESS",
     });
@@ -369,11 +370,11 @@ export const addQuestion = async (
       optionD,
       correctAns,
     },
-  }
-  console.log(body)
+  };
+  console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/createQuestion`, body, config)
-    viewQuestions(dispatch, testid)
+    const res = await axios.post(`${baseURL}/createQuestion`, body, config);
+    viewQuestions(dispatch, testid);
     dispatch({
       type: "QUESTION_CREATED",
     });
@@ -382,14 +383,9 @@ export const addQuestion = async (
       type: "ACTION_FAIL",
     });
   }
-}
+};
 /// Code by Ayush do check
-export const addQuestion2 = async (
-  dispatch,
-  testid,
-  question,
-  marks,
-) => {
+export const addQuestion2 = async (dispatch, testid, question, marks) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -407,13 +403,13 @@ export const addQuestion2 = async (
       marks,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
-      type: 2
+      type: 2,
     },
-  }
-  console.log(body)
+  };
+  console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/createQuestion`, body, config)
-    viewQuestions(dispatch, testid)
+    const res = await axios.post(`${baseURL}/createQuestion`, body, config);
+    viewQuestions(dispatch, testid);
     dispatch({
       type: "QUESTION_CREATED",
     });
@@ -422,10 +418,10 @@ export const addQuestion2 = async (
       type: "ACTION_FAIL",
     });
   }
-}
+};
 
 export const viewQuestions = async (dispatch, testid) => {
-  const questions = []
+  const questions = [];
   dispatch({
     type: "START_LOADING",
   });
@@ -437,29 +433,40 @@ export const viewQuestions = async (dispatch, testid) => {
   const body = {
     database: "ExaminationSystem",
     collection: "questions",
-    Filter:{
-        testid
-    }
-}
-  console.log(body)
+    Filter: {
+      testid,
+    },
+  };
+  console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/viewQuestions`, body, config)
-    console.log(res.data)
+    const res = await axios.post(`${baseURL}/viewQuestions`, body, config);
+    console.log(res.data);
     res.data.map((question) => {
       return questions.push(question);
     });
     dispatch({
       type: "GET_QUESTIONS",
-      questions: questions
+      questions: questions,
     });
   } catch (err) {
     dispatch({
       type: "ACTION_FAIL",
     });
   }
-}
+};
 
-export const updateQuestion = async (dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, marks, testid) => {
+export const updateQuestion = async (
+  dispatch,
+  qid,
+  question,
+  optionA,
+  optionB,
+  optionC,
+  optionD,
+  correctAns,
+  marks,
+  testid
+) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -471,8 +478,8 @@ export const updateQuestion = async (dispatch, qid, question, optionA, optionB, 
   const body = {
     database: "ExaminationSystem",
     collection: "questions",
-    Filter:{
-        qid
+    Filter: {
+      qid,
     },
     DataToBeUpdated: {
       question,
@@ -481,24 +488,30 @@ export const updateQuestion = async (dispatch, qid, question, optionA, optionB, 
       optionC,
       optionD,
       correctAns,
-      marks
-    }
-}
+      marks,
+    },
+  };
 
   try {
-    const res = await axios.post(`${baseURL}/updateQuestion`, body, config)
-    viewQuestions(dispatch, testid)
+    const res = await axios.post(`${baseURL}/updateQuestion`, body, config);
+    viewQuestions(dispatch, testid);
     dispatch({
-      type: "ACTION_SUCCESS"
+      type: "ACTION_SUCCESS",
     });
   } catch (err) {
     dispatch({
       type: "ACTION_FAIL",
     });
   }
-}
+};
 
-export const updateQuestion2 = async (dispatch, qid, question, marks, testid) => {
+export const updateQuestion2 = async (
+  dispatch,
+  qid,
+  question,
+  marks,
+  testid
+) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -510,29 +523,29 @@ export const updateQuestion2 = async (dispatch, qid, question, marks, testid) =>
   const body = {
     database: "ExaminationSystem",
     collection: "questions",
-    Filter:{
-        qid
+    Filter: {
+      qid,
     },
     DataToBeUpdated: {
       question,
-      marks
-    }
-}
+      marks,
+    },
+  };
 
-  console.log(body)
+  console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/updateQuestion`, body, config)
-    console.log(res.data)
-    viewQuestions(dispatch, testid)
+    const res = await axios.post(`${baseURL}/updateQuestion`, body, config);
+    console.log(res.data);
+    viewQuestions(dispatch, testid);
     dispatch({
-      type: "ACTION_SUCCESS"
+      type: "ACTION_SUCCESS",
     });
   } catch (err) {
     dispatch({
       type: "ACTION_FAIL",
     });
   }
-}
+};
 
 export const createCategory = async (dispatch, categoryName) => {
   dispatch({
@@ -544,19 +557,18 @@ export const createCategory = async (dispatch, categoryName) => {
     },
   };
   const body = {
-      database: "ExaminationSystem",
-      collection: "category",
-      document: {
-        categoryName,
-        createdBy: localStorage.getItem("user.uid"),
-        isActive: 1
-      }
-    
-  }
+    database: "ExaminationSystem",
+    collection: "category",
+    document: {
+      categoryName,
+      createdBy: localStorage.getItem("user.uid"),
+      isActive: 1,
+    },
+  };
 
   try {
     await axios.post(`${baseURL}/createCategory`, body, config);
-    getCategories(dispatch)
+    getCategories(dispatch);
     dispatch({
       type: "ACTION_SUCCESS",
     });
@@ -590,7 +602,7 @@ export const updateCategory = async (dispatch, categoryid, categoryName) => {
   console.log(body);
   try {
     const res = await axios.post(`${baseURL}/updateCategory`, body, config);
-    getCategories(dispatch)
+    getCategories(dispatch);
     res.data.status === 1
       ? dispatch({
           type: "ACTION_SUCCESS",
@@ -598,14 +610,12 @@ export const updateCategory = async (dispatch, categoryid, categoryName) => {
       : dispatch({
           type: "ACTION_FAIL",
         });
-    
   } catch (err) {
     dispatch({
       type: "ACTION_FAIL",
     });
   }
 };
-
 
 export const getCategories = async (dispatch, categoryid) => {
   const categories = [];

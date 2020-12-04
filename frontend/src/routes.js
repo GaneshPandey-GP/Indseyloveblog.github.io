@@ -9,13 +9,14 @@ import SubAdminDashboard from "./pages/SubAdminDashboard";
 import { AdmPrivateRoute, StudPrivateRoute  } from "./config/PrivateRoute";
 import SubAdminLogin from "./pages/SubAdminLogin";
 import Questions from "./pages/Questions";
-
+import StudentView from "./pages/StudentView";
 const BaseRouter = () => (
     <Router>
             <Switch>
                 <Route exact path="/login" component={Login} /> 
                 <Route exact path="/sub-admin-login" component={SubAdminLogin} />
                 <Route exact path="/add-questions" component={Questions} />
+                <Route exact path="/stu-view" component={StudentView} />
                 <Route exact path="/testview" component={TestView} /> 
                 <Route exact path="/register" component={Register} />
                 <AdmPrivateRoute exact path="/sub-admin-dashboard" component={SubAdminDashboard} />
