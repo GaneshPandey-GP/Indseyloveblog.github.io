@@ -13,7 +13,6 @@ export const initialState = {
   loading: false,
   subjects: [],
   categories:[],
-  categoryid:"",
   tests: [],
   questions: [],
   errorMessage: null,

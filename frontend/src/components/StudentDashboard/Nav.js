@@ -8,11 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountBalanceRoundedIcon from "@material-ui/icons/AccountBalanceRounded";
 import clsx from "clsx";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { useAuthState } from "../../context";
-import SelectSubject from './SelectSubject'
 import { NavLoading } from "../Loading";
 
 const useStyles = makeStyles((theme) => ({

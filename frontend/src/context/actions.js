@@ -436,7 +436,7 @@ export const viewQuestions = async (dispatch, testid) => {
     database: "ExaminationSystem",
     collection: "questions",
     Filter: {
-      testid,
+      testid: parseInt(testid),
     },
   };
   console.log(body);

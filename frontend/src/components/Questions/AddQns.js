@@ -10,26 +10,18 @@ import {
   Button,
   FormControl,
   InputLabel,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   MenuItem,
-  Paper,
   Select,
   TextField,
 } from "@material-ui/core";
 import { addQuestion, addQuestion2, useAuthState } from "../../context";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-// import axios from "axios";
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function AddQns(props) {
-  let data = useLocation();
-  console.log(data);
-  const testid = data.testid;
+  const testid = localStorage.getItem('testid');
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [correctAns, setCorrectAns] = useState("");
