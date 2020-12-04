@@ -12,13 +12,13 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { useAuthState } from "../../context";
-
+import { NavLoading } from "../../components/Loading";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     display: "flex",
     overflowX: "hidden",
-    marginBottom: 100,
+    marginBottom: 64,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyCard: {
     display: "flex",
-
+    marginTop: 0,
     flexWrap: "wrap",
     "& > *": {
       margin: theme.spacing(0),
@@ -49,14 +49,16 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     flexGrow: 1,
+    marginTop: 80,
   },
   paper: {
     padding: theme.spacing(4),
     // textAlign: "left",
     fontWeight: 900,
+    whiteSpace: "nowrap",
     background: "transparent",
     borderBottom: "1px solid #fff",
-
+    fontSize: 16,
     color: theme.palette.text.secondary,
     "&:hover": {
       boxShadow: "7px 8px 10px #3f51b5",
@@ -72,13 +74,13 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
+  
 }));
 
 function SelectSubject() {
   const classes = useStyles();
   const [{ isAuthenticated, loading, subjects }, dispatch] = useAuthState();
-  const subject =["Daa","CN","DS","DAA","OS","DBMS","Daa","CN","DS"] 
- 
+
   return (
     <>
       <div className={classes.root}>
@@ -121,30 +123,28 @@ function SelectSubject() {
           </Toolbar>
         </AppBar>
       </div>
-      <div className="container mt-5 ">
-        <div className="card-text ">
-          <h3>Subjects</h3>
-        </div>
-        <div className={classes.bodyCard}>
-        {subject.map(({subname})=>  
-       (  <Grid container spacing={3}>
-        
-            <Grid item xs={12}>
-              
-            <Paper className={classes.paper}>
-               <Grid container spacing={3}>
-                  
-                    <Grid item xs={12} style={{"height":10,}}>
-                        <Typography>
-                            <LibraryBooksIcon/>{subname}
-                        </Typography>
-                    </Grid>
+      {loading ? (
+        <NavLoading />
+      ) : (
+        <div className={classes.main}>
+          <div className="container">
+            <h1 className="text-capitalize text-center card-header ">
+              Subjects
+            </h1>
+            <div className={classes.bodyCard}>
+              {subjects.map(({ subname }) => (
+                <Grid container spacing={0}>
+                  <Grid item xs={12}>
+                    <Paper className={classes.paper}>
+                      <LibraryBooksIcon /> {subname}
+                    </Paper>
+                  </Grid>
                 </Grid>
-            </Paper>
-            </Grid>
-        </Grid>))}
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

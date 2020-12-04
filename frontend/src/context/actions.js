@@ -167,8 +167,10 @@ export const getSubjects = async (dispatch, categoryid) => {
       categoryid: String(categoryid)
     },
   };
+  console.log(body)
   try {
     const res = await axios.post(`${baseURL}/getSubjects`, body, config);
+    console.log(res.data)
     res.data.map((subject) => subjects.push(subject));
     dispatch({
       type: "GET_SUBJECTS",
@@ -242,7 +244,7 @@ export const getTests = async (dispatch, subid) => {
 
   try {
     const res = await axios.post(`${baseURL}/getTests`, body, config);
-    console.log(res.data);
+
     res.data.map((test) => {
       return tests.push(test);
     });
