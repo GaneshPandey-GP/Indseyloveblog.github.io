@@ -13,6 +13,9 @@ function Login(props) {
     try{
       localStorage.removeItem("user.uid")
       localStorage.removeItem("user.level")
+      localStorage.removeItem("categoryid")
+      localStorage.removeItem("testname")
+      localStorage.removeItem("testid")
     } catch(err) {
       console.log(err)
     }

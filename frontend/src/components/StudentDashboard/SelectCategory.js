@@ -1,13 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import IconButton from "@material-ui/core/IconButton";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import AccountBalanceRoundedIcon from "@material-ui/icons/AccountBalanceRounded";
-import clsx from "clsx";
 import { Link } from 'react-router-dom';
 import Grid from "@material-ui/core/Grid";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
@@ -16,6 +8,7 @@ import { NavLoading } from "../../components/Loading";
 import Button from '@material-ui/core/Button';
 
 import Chip from '@material-ui/core/Chip';
+import Nav from "./Nav";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -93,66 +86,23 @@ function SelectCategory() {
 
   return (
     <>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar position="fixed" className={clsx(classes.appBar)}>
-          <Toolbar>
-            <Typography variant="h6" noWrap className={classes.title}>
-              <AccountBalanceRoundedIcon /> SCE Exam Portal
-            </Typography>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              className={classes.home}
-            >
-              Home
-            </IconButton>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              className={classes.home}
-            >
-              Tests
-            </IconButton>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              className={classes.home}
-            >
-              Profile
-            </IconButton>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="end"
-              className={classes.home}
-            >
-              <ExitToAppIcon />
-              Logout
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </div>
-      {loading ? (
-        <NavLoading />
-      ) : (
+      <Nav />
         <div className={classes.main}>
           <div className="container">
-            <h1 className="text-capitalize text-center card-header ">
-              Category
-            </h1>
+            <h4 className="">
+              Select a Category
+            </h4>
             <div className={classes.bodyCard}>
               {categories.map(({ categoryName,categoryid },index) => (
                 <Grid container spacing={4}>
                   <Grid item xs={12}> 
-                  <Link  to={{pathname: "/stu-view" }}  > <Chip label={categoryName} className={classes.paper} onClick={()=>dispatch({type:"SET_CATEGORY_ID",categoryid})}  icon={ <LibraryBooksIcon /> } component="button" /> </Link>
+                  <Link  to={{pathname: "/subject-test-view" }}  > <Chip label={categoryName} className={classes.paper} onClick={() => localStorage.setItem("categoryid", categoryid)}  component="button" /> </Link>
                   </Grid>
                 </Grid>
               ))}
             </div>
           </div>
         </div>
-      )}
     </>
   );
 }

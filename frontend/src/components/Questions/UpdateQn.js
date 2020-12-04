@@ -15,8 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns, imarks}) {
-  let data = useLocation();
-  const testid = data.testid
+  const testid = localStorage.getItem('testid')
   const [open, setOpen] = React.useState(false);
   const [correctAns, setCorrectAns] = useState(icorrectAns)
   
@@ -68,7 +67,6 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
       <Button
         onClick={handleClickOpen}
         variant="contained"
-        color="text-primary"
         startIcon={<EditIcon />}
         >
             Update
@@ -216,7 +214,6 @@ export const UpdateQn2 = ({iquestion, qid, imarks}) => {
       <Button
         onClick={handleClickOpen}
         variant="contained"
-        color="text-primary"
         startIcon={<EditIcon />}
         >
             Update
@@ -262,7 +259,7 @@ export const UpdateQn2 = ({iquestion, qid, imarks}) => {
         </DialogContent>
         {valueError ? <p className="text-small text-danger ml-4">{valueError}</p>: <p></p>}
         <DialogActions>
-          <Button onClick={handleFormSubmit} color="primary" form="addQuestion">
+          <Button onClick={handleFormSubmit} form="addQuestion">
             Save
           </Button>
         </DialogActions>

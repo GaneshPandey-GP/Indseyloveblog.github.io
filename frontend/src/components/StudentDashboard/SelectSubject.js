@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,29 +13,15 @@ import Grid from "@material-ui/core/Grid";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { useAuthState } from "../../context";
 import { NavLoading } from "../../components/Loading";
+import Nav from "./Nav";
+import { TestCard } from "./TestCard";
+import { getTests } from "../../context/actions";
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    display: "flex",
-    overflowX: "hidden",
-    marginBottom: 64,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
+
   head: {
     color: "#3f51b5",
     fontFamily: "'Times New Roman', Times, serif",
     fontWeight: 600,
-  },
-  home: {
-    fontSize: 15,
-    fontWeight: 50,
-  },
-  title: {
-    flexGrow: 1,
-    fontSize: 16,
-    fontWeight: 700,
   },
   bodyCard: {
     display: "flex",
@@ -53,90 +39,41 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(4),
-    // textAlign: "left",
-    fontWeight: 900,
+    fontWeight: 700,
     whiteSpace: "nowrap",
     background: "transparent",
     borderBottom: "1px solid #fff",
-    fontSize: 16,
+    fontSize: 15,
     color: theme.palette.text.secondary,
     "&:hover": {
       boxShadow: "7px 8px 10px #3f51b5",
+      cursor: 'pointer'
     },
   },
-  wrapper: {
-    borderRadius: "6px",
-  },
-  appBar: {
-    background: "#3f51b5",
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  
 }));
 
 function SelectSubject() {
-  const classes = useStyles();
-  const [{ isAuthenticated, loading, subjects }, dispatch] = useAuthState();
-
+  const classes = useStyles()
+  const [show, setShow] = useState(false)
+  const [{ subjects, loading }, dispatch] = useAuthState();
+  const handleClick = (subid) => {
+    getTests(dispatch, subid)
+    setShow(true)
+  }
   return (
     <>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar position="fixed" className={clsx(classes.appBar)}>
-          <Toolbar>
-            <Typography variant="h6" noWrap className={classes.title}>
-              <AccountBalanceRoundedIcon /> SCE Exam Portal
-            </Typography>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              className={classes.home}
-            >
-              Home
-            </IconButton>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              className={classes.home}
-            >
-              Tests
-            </IconButton>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              className={classes.home}
-            >
-              Profile
-            </IconButton>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="end"
-              className={classes.home}
-            >
-              <ExitToAppIcon />
-              Logout
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </div>
-      {loading ? (
-        <NavLoading />
-      ) : (
+      <Nav />
         <div className={classes.main}>
           <div className="container">
-            <h1 className="text-capitalize text-center card-header ">
-              Subjects
-            </h1>
+          <h4 className="">
+              Select a Subject
+            </h4>
             <div className={classes.bodyCard}>
-              {subjects.map(({ subname }) => (
-                <Grid container spacing={0}>
-                  <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                      <LibraryBooksIcon /> {subname}
+              {subjects.map(({ subname, subid }) => (
+                <Grid container spacing={3}>
+                  <Grid item xs={12}  >
+                    <Paper className={classes.paper} onClick={() => handleClick(subid)}>
+                      {subname}
                     </Paper>
                   </Grid>
                 </Grid>
@@ -144,7 +81,7 @@ function SelectSubject() {
             </div>
           </div>
         </div>
-      )}
+        {show && loading === false ? <TestCard /> : <></>}
     </>
   );
 }

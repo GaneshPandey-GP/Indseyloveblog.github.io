@@ -41,11 +41,16 @@ export default function Register() {
   const [message, setMessage] = useState()
 
   useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
+    try{
+      localStorage.removeItem("user.uid")
+      localStorage.removeItem("user.level")
+      localStorage.removeItem("categoryid")
+      localStorage.removeItem("testname")
+      localStorage.removeItem("testid")
+    } catch(err) {
+      console.log(err)
     }
-  }, [])
+  },[])
 
   const onSubmit = (data, e) => {
     console.log(data)

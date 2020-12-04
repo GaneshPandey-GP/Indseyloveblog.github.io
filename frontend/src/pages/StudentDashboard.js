@@ -15,10 +15,7 @@ export default function StudentDashboard() {
 
   return (
     <>
-      {/* <SelectSubject />
-      {tests? <TestCard /> : <div></div>} */}
-<SelectCategory/>
-      
+      <SelectCategory/>
     </>
   );
 }

@@ -32,6 +32,11 @@ export default function ViewTests() {
   const [{tests, subjects, loading}, dispatch] = useAuthState()
   const classes = useStyles();
 
+  const clickHandler = (testid, testname) => {
+    localStorage.setItem("testid", testid)
+    localStorage.setItem("testname", testname)
+  }
+  
   if (loading) return (<><Skeleton variant="rect" height={30}/><br/><Skeleton variant="rect" height={165} /></>)
 
   return (
@@ -64,7 +69,7 @@ export default function ViewTests() {
               <TableCell component="th" scope="row">{subname}</TableCell>
               <TableCell component="th" scope="row">{testtime}</TableCell>
               <TableCell component="th" scope="row">
-               <Link to={{pathname: "/add-questions", testid, testname }} ><button type="button" className="btn btn-info">Questions</button></Link> 
+               <Link to={{pathname: "/add-questions"}} ><button type="button" className="btn btn-info" onClick={() => clickHandler(testid, testname)}>Questions</button></Link> 
               </TableCell>
               <TableCell component="th" scope="row">
                <UpdateTest initialTestName={testname} initialSubjectid={subjectid} initialTestTime={testtime} testid={testid}/>

@@ -6,19 +6,16 @@ import { useAuthState } from "../context";
 import { getSubjects, getTests } from "../context/actions";
 
 export default function StudentDashboard() {
-  const [{ tests, categoryid }, dispatch] = useAuthState()
+  const [{ tests }, dispatch] = useAuthState()
   useEffect(() => {
     getTests(dispatch)
-    getSubjects(dispatch,categoryid)
+    getSubjects(dispatch, localStorage.getItem("categoryid"))
 
   }, [])
 
   return (
     <>
       <SelectSubject />
-      {tests? <TestCard /> : <div></div>} 
-
-      
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { adminlogin, useAuthState } from "../context";
 import { useForm } from "react-hook-form";
 import "./Login.css";
@@ -10,7 +10,18 @@ import { Loading } from "../components/Loading";
 
 export default function SubAdminLogin() {
   const { register, handleSubmit, errors } = useForm();
-  const [{ loading, isAuthenticated, errorMessage }, dispatch] = useAuthState();
+  const [{ loading, isAuthenticated, errorMessage }, dispatch] = useAuthState()
+  useEffect(() => {
+    try{
+      localStorage.removeItem("user.uid")
+      localStorage.removeItem("user.level")
+      localStorage.removeItem("categoryid")
+      localStorage.removeItem("testname")
+      localStorage.removeItem("testid")
+    } catch(err) {
+      console.log(err)
+    }
+  },[])
   const onSubmit = (data, e) => {
     e.preventDefault();
     adminlogin(dispatch, data);

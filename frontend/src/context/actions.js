@@ -150,7 +150,7 @@ export const subjectCreate = async (dispatch, subname, categoryid) => {
   }
 };
 
-export const getSubjects = async (dispatch,categoryid) => {
+export const getSubjects = async (dispatch, categoryid) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -163,7 +163,9 @@ export const getSubjects = async (dispatch,categoryid) => {
   const body = {
     database: "ExaminationSystem",
     collection: "subjects",
-    Filter: {categoryid},
+    Filter: {
+      categoryid: String(categoryid)
+    },
   };
   console.log(body)
   try {
@@ -206,7 +208,7 @@ export const updateSubject = async (dispatch, subid, subname) => {
   console.log(body);
   try {
     const res = await axios.post(`${baseURL}/updateSubject`, body, config);
-    getTests(dispatch);
+    getSubjects(dispatch);
     res.data.status === "1"
       ? dispatch({
           type: "ACTION_SUCCESS",
@@ -384,7 +386,7 @@ export const addQuestion = async (
     });
   }
 };
-/// Code by Ayush do check
+
 export const addQuestion2 = async (dispatch, testid, question, marks) => {
   dispatch({
     type: "START_LOADING",
@@ -434,7 +436,7 @@ export const viewQuestions = async (dispatch, testid) => {
     database: "ExaminationSystem",
     collection: "questions",
     Filter: {
-      testid,
+      testid: parseInt(testid),
     },
   };
   console.log(body);

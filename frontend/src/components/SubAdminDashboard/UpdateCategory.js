@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UpdateCategory({categoryid, categoryName}) {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(categoryName);
   const [{isAuthenticated, loading}, dispatch] = useAuthState()
   const [valueError, setValueError] = React.useState('')
 
@@ -44,7 +44,7 @@ export default function UpdateCategory({categoryid, categoryName}) {
           <Typography className={classes.heading}>{categoryName}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <TextField id={categoryName} label={categoryName} onChange={(e) => setCategory(e.target.value)}/>
+        <TextField id={categoryName} label={categoryName} value={category} onChange={(e) => setCategory(e.target.value)}/>
         </AccordionDetails>
         <AccordionActions>
           {valueError ? <p className="text-small text-danger ml-4">{valueError}</p>: <p></p>}

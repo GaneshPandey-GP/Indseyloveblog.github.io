@@ -6,7 +6,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { useAuthState, viewQuestions } from "../../context";
 import { NavLoading } from "../Loading";
-import { useLocation } from "react-router-dom";
 import { Card, CardActions, CardContent, Divider } from "@material-ui/core";
 import UpdateQn, { UpdateQn2 } from "./UpdateQn";
 
@@ -17,24 +16,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ViewQuestions() {
-  let data = useLocation();
-  const itestid = data.testid;
-  const itestname = data.testname;
-  const [testid, setTestid] = useState(itestid);
-  const [testname, setTestname] = useState(itestname);
+  const [testname, setTestname] = useState(localStorage.getItem("testname"));
   const [{ loading, questions }, dispatch] = useAuthState();
 
   useEffect(() => {
-    viewQuestions(dispatch, testid);
-  }, [dispatch, testid]);
-  console.log(questions);
+    viewQuestions(dispatch, localStorage.getItem("testid"));
+  }, [dispatch]);
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar variant="dense">
-          <Typography variant="h6" color="inherit">
+          <Typography variant="h6">
             Questions of "{testname}"
           </Typography>
         </Toolbar>
@@ -69,7 +63,7 @@ export default function ViewQuestions() {
                         Qno.{index + 1} {question}
                       </Typography>
                       <Typography
-                        color="textSecondary"
+                        
                         variant="h6"
                         className="ml-4"
                       >
@@ -81,7 +75,7 @@ export default function ViewQuestions() {
                         <Typography component="p">(b) {optionB}</Typography>
                         <Typography component="p">(c) {optionC}</Typography>
                         <Typography component="p">(d) {optionD}</Typography>
-                        <Typography color="textSecondary">
+                        <Typography >
                           Ans: {correctAns}
                         </Typography>
                       </div>
@@ -110,7 +104,7 @@ export default function ViewQuestions() {
                         Qno.{index + 1} {question}
                       </Typography>
                       <Typography
-                        color="textSecondary"
+                        
                         variant="h6"
                         className="ml-4 mt-2"
                       >
