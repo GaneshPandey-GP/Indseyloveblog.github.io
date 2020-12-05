@@ -11,10 +11,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { ListItem, ListItemIcon, ListItemText, TextField } from '@material-ui/core';
-import { useAuthState } from '../../context';
+import { useAuthState, createTest } from '../../context';
 import EditIcon from '@material-ui/icons/Edit';
-import { createTest } from '../../context/actions';
-import Loading from '../Loading';
 
 const useStyles = makeStyles((theme) => ({
   container: {

@@ -7,8 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { IconButton, Tooltip } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import { useAuthState } from '../../context';
-import { getTests } from '../../context/actions';
+import { useAuthState, getTests } from '../../context';
 
 
 function SubjectList(props) {

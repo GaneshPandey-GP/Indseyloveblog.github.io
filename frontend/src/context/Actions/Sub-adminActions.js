@@ -1,11 +1,4 @@
 import axios from "axios";
-import {
-  SIGNUP_SUCCESS,
-  SIGNUP_FAIL,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
-} from "./types";
 
 const baseURL = "http://127.0.0.1:5001";
 
@@ -29,97 +22,17 @@ export const adminlogin = async (dispatch, { username, password }) => {
 
     res.data[0].level === 1
       ? dispatch({
-          type: LOGIN_SUCCESS,
+          type: 'LOGIN_SUCCESS',
           payload: res.data,
         })
       : dispatch({
-          type: LOGIN_FAIL,
+          type: 'LOGIN_FAIL',
         });
   } catch (err) {
     dispatch({
-      type: LOGIN_FAIL,
+      type: 'LOGIN_FAIL',
     });
   }
-};
-
-export const loginUser = async (dispatch, { username, password }) => {
-  dispatch({
-    type: "START_LOADING",
-  });
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  const body = {
-    database: "ExaminationSystem",
-    collection: "users",
-    username,
-    password,
-  };
-  try {
-    const res = await axios.post(`${baseURL}/login`, body, config);
-    console.log(res.data[0].level);
-    res.data[0].level === 2
-      ? dispatch({
-          type: LOGIN_SUCCESS,
-          payload: res.data,
-        })
-      : dispatch({
-          type: LOGIN_FAIL,
-        });
-  } catch (err) {
-    dispatch({
-      type: LOGIN_FAIL,
-    });
-  }
-};
-
-export const Signup = async (
-  dispatch,
-  { username, fname, lname, contact, email, password }
-) => {
-  dispatch({
-    type: "START_LOADING",
-  });
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  const body = {
-    database: "ExaminationSystem",
-    collection: "users",
-    document: {
-      username: username,
-      fname: fname,
-      lname: lname,
-      contact: contact,
-      email: email,
-      password: password,
-      createdBy: -1,
-      isActive: 1,
-      level: 2,
-    },
-  };
-  try {
-    const res = await axios.post(`${baseURL}/register`, body, config);
-    dispatch({
-      type: SIGNUP_SUCCESS,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: SIGNUP_FAIL,
-    });
-  }
-};
-
-export const logout = (dispatch) => {
-  dispatch({
-    type: "START_LOADING",
-  });
-  dispatch({ type: LOGOUT });
 };
 
 export const subjectCreate = async (dispatch, subname, categoryid) => {
@@ -150,7 +63,7 @@ export const subjectCreate = async (dispatch, subname, categoryid) => {
   }
 };
 
-export const getSubjects = async (dispatch, categoryid) => {
+export const getSubjects = async (dispatch) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -164,13 +77,12 @@ export const getSubjects = async (dispatch, categoryid) => {
     database: "ExaminationSystem",
     collection: "subjects",
     Filter: {
-      categoryid: String(categoryid)
+      createdBy: localStorage.getItem("user.uid"),
     },
   };
-  console.log(body)
+
   try {
     const res = await axios.post(`${baseURL}/getSubjects`, body, config);
-    console.log(res.data)
     res.data.map((subject) => subjects.push(subject));
     dispatch({
       type: "GET_SUBJECTS",
@@ -239,6 +151,7 @@ export const getTests = async (dispatch, subid) => {
     collection: "tests",
     Filter: {
       subid,
+      createdBy: parseInt(localStorage.getItem("user.uid")),
     },
   };
 
@@ -375,7 +288,7 @@ export const addQuestion = async (
   };
   console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/createQuestion`, body, config);
+    await axios.post(`${baseURL}/createQuestion`, body, config);
     viewQuestions(dispatch, testid);
     dispatch({
       type: "QUESTION_CREATED",
@@ -410,7 +323,7 @@ export const addQuestion2 = async (dispatch, testid, question, marks) => {
   };
   console.log(body);
   try {
-    const res = await axios.post(`${baseURL}/createQuestion`, body, config);
+    await axios.post(`${baseURL}/createQuestion`, body, config);
     viewQuestions(dispatch, testid);
     dispatch({
       type: "QUESTION_CREATED",
@@ -495,7 +408,7 @@ export const updateQuestion = async (
   };
 
   try {
-    const res = await axios.post(`${baseURL}/updateQuestion`, body, config);
+    await axios.post(`${baseURL}/updateQuestion`, body, config);
     viewQuestions(dispatch, testid);
     dispatch({
       type: "ACTION_SUCCESS",
@@ -634,6 +547,7 @@ export const getCategories = async (dispatch, categoryid) => {
     collection: "category",
     Filter: {
       categoryid,
+      createdBy: localStorage.getItem("user.uid"),
     },
   };
 

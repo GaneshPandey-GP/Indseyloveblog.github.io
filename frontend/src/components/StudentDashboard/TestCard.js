@@ -6,7 +6,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useAuthState } from "../../context";
-import { getTests } from "../../context/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,10 +32,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     marginBottom: 12,
   },
-}));
-export const TestCard = ({ subid }) => {
+}))
+
+
+export const TestCard = () => {
   const [{ tests }, dispatch] = useAuthState();
-  console.log(subid)
   const classes = useStyles();
   tests.map((testname) => console.log(testname));
   return (
