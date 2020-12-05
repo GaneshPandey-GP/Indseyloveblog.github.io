@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import DashboardData from '../components/SubAdminDashboard/DashboardData'
 import { useAuthState } from "../context";
-import { getSubjects, getTests, getCategories } from "../context/actions";
+import { getSubjects, getTests, getCategories } from "../context";
 
 function SubAdminDashboard() {
   const [{subjects}, dispatch] = useAuthState()

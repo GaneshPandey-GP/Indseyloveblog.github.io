@@ -1,21 +1,11 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import IconButton from "@material-ui/core/IconButton";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import AccountBalanceRoundedIcon from "@material-ui/icons/AccountBalanceRounded";
-import clsx from "clsx";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { useAuthState } from "../../context";
-import { NavLoading } from "../../components/Loading";
 import Nav from "./Nav";
 import { TestCard } from "./TestCard";
-import { getTests } from "../../context/actions";
+import { getTests4Client } from "../../context";
 const useStyles = makeStyles((theme) => ({
 
   head: {
@@ -57,7 +47,7 @@ function SelectSubject() {
   const [show, setShow] = useState(false)
   const [{ subjects, loading }, dispatch] = useAuthState();
   const handleClick = (subid) => {
-    getTests(dispatch, subid)
+    getTests4Client(dispatch, subid)
     setShow(true)
   }
   return (
@@ -70,7 +60,7 @@ function SelectSubject() {
             </h4>
             <div className={classes.bodyCard}>
               {subjects.map(({ subname, subid }) => (
-                <Grid container spacing={3}>
+                <Grid container spacing={3} key={subid}>
                   <Grid item xs={12}  >
                     <Paper className={classes.paper} onClick={() => handleClick(subid)}>
                       {subname}

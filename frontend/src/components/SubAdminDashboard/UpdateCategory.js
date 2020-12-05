@@ -6,8 +6,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { AccordionActions, Button, Divider, TextField } from '@material-ui/core';
-import { updateCategory } from '../../context/actions';
-import { useAuthState } from '../../context';
+import { useAuthState, updateCategory } from '../../context';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -2,13 +2,10 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from 'react-router-dom';
 import Grid from "@material-ui/core/Grid";
-import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { useAuthState } from "../../context";
-import { NavLoading } from "../../components/Loading";
-import Button from '@material-ui/core/Button';
-
 import Chip from '@material-ui/core/Chip';
 import Nav from "./Nav";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -93,8 +90,8 @@ function SelectCategory() {
               Select a Category
             </h4>
             <div className={classes.bodyCard}>
-              {categories.map(({ categoryName,categoryid },index) => (
-                <Grid container spacing={4}>
+              {categories.map(({ categoryName, categoryid },index) => (
+                <Grid container spacing={4} key={categoryid}>
                   <Grid item xs={12}> 
                   <Link  to={{pathname: "/subject-test-view" }}  > <Chip label={categoryName} className={classes.paper} onClick={() => localStorage.setItem("categoryid", categoryid)}  component="button" /> </Link>
                   </Grid>

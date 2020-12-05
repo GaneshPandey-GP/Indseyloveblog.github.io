@@ -3,8 +3,6 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Paper, Grid, Divider } from "@material-ui/core";
 import LDrawer from "./LDrawer";
-import { useAuthState } from "../../context";
-import Loading from "../Loading";
 import ViewTests from './ViewTests'
 
 const drawerWidth = 240;
@@ -47,8 +45,6 @@ const useStyles = makeStyles((theme) => ({
 export default function DashboardData() {
   const classes = useStyles();
 
-  // const [{loading}, dispatch] = useAuthState()
- 
   return (
     <div className={classes.root}>
       <LDrawer />

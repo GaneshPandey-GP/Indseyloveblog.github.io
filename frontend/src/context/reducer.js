@@ -1,12 +1,3 @@
-import {
-  START_LOADING,
-  SIGNUP_SUCCESS,
-  SIGNUP_FAIL,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
-} from './types';
-
 export const initialState = {
   isAuthenticated: false,
   user: [{}],
@@ -21,12 +12,12 @@ export const initialState = {
 
 export const reducer = (initialState, action) => {
   switch(action.type) {
-      case START_LOADING:
+      case 'START_LOADING':
         return {
           ...initialState,
           loading: true
         };
-      case LOGIN_SUCCESS:
+      case 'LOGIN_SUCCESS':
         localStorage.setItem('user.level', action.payload[0].level);
         localStorage.setItem('user.uid', action.payload[0].uid);
         return {
@@ -35,14 +26,14 @@ export const reducer = (initialState, action) => {
           loading: false,
           user: action.payload
         }
-      case SIGNUP_SUCCESS:
+      case 'SIGNUP_SUCCESS':
         return {
           ...initialState,
           isAuthenticated: true,
           loading: false
         }
-      case SIGNUP_FAIL:
-      case LOGIN_FAIL:
+      case 'SIGNUP_FAIL':
+      case 'LOGIN_FAIL':
         return {
           ...initialState,
           Document_ID: null,
@@ -51,7 +42,7 @@ export const reducer = (initialState, action) => {
           loading: false,
           errorMessage: "Your creds didn't match! Try Again.."
         }
-      case LOGOUT:
+      case 'LOGOUT':
         // localStorage.removeItem('user.level', action.payload[0].level);
         // localStorage.removeItem('user.uid', action.payload[0].uid);
         return {
