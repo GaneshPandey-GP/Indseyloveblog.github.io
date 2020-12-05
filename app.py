@@ -41,6 +41,11 @@ class MongoAPI:
         documents = self.collection.find(filt)
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
         return output
+    def readWithFilter2(self):
+        filt = self.data['Filter']
+        documents = self.collection.find(filt,{'answers':0})
+        output = [{item: data[item] for item in data if item != '_id'} for data in documents]
+        return output
     def readUsers(self):
         documents = self.collection.find()
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
@@ -295,6 +300,52 @@ def get_category():
                         mimetype='application/json')
     obj1 = MongoAPI(data)
     response = obj1.readWithFilter()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/createSubmission', methods=['POST'])
+def create_submission():
+    data = request.json
+    data2=json.loads('{"database":"ExaminationSystem","collection":"sequences"}')
+    obj2 = MongoAPI(data2)
+    print(obj2.getSequences()[0].get('submissionSequence'))
+    cid=(obj2.getSequences()[0].get('submissionSequence'))
+    print(cid)
+    data['document']['categoryid']=cid
+    if data is None or data == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.write(data)
+    cid2=cid+1
+    data3=json.loads('{"database":"ExaminationSystem","collection":"sequences","Filter":{"submissionSequence":'+str(cid)+'},"DataToBeUpdated":{"submissionSequence":'+str(cid2)+'}}')
+    obj3 = MongoAPI(data3)
+    obj3.update()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/viewSubmission', methods=['POST'])
+def get_submission():
+    data = request.json
+    if data is None or data == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.readWithFilter()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
+@app.route('/viewResults', methods=['POST'])
+def get_result():
+    data = request.json
+    if data is None or data == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.readWithFilter2()
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
