@@ -143,6 +143,7 @@ def create_test():
     obj4 = MongoAPI(data4)
     subname=(obj4.readWithFilter()[0].get('subname'))
     data['document']['subname']=subname
+    data['document']['totalMarks']=0
     print(data)
     data2=json.loads('{"database":"ExaminationSystem","collection":"sequences"}')
     obj2 = MongoAPI(data2)
@@ -220,6 +221,18 @@ def create_question():
     cid=(obj2.getSequences()[0].get('questionSequence'))
     print(cid)
     data['document']['qid']=cid
+    testid=data['document']['testid']
+    print(testid)
+    marks=data['document']['marks']
+    print(marks)
+    data4=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'}}')
+    obj4=MongoAPI(data4)
+    test=obj4.readWithFilter()
+    print(test[0].get('marks'))
+    data5=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'},"DataToBeUpdated":{"totalMarks":'+str(marks+test[0].get('totalMarks'))+'}')
+    obj5=MongoAPI(data5)
+    obj5.update()
+    print(ayush)
     if data is None or data == {}:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
@@ -236,6 +249,16 @@ def create_question():
 @app.route('/updateQuestion', methods=['POST'])
 def update_question():
     data = request.json
+    oldMarks=data['oldMarks']
+    newMarks=data['DataToBeUpdated']['marks']
+    testid=data['testid']
+    marksChange=newMarks-oldMarks
+    data4=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'}}')
+    obj4=MongoAPI(data4)
+    test=obj4.readWithFilter()
+    data5=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'},"DataToBeUpdated":{"totalMarks":'+str(marksChange+test[0].get('totalMarks'))+'}')
+    obj5=MongoAPI(data5)
+    obj5.update()
     if data is None or data == {} or 'DataToBeUpdated' not in data:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
@@ -311,7 +334,7 @@ def create_submission():
     print(obj2.getSequences()[0].get('submissionSequence'))
     cid=(obj2.getSequences()[0].get('submissionSequence'))
     print(cid)
-    data['document']['categoryid']=cid
+    data['document']['submissionID']=cid
     if data is None or data == {}:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
