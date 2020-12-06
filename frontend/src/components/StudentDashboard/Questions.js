@@ -23,24 +23,24 @@ function Questions() {
   const classes = useStyles();
   const [{ questions, loading }, dispatch] = useAuthState();
   const [answers, setAnswers] = useState([{qid: '', ans: ''}])
-  const [value, setValue] = React.useState([]);
+  const [selected, setSelected] = React.useState([]);
   const [helperText, setHelperText] = React.useState("Choose wisely");
   console.log(questions);
 
-  const handleRadioChange = (event) => {
-    setValue(event.target.value.concat(value));
+  const handleRadioChange = (e, qid) => {
+    setSelected((selected) => [...selected, e.target.value])
+    setAnswers((answers) => [...answers, {qid: qid, ans: selected}]);
+    console.log(selected)
     setHelperText(" ");
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    console.log(value)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // console.log(value)
     // createSubmission(dispatch, )
   };
   return (
     <>
-
-  
     <div>
   {loading ?<p></p> : <Timer/>}
       <form className="container " onSubmit={handleSubmit}>
@@ -66,8 +66,8 @@ function Questions() {
                     <RadioGroup
                       aria-label="quiz"
                       name="quiz"
-                      value={value}
-                      onChange={handleRadioChange}
+                      value={selected[index]}
+                      onChange={(e) => handleRadioChange(e, qid)}
                     >
                       <FormControlLabel
                         value={optionA}
