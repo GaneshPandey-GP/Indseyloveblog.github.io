@@ -38,8 +38,9 @@ const useStyles = makeStyles((theme) => ({
 export const TestCard = () => {
   const [{ tests }, dispatch] = useAuthState()
   const handleTestClick = (testid, testtime) => {
-    viewQuestions4Client(dispatch, testid )
+    // viewQuestions4Client(dispatch, testid )
     localStorage.setItem("timer", testtime)
+    localStorage.setItem("testid", testid)
   }
   const classes = useStyles();
   return (

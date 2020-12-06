@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -7,7 +7,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { createSubmission, useAuthState } from "../../context";
+import { createSubmission, useAuthState, viewQuestions4Client } from "../../context";
 import PublishIcon from '@material-ui/icons/Publish';
 import Timer from './Timer';
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,11 @@ function Questions() {
   const [answers, setAnswers] = useState([{qid: '', ans: ''}])
   const [selected, setSelected] = React.useState([]);
   const [helperText, setHelperText] = React.useState("Choose wisely");
+  useEffect(() => {
+    viewQuestions4Client(dispatch, parseInt(localStorage.getItem("testid")) )
+  },[])
   console.log(questions);
+
 
   const handleRadioChange = (e, qid) => {
     setSelected((selected) => [...selected, e.target.value])
