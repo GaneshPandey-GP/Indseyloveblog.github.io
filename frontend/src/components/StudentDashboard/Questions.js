@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createSubmission, useAuthState } from "../../context";
 import PublishIcon from '@material-ui/icons/Publish';
-
+import Timer from './Timer';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(3),
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Questions() {
   const classes = useStyles();
-  const [{ questions }, dispatch] = useAuthState();
+  const [{ questions, loading }, dispatch] = useAuthState();
   const [answers, setAnswers] = useState([{qid: '', ans: ''}])
   const [value, setValue] = React.useState([]);
   const [helperText, setHelperText] = React.useState("Choose wisely");
@@ -38,7 +38,11 @@ function Questions() {
     // createSubmission(dispatch, )
   };
   return (
+    <>
+
+  
     <div>
+  {loading ?<p></p> : <Timer/>}
       <form className="container " onSubmit={handleSubmit}>
         {questions.map(
           ({
@@ -106,6 +110,7 @@ function Questions() {
         </div>
       </form>
     </div>
+    </>
   );
 }
 

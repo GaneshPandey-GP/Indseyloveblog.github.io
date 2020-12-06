@@ -117,9 +117,11 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
+          
           <Typography variant="h6" noWrap>
             Attempt the following questions:
           </Typography>
+        
         </Toolbar>
       </AppBar>
       <Drawer
@@ -155,14 +157,15 @@ export default function MiniDrawer() {
             </ListItem>
         </List>
         <List>
-            <ListItem button>
-              <ListItemIcon> <TimerIcon /></ListItemIcon>
-              <Timer />
-            </ListItem>
+            
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {/* <div className="align-items-center card-text  row">
+          <h1 className="col-sm-10">Test</h1>
+          <TimerIcon /> <Timer />
+        </div> */}
         <Questions />
       </main>
     </div>

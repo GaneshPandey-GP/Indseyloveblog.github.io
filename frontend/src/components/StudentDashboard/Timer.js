@@ -1,26 +1,56 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import TimerIcon from '@material-ui/icons/Timer';
 
 export default function Timer() {
     const testtime = parseInt(localStorage.getItem("timer"))
-    // const hrs = testtime / 60
-    const [mins, setMins] = React.useState(testtime);
-    const [secs, setSecs] = React.useState(60);
+    const [minutes, setMinutes] = useState(testtime);
+  const [seconds, setSeconds] = useState(59);
+  useEffect(() => {
+    if (!minutes) return;
+    const intervelID = setInterval(() => {
+      setMinutes(minutes - 1);
+      minutes - 1 === 0 ? setSeconds(0) : setSeconds(59);
+    }, 1000 * 60);
+    return () => {
+      clearInterval(intervelID);
+    };
+  }, [minutes]);
 
-  
-    React.useEffect(() => {
-      if (mins > 0) {
-        setTimeout(() => setMins(mins - 1), 60000)
-        setTimeout(() => setSecs(secs - 1), 1000)
-      } else {
-        setMins('BOOOOM!');
-      }
-    });
-  
-    return (
-      <div className="App">
-        <div>
-          {mins}:{secs}
+  useEffect(() => {
+    if (!seconds) return;
+    const intervelID = setInterval(() => {
+      setSeconds(seconds - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(intervelID);
+    };
+  }, [seconds]);
+
+  return (
+    <>
+      {minutes !== 0 ? (
+        <div className="container col-sm-10 text-right">
+          <span className="text-info"> <strong><TimerIcon/> Time Left</strong></span>
+          {minutes < 2 ? (
+            <h2 className="text-danger">
+             
+              {minutes < 10 ?  `0${minutes}` :  `${minutes}`} :
+              {seconds < 10 ? `0${seconds}` :  ` ${seconds}`}
+            </h2>
+          ) : (
+            <h2>
+              {minutes < 10 ?  `0${minutes}` :  `${minutes}`} :
+              {seconds < 10 ?  `0${seconds}` :  `${seconds}`}
+            </h2>
+          )}
         </div>
-      </div>
-    );
+      ) : (
+        <div class="alert alert-danger text-center " role="alert">
+          Times Up!!
+        </div>
+      )}
+    </>
+  );
+
   }
