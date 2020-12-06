@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import TimerIcon from '@material-ui/icons/Timer';
-import { useAuthState } from "../../context";
 
 export default function Timer() {
     const testtime = parseInt(localStorage.getItem("timer"))
-    const [minutes, setMinutes] = useState(testtime)
-    const [{loading}] = useAuthState()
+    const [minutes, setMinutes] = useState(testtime-1);
   const [seconds, setSeconds] = useState(59);
   useEffect(() => {
     if (!minutes) return;
@@ -18,7 +16,7 @@ export default function Timer() {
     };
   }, [minutes]);
 
-const runTimer = () => {
+  useEffect(() => {
     if (!seconds) return;
     const intervelID = setInterval(() => {
       setSeconds(seconds - 1);
@@ -27,11 +25,11 @@ const runTimer = () => {
     return () => {
       clearInterval(intervelID);
     };
-}
-if(!loading) runTimer()
+  }, [seconds]);
+
   return (
     <>
-      {minutes !== 0 ? (
+      {minutes >= 0 ? (
         <div className="container col-sm-10 text-right">
           <span className="text-info"> <strong><TimerIcon/> Time Left</strong></span>
           {minutes < 2 ? (
