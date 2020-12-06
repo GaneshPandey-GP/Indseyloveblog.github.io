@@ -20,6 +20,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import HelpIcon from '@material-ui/icons/Help';
 import Questions from './Questions';
 import Timer from './Timer';
+import { NavLoading } from '../Loading';
+import { useAuthState } from '../../context';
 
 const drawerWidth = 240;
 
@@ -88,6 +90,7 @@ export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [{ loading }] = useAuthState();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -123,7 +126,9 @@ export default function MiniDrawer() {
           </Typography>
         
         </Toolbar>
+        {loading ? <NavLoading /> : <></>}
       </AppBar>
+      
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {

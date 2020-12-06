@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createSubmission, useAuthState, viewQuestions4Client } from "../../context";
 import PublishIcon from '@material-ui/icons/Publish';
 import Timer from './Timer';
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(3),
@@ -22,31 +23,58 @@ const useStyles = makeStyles((theme) => ({
 function Questions() {
   const classes = useStyles();
   const [{ questions, loading }, dispatch] = useAuthState();
-  const [answers, setAnswers] = useState([{qid: '', ans: ''}])
   const [selected, setSelected] = React.useState([]);
   const [helperText, setHelperText] = React.useState("Choose wisely");
+  const testid = parseInt(localStorage.getItem("testid"))
+
   useEffect(() => {
-    viewQuestions4Client(dispatch, parseInt(localStorage.getItem("testid")) )
-  },[])
+    viewQuestions4Client(dispatch, testid )
+  },[dispatch, testid])
   console.log(questions);
 
+  const selector = React.useCallback(
+    (key, ans) =>
+      setSelected((selected) => ({
+        ...selected,
+        [key]: {
+          ...selected[key],
+          qid: key,
+          ans
+        },
+      })),
+    []
+  )
+
+  const getMarks = () => {
+    let answers = Object.assign({}, ...questions.map((x) => ({[x.qid]: x.correctAns})))
+    let marks = Object.assign({}, ...questions.map((x) => ({[x.qid]: x.marks})))
+    let totalmarks = 0
+    for (let i in selected) {
+      if(selected[i].ans === answers[i]) {
+        totalmarks = totalmarks + marks[i]
+      }
+    }
+    return(totalmarks)
+  }
 
   const handleRadioChange = (e, qid) => {
-    setSelected((selected) => [...selected, e.target.value])
-    setAnswers((answers) => [...answers, {qid: qid, ans: selected}]);
-    console.log(selected)
+    const data = e.target.value
+    selector(qid, data)
     setHelperText(" ");
-  };
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // console.log(value)
-    // createSubmission(dispatch, )
-  };
+    const result = getMarks()
+    const answers = Object.values(selected)
+    // alert("You got" + " " + result)
+    createSubmission(dispatch, testid, result, answers )
+  }
+
   return (
     <>
     <div>
-  {loading ?<p></p> : <Timer/>}
+    {loading ?<p></p> : <Timer/>}
       <form className="container " onSubmit={handleSubmit}>
         {questions.map(
           ({
@@ -55,14 +83,15 @@ function Questions() {
             optionB,
             optionC,
             optionD,
-            correctAns,
             qid,
+            marks
           }, index) => (
             <div className="card mt-3 rounded-lg shadow-lg" key={qid}>
               <div className="card-header">
                <h4> QNo.{index+1} {question}</h4>
               </div>
               <div className="card-body">
+              <p className="float-right">{marks} marks</p>
                   <FormControl
                     component="fieldset"
                     className={classes.formControl}
@@ -74,22 +103,22 @@ function Questions() {
                       onChange={(e) => handleRadioChange(e, qid)}
                     >
                       <FormControlLabel
-                        value={optionA}
+                        value="a"
                         control={<Radio />}
                         label={optionA}
                       />
                       <FormControlLabel
-                        value={optionB}
+                        value="b"
                         control={<Radio />}
                         label={optionB}
                       />
                       <FormControlLabel
-                        value={optionC}
+                        value="c"
                         control={<Radio />}
                         label={optionC}
                       />
                       <FormControlLabel
-                        value={optionD}
+                        value="d"
                         control={<Radio />}
                         label={optionD}
                       />

@@ -10,18 +10,22 @@ import { AdmPrivateRoute, StudPrivateRoute  } from "./config/PrivateRoute";
 import SubAdminLogin from "./pages/SubAdminLogin";
 import Questions from "./pages/Questions";
 import StudentView from "./pages/StudentView";
+import Result from "./components/StudentDashboard/Result";
+import history from './config/history'
+
 
 const BaseRouter = () => (
-    <Router>
+    <Router history={history}>
             <Switch>
                 <Route exact path="/login" component={Login} /> 
                 <Route exact path="/sub-admin-login" component={SubAdminLogin} />
                 <AdmPrivateRoute exact path="/add-questions" component={Questions} />
-                <Route exact path="/subject-test-view" component={StudentView} />
-                <Route exact path="/test" component={TestView} /> 
+                <StudPrivateRoute exact path="/subject-test-view" component={StudentView} />
+                <StudPrivateRoute exact path="/test" component={TestView} /> 
                 <Route exact path="/register" component={Register} />
                 <AdmPrivateRoute exact path="/sub-admin-dashboard" component={SubAdminDashboard} />
                 <StudPrivateRoute exact path="/stud-dashboard" component={StudentDashboard} />
+                <StudPrivateRoute exact path="/result" component={Result} />
                 <Route exact path="*" component={NotFound} />
             </Switch>
     </Router>

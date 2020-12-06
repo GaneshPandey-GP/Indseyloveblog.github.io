@@ -105,6 +105,11 @@ export const reducer = (initialState, action) => {
         ...initialState,
         categoryid:action.categoryid,
       };
+      case 'SUBMISSION_SUCCESS': 
+      return {
+        ...initialState,
+        loading: false,
+      };
       default:
         return initialState
   }

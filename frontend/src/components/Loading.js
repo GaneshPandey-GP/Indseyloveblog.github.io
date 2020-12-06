@@ -32,9 +32,9 @@ export const NavLoading = () => {
 
 export const Loading = () => {
   return (
-  <div class="text-center">
-    <div class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
+  <div className="text-center">
+    <div className="spinner-border" role="status">
+      <span className="sr-only">Loading...</span>
     </div>
   </div>
   )

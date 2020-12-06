@@ -381,7 +381,8 @@ export const updateQuestion = async (
   optionD,
   correctAns,
   marks,
-  testid
+  testid,
+  oldmarks
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -393,6 +394,8 @@ export const updateQuestion = async (
   };
   const body = {
     database: "ExaminationSystem",
+    oldMarks: oldmarks,
+    testid: parseInt(testid),
     collection: "questions",
     Filter: {
       qid,

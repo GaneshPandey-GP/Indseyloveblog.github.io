@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useAuthState, viewQuestions4Client } from "../../context";
 import { Link } from "react-router-dom";
@@ -37,11 +36,12 @@ const useStyles = makeStyles((theme) => ({
 
 export const TestCard = () => {
   const [{ tests }, dispatch] = useAuthState()
-  const handleTestClick = (testid, testtime) => {
-    // viewQuestions4Client(dispatch, testid )
+  const handleTestClick = (testid, testtime, totalMarks) => {
     localStorage.setItem("timer", testtime)
     localStorage.setItem("testid", testid)
+    localStorage.setItem("totalMarks", totalMarks)
   }
+  console.log(tests)
   const classes = useStyles();
   return (
     <>
@@ -51,7 +51,7 @@ export const TestCard = () => {
             {tests[0] ? <h1 className="col-sm-12 text-capitalize text-center card-header">
               Tests
             </h1> : <></>}
-            {tests.map(({ testname, testid, subname, testtime }) => (
+            {tests.map(({ testname, testid, subname, testtime, totalMarks }) => (
               <div className="col-sm-4 mb-4 mt-3" key={testid}>
                 <Card className={classes.root} variant="outlined" key={testid}>
                   <CardContent>
@@ -70,15 +70,13 @@ export const TestCard = () => {
                       Ends On : {testtime} min
                     </Typography>
                   </CardContent>
-                  {/* <CardActions> */}
                     <Link to="/test">
-                      <button onClick={() => handleTestClick(testid, testtime)}
+                      <button onClick={() => handleTestClick(testid, testtime, totalMarks)}
                         className="btn btn-info btn-lg btn-block"
                       >
                         Start
                       </button>
                     </Link>
-                  {/* </CardActions> */}
                 </Card>
               </div>
             ))}

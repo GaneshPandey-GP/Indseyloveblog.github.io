@@ -130,10 +130,8 @@ export const viewQuestions4Client = async (dispatch, testid) => {
       testid: parseInt(testid)
     }
   };
-  console.log(body);
   try {
     const res = await axios.post(`${baseURL}/viewQuestions`, body, config);
-    console.log(res.data);
     res.data.map((question) => {
       return questions.push(question);
     });
@@ -218,8 +216,7 @@ export const getCategories4Client = async (dispatch, categoryid) => {
 }
 
 
-export const createSubmission = async (dispatch, testid, answers) => {
-  // const categories = [];
+export const createSubmission = async (dispatch, testid, result, answers) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -229,28 +226,23 @@ export const createSubmission = async (dispatch, testid, answers) => {
     },
   };
   const body = {
-    database: "ExaminationSystem",
-    collection: "submissions",
-    document:{
-      testid: testid,
-      userid: localStorage.getItem("user.uid"),
-      answers: answers
-      // [
-      //   {
-      //     qid:2,
-      //     ans:ans
-      //   }
-      // ]
+    "database": "ExaminationSystem",
+    "collection": "submissions",
+    testid,
+    result,
+    "document":{
+      "userid": parseInt(localStorage.getItem("user.uid")),
+      answers,
+      total: parseInt(localStorage.getItem("totalMarks"))
     }
   }
+
+  console.log(body)
   try {
     const res = await axios.post(`${baseURL}/createSubmission`, body, config);
     console.log(res.data)
-    // res.data.map((category) => {
-    //   return categories.push(category);
-    // });
     dispatch({
-      type: "ACTION_SUCCESS",
+      type: "SUBMISSION_SUCCESS",
     });
   } catch (err) {
     dispatch({

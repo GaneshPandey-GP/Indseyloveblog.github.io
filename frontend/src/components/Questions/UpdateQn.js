@@ -57,7 +57,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
       setValueError("Enter all the values!")
       else {
         setValueError("")
-        updateQuestion(dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, testid, marks)
+        updateQuestion(dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, marks, testid, imarks)
         handleClose()
       }
   }
