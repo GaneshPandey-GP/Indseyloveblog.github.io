@@ -14,15 +14,17 @@ import {
   createCategory,
   updateCategory,
   getCategories,
-} from "./actions/Sub-adminActions";
+} from "./Actions/Sub-adminActions";
 
 import {
   Signup,
   loginUser,
   getCategories4Client,
+  viewQuestions4Client,
   getTests4Client,
   getSubjects4Client,
-} from "./actions/ClientActions";
+  createSubmission,
+} from "./Actions/ClientActions";
 
 import { AuthProvider, useAuthState } from "./context";
 
@@ -41,6 +43,7 @@ export {
   addQuestion,
   updateQuestion2,
   viewQuestions,
+  viewQuestions4Client,
   addQuestion2,
   updateQuestion,
   createCategory,
@@ -49,4 +52,5 @@ export {
   getCategories4Client,
   getTests4Client,
   getSubjects4Client,
+  createSubmission
 };

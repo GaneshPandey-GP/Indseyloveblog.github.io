@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { useAuthState } from "../../context";
+import { useAuthState, viewQuestions4Client } from "../../context";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 275,
+    minWidth: 285,
     boxShadow: "7px 8px 10px #5a616f",
     "&:hover": {
       boxShadow: "7px 8px 10px #000000",
@@ -36,9 +36,12 @@ const useStyles = makeStyles((theme) => ({
 
 
 export const TestCard = () => {
-  const [{ tests }, dispatch] = useAuthState();
+  const [{ tests }, dispatch] = useAuthState()
+  const handleTestClick = (testid, testtime) => {
+    viewQuestions4Client(dispatch, testid, )
+    localStorage.setItem("timer", testtime)
+  }
   const classes = useStyles();
-  tests.map((testname) => console.log(testname));
   return (
     <>
       <div className={classes.main}>
@@ -48,7 +51,7 @@ export const TestCard = () => {
               Tests
             </h1> : <></>}
             {tests.map(({ testname, testid, subname, testtime }) => (
-              <div className="col-sm-4 mb-4 mt-3">
+              <div className="col-sm-4 mb-4 mt-3" key={testid}>
                 <Card className={classes.root} variant="outlined" key={testid}>
                   <CardContent>
                     <Typography
@@ -66,16 +69,15 @@ export const TestCard = () => {
                       Ends On : {testtime} min
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <Button
-                      className="text-center"
-                      variant="outlined"
-                      color="primary"
-                      fullWidth
-                    >
-                      Start
-                    </Button>
-                  </CardActions>
+                  {/* <CardActions> */}
+                    <Link to="/test">
+                      <button onClick={() => handleTestClick(testid, testtime)}
+                        className="btn btn-info btn-lg btn-block"
+                      >
+                        Start
+                      </button>
+                    </Link>
+                  {/* </CardActions> */}
                 </Card>
               </div>
             ))}
