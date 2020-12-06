@@ -228,11 +228,10 @@ def create_question():
     data4=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'}}')
     obj4=MongoAPI(data4)
     test=obj4.readWithFilter()
-    print(test[0].get('marks'))
-    data5=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'},"DataToBeUpdated":{"totalMarks":'+str(marks+test[0].get('totalMarks'))+'}')
+    print(test[0].get('totalMarks'))
+    data5=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'},"DataToBeUpdated":{"totalMarks":"'+str(int(marks)+int(test[0].get('totalMarks')))+'"}}')
     obj5=MongoAPI(data5)
     obj5.update()
-    print(ayush)
     if data is None or data == {}:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
@@ -256,7 +255,7 @@ def update_question():
     data4=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'}}')
     obj4=MongoAPI(data4)
     test=obj4.readWithFilter()
-    data5=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'},"DataToBeUpdated":{"totalMarks":'+str(marksChange+test[0].get('totalMarks'))+'}')
+    data5=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'},"DataToBeUpdated":{"totalMarks":'+str(int(marksChange)+int(test[0].get('totalMarks')))+'}}')
     obj5=MongoAPI(data5)
     obj5.update()
     if data is None or data == {} or 'DataToBeUpdated' not in data:
