@@ -275,9 +275,9 @@ export const addQuestion = async (
     document: {
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
-      testid,
+      testid: parseInt(testid),
       question,
-      marks,
+      marks : parseInt(marks),
       type: 1,
       optionA,
       optionB,
@@ -350,8 +350,9 @@ export const viewQuestions = async (dispatch, testid) => {
     collection: "questions",
     Filter: {
       testid: parseInt(testid),
+      createdBy: parseInt(localStorage.getItem("user.uid"))
     },
-  };
+  }
   console.log(body);
   try {
     const res = await axios.post(`${baseURL}/viewQuestions`, body, config);
@@ -368,7 +369,7 @@ export const viewQuestions = async (dispatch, testid) => {
       type: "ACTION_FAIL",
     });
   }
-};
+}
 
 export const updateQuestion = async (
   dispatch,

@@ -113,6 +113,41 @@ export const getSubjects4Client = async (dispatch, categoryid) => {
   }
 };
 
+export const viewQuestions4Client = async (dispatch, testid) => {
+  const questions = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "questions",
+    Filter: {
+      testid: parseInt(testid)
+    }
+  };
+  console.log(body);
+  try {
+    const res = await axios.post(`${baseURL}/viewQuestions`, body, config);
+    console.log(res.data);
+    res.data.map((question) => {
+      return questions.push(question);
+    });
+    dispatch({
+      type: "GET_QUESTIONS",
+      questions: questions,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}
+
 export const getTests4Client = async (dispatch, subid) => {
   const tests = [];
   dispatch({
@@ -146,7 +181,7 @@ export const getTests4Client = async (dispatch, subid) => {
       type: "ACTION_FAIL",
     });
   }
-};
+}
 
 export const getCategories4Client = async (dispatch, categoryid) => {
   const categories = [];
@@ -180,4 +215,46 @@ export const getCategories4Client = async (dispatch, categoryid) => {
       type: "ACTION_FAIL",
     });
   }
-};
+}
+
+
+export const createSubmission = async (dispatch, testid, answers) => {
+  // const categories = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "submissions",
+    document:{
+      testid: testid,
+      userid: localStorage.getItem("user.uid"),
+      answers: answers
+      // [
+      //   {
+      //     qid:2,
+      //     ans:ans
+      //   }
+      // ]
+    }
+  }
+  try {
+    const res = await axios.post(`${baseURL}/createSubmission`, body, config);
+    console.log(res.data)
+    // res.data.map((category) => {
+    //   return categories.push(category);
+    // });
+    dispatch({
+      type: "ACTION_SUCCESS",
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}
