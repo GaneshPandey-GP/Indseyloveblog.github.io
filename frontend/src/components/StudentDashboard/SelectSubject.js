@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -6,6 +6,8 @@ import { useAuthState } from "../../context";
 import Nav from "./Nav";
 import { TestCard } from "./TestCard";
 import { getTests4Client } from "../../context";
+import History from "./History";
+import { Redirect } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
 
   head: {
@@ -15,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyCard: {
     display: "flex",
-    marginTop: 0,
+    marginTop: 3,
     flexWrap: "wrap",
     "& > *": {
       margin: theme.spacing(0),
@@ -45,19 +47,38 @@ const useStyles = makeStyles((theme) => ({
 function SelectSubject() {
   const classes = useStyles()
   const [show, setShow] = useState(false)
-  const [{ subjects, loading }, dispatch] = useAuthState();
+  const [{ subjects, loading }, dispatch] = useAuthState()
+  const [error, setError] = useState(false)
+  const category = localStorage.getItem("category")
+  const categoryid = localStorage.getItem("categoryid")
+
+  useEffect(() => {
+    try{
+      localStorage.removeItem("testid")
+      localStorage.removeItem("testtime")
+      localStorage.removeItem("testname")
+      localStorage.removeItem("totalMarks")
+      localStorage.removeItem("timer")
+    }catch(err){
+      console.log(err)
+    }
+    if (categoryid === null || category === null) setError(true)
+
+  }, [])
+
   const handleClick = (subid) => {
     getTests4Client(dispatch, subid)
     setShow(true)
   }
+
+  if (error) return <Redirect to="/stud-dashboard" />
+
   return (
     <>
       <Nav />
         <div className={classes.main}>
           <div className="container">
-          <h4 className="">
-              Select a Subject
-            </h4>
+          <History/>
             <div className={classes.bodyCard}>
               {subjects.map(({ subname, subid }) => (
                 <Grid container spacing={3} key={subid}>

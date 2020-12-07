@@ -2,10 +2,12 @@ export const initialState = {
   isAuthenticated: false,
   user: [{}],
   loading: false,
+  load: false,
   subjects: [],
   categories:[],
   tests: [],
   questions: [],
+  results: [],
   errorMessage: null,
 };
 
@@ -100,10 +102,26 @@ export const reducer = (initialState, action) => {
         categories: action.categories,
         loading: false
       };
-      case 'SET_CATEGORY_ID': 
+      case 'START_LOAD': 
       return {
         ...initialState,
-        categoryid:action.categoryid,
+        load: true,
+      }   
+      case 'SUBMISSION_SUCCESS': 
+      return {
+        ...initialState,
+        load: false,
+      }
+      case 'SUBMISSION_FAIL': 
+      return {
+        ...initialState,
+        load: false,
+      }
+      case 'GET_RESULTS': 
+      return {
+        ...initialState,
+        loading: false,
+        results: action.results
       };
       default:
         return initialState

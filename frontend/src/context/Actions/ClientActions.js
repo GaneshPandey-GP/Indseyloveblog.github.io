@@ -130,10 +130,8 @@ export const viewQuestions4Client = async (dispatch, testid) => {
       testid: parseInt(testid)
     }
   };
-  console.log(body);
   try {
     const res = await axios.post(`${baseURL}/viewQuestions`, body, config);
-    console.log(res.data);
     res.data.map((question) => {
       return questions.push(question);
     });
@@ -218,8 +216,46 @@ export const getCategories4Client = async (dispatch, categoryid) => {
 }
 
 
-export const createSubmission = async (dispatch, testid, answers) => {
-  // const categories = [];
+export const createSubmission = async (dispatch, testid, result, answers) => {
+  dispatch({
+    type: "START_LOAD",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "submissions",
+
+    document:{
+      testid,
+      result,
+      answers,
+      userid: parseInt(localStorage.getItem("user.uid")),
+      total: parseInt(localStorage.getItem("totalMarks")),
+      testname: localStorage.getItem("testname")
+    }
+  }
+
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/createSubmission`, body, config);
+    console.log(res.data)
+    dispatch({
+      type: "SUBMISSION_SUCCESS",
+    })
+  } catch (err) {
+    dispatch({
+      type: "SUBMISSION_FAIL",
+    });
+  }
+}
+
+
+export const viewResults = async (dispatch, testid, result, answers) => {
+  const results = []
   dispatch({
     type: "START_LOADING",
   });
@@ -231,26 +267,21 @@ export const createSubmission = async (dispatch, testid, answers) => {
   const body = {
     database: "ExaminationSystem",
     collection: "submissions",
-    document:{
-      testid: testid,
-      userid: localStorage.getItem("user.uid"),
-      answers: answers
-      // [
-      //   {
-      //     qid:2,
-      //     ans:ans
-      //   }
-      // ]
+    Filter:{
+      userid: parseInt(localStorage.getItem("user.uid")),
     }
   }
+
+  console.log(body)
   try {
-    const res = await axios.post(`${baseURL}/createSubmission`, body, config);
+    const res = await axios.post(`${baseURL}/viewResults`, body, config);
     console.log(res.data)
-    // res.data.map((category) => {
-    //   return categories.push(category);
-    // });
+    res.data.map((result) => {
+      return results.push(result);
+    })
     dispatch({
-      type: "ACTION_SUCCESS",
+      type: "GET_RESULTS",
+      results: results,
     });
   } catch (err) {
     dispatch({

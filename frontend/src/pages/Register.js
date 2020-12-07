@@ -42,11 +42,7 @@ export default function Register() {
 
   useEffect(() => {
     try{
-      localStorage.removeItem("user.uid")
-      localStorage.removeItem("user.level")
-      localStorage.removeItem("categoryid")
-      localStorage.removeItem("testname")
-      localStorage.removeItem("testid")
+      localStorage.clear();
     } catch(err) {
       console.log(err)
     }

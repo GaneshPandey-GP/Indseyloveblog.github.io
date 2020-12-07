@@ -2,6 +2,7 @@ import React from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Backdrop from '@material-ui/core/Backdrop';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     left: "50%",
     textAlign: "center",
     alignSelf: "center",
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
   },
 }));
 
@@ -32,10 +37,23 @@ export const NavLoading = () => {
 
 export const Loading = () => {
   return (
-  <div class="text-center">
-    <div class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
+  <div className="text-center">
+    <div className="spinner-border" role="status">
+      <span className="sr-only">Loading...</span>
     </div>
   </div>
   )
 };
+
+
+export const SimpleBackdrop = () => {
+  const classes = useStyles();
+
+  return (
+    <div>
+      <Backdrop className={classes.backdrop} open={true}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
+  );
+}
