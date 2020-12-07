@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -26,13 +27,24 @@ const useStyles = makeStyles((theme) => ({
   home: {
     fontSize: 15,
     fontWeight: 50,
+    color: "#ffff",
+  },
+ 
+  link: {
+    fontSize: 15,
+    fontWeight: 50,
+    textDecorationLine:"none !important",
+    color: "#ffff",
+    "&:hover": {
+      color: "#ffff",
+      textDecoration:"none",
+    },
   },
   title: {
     flexGrow: 1,
     fontSize: 16,
     fontWeight: 700,
   },
-
 
   appBar: {
     background: "#3f51b5",
@@ -60,21 +72,27 @@ function Nav() {
               aria-label="open drawer"
               className={classes.home}
             >
-              Home
+             <Link className={classes.link} to=".">
+                Home
+              </Link>
             </IconButton>
             <IconButton
               color="inherit"
               aria-label="open drawer"
               className={classes.home}
             >
-              Tests
+              <Link className={classes.link} to="/test-details">
+                Results
+              </Link>
             </IconButton>
             <IconButton
               color="inherit"
               aria-label="open drawer"
               className={classes.home}
             >
-              Profile
+              <Link className={classes.link} style={{textDecoration:"none"}} to="">
+                Profile
+              </Link>
             </IconButton>
             <IconButton
               color="inherit"
