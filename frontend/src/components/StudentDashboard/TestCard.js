@@ -5,6 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { useAuthState, viewQuestions4Client } from "../../context";
 import { Link } from "react-router-dom";
+import { CardActions, Drawer } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,66 +21,88 @@ const useStyles = makeStyles((theme) => ({
     transform: "scale(0.8)",
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
+    textAlign: "center",
     padding: theme.spacing(1),
     fontWidth: 900,
   },
   main: {
-    marginTop: 150,
+    marginTop: 120,
   },
   data: {
     padding: theme.spacing(1),
-    marginBottom: 12,
+    marginBottom: 8,
   },
-}))
-
+}));
 
 export const TestCard = () => {
-  const [{ tests }, dispatch] = useAuthState()
-  const handleTestClick = (testid, testtime, totalMarks) => {
+  const [{ tests }] = useAuthState();
+
+  useEffect((testtime, testid, testname, totalMarks) => {
+    handleTestClick(testtime, testid, testname, totalMarks);
+  }, []);
+
+  const handleTestClick = (testtime, testid, testname, totalMarks) => {
     localStorage.setItem("timer", testtime)
     localStorage.setItem("testid", testid)
+    localStorage.setItem("testname", testname)
     localStorage.setItem("totalMarks", totalMarks)
   }
-  console.log(tests)
   const classes = useStyles();
   return (
     <>
+      
       <div className={classes.main}>
-        <div className="container mt-5">
-          <div className="row mt-5">
-            {tests[0] ? <h1 className="col-sm-12 text-capitalize text-center card-header">
-              Tests
-            </h1> : <></>}
-            {tests.map(({ testname, testid, subname, testtime, totalMarks }) => (
-              <div className="col-sm-4 mb-4 mt-3" key={testid}>
-                <Card className={classes.root} variant="outlined" key={testid}>
-                  <CardContent>
-                    <Typography
-                      className={classes.title}
-                      variant="h5"
-                      component="h4"
-                      gutterBottom
-                    >
-                      Test Name : {testname}
-                    </Typography>
-                    <Typography color="textSecondary" className={classes.data}>
-                      Subject : {subname}
-                    </Typography>
-                    <Typography color="textSecondary" className={classes.data}>
-                      Ends On : {testtime} min
-                    </Typography>
-                  </CardContent>
-                    <Link to="/test">
-                      <button onClick={() => handleTestClick(testid, testtime, totalMarks)}
-                        className="btn btn-info btn-lg btn-block"
-                      >
-                        Start
-                      </button>
-                    </Link>
-                </Card>
-              </div>
-            ))}
+      <hr />
+        <div className="container">
+          <div className="row mt-4">
+            {tests[0] ? (
+              <h2 className="col-sm-12 text-center card-header ">
+                Tests
+              </h2>
+            ) : (
+              <></>
+            )}
+            {tests.map(
+              ({ testname, testid, subname, testtime, totalMarks }) => (
+                <div className="col-sm-4 mb-4 mt-4 p-2" key={testid}>
+                  <Card
+                    className={classes.root}
+                    variant="outlined"
+                    key={testid}
+                  >
+                    <CardContent>
+                      <h1 className={classes.title}>{testname}</h1>
+                      <div className={classes.data}>
+                        <Typography color="textSecondary">
+                          Subject : {subname}
+                        </Typography>
+                        <Typography color="textSecondary">
+                          Duration : {testtime} min
+                        </Typography>
+                      </div>
+                    </CardContent>
+                    <CardActions>
+                      <Link to="test" className="btn btn-outline-info btn-lg btn-block">
+                        <button
+                          onClick={() =>
+                            handleTestClick(
+                              testtime,
+                              testid,
+                              testname,
+                              totalMarks
+                            )
+                          }
+                          className="btn "
+                        >
+                          Start
+                        </button>
+                      </Link>
+                    </CardActions>
+                  </Card>
+                </div>
+              )
+            )}
           </div>
         </div>
       </div>

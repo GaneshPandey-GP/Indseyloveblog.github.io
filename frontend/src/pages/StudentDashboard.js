@@ -1,13 +1,22 @@
 import React, { useEffect } from "react";
 import SelectCategory from "../components/StudentDashboard/SelectCategory";
 import { useAuthState } from "../context";
-import { getCategories4Client, getSubjects4Client, getTests4Client } from "../context";
+import { getCategories4Client} from "../context";
 
 export default function StudentDashboard() {
-  const [{ tests }, dispatch] = useAuthState()
+  const [{ }, dispatch] = useAuthState()
   useEffect(() => {
-    getTests4Client(dispatch)
-    getSubjects4Client(dispatch)
+    try{
+      localStorage.removeItem("testid")
+      localStorage.removeItem("testtime")
+      localStorage.removeItem("testname")
+      localStorage.removeItem("categoryid")
+      localStorage.removeItem("totalMarks")
+      localStorage.removeItem("timer")
+      localStorage.removeItem("category")
+    }catch(err){
+      console.log(err)
+    }
     getCategories4Client(dispatch)
   }, [])
 

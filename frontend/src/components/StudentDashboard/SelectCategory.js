@@ -1,35 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { useAuthState } from "../../context";
-import Chip from '@material-ui/core/Chip';
+import Chip from "@material-ui/core/Chip";
 import Nav from "./Nav";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    display: "flex",
-    overflowX: "hidden",
-    marginBottom: 64,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  head: {
-    color: "#3f51b5",
-    fontFamily: "'Times New Roman', Times, serif",
-    fontWeight: 600,
-  },
-  home: {
-    fontSize: 15,
-    fontWeight: 50,
-  },
-  title: {
-    flexGrow: 1,
-    fontSize: 16,
-    fontWeight: 700,
-  },
   bodyCard: {
     display: "flex",
     marginTop: 0,
@@ -48,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4),
     margin: theme.spacing(1),
     fontWeight: 800,
-    width:"100%",
-    margin:'dense',
+    width: "100%",
+    margin: "dense",
     border: "none",
     borderBottom: "1px solid #fff",
     fontSize: 22,
@@ -58,48 +35,44 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: "7px 8px 10px #3f51b5",
     },
   },
-  wrapper: {
-    borderRadius: "6px",
-  },
-  typography: {
-    height: "26px",
-    fontSize: 20,
-    fontWeight: 900,
-  },
-  appBar: {
-    background: "#3f51b5",
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
 }));
-const Change = () =>{
- alert("Hello")
-}
+
 function SelectCategory() {
   const classes = useStyles();
-  const [{ isAuthenticated, loading, categories }, dispatch] = useAuthState();
+  const [{ loading, categories }, dispatch] = useAuthState();
 
+  const clickHandler = (categoryid, category) => {
+    localStorage.setItem("categoryid", categoryid)
+    localStorage.setItem("category", category)
+  };
   return (
     <>
-      <Nav />
+    <Nav />
+      {loading ? (
+        <div></div>
+      ) : (
         <div className={classes.main}>
           <div className="container">
-            <h4 className="">
-              Select a Category
-            </h4>
+            <h4 className="">Select a Category</h4>
             <div className={classes.bodyCard}>
-              {categories.map(({ categoryName, categoryid },index) => (
+              {categories.map(({ categoryName, categoryid }, index) => (
                 <Grid container spacing={4} key={categoryid}>
-                  <Grid item xs={12}> 
-                  <Link  to={{pathname: "/subject-test-view" }}  > <Chip label={categoryName} className={classes.paper} onClick={() => localStorage.setItem("categoryid", categoryid)}  component="button" /> </Link>
+                  <Grid item xs={12}>
+                    <Link to={{ pathname: "/subject-test-view" }}>
+                      <Chip
+                        label={categoryName}
+                        className={classes.paper}
+                        onClick={() => clickHandler(categoryid, categoryName)}
+                        component="button"
+                      />
+                    </Link>
                   </Grid>
                 </Grid>
               ))}
             </div>
           </div>
         </div>
+      )}
     </>
   );
 }

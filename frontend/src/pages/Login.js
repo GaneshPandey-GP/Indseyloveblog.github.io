@@ -11,11 +11,7 @@ import Alert from "@material-ui/lab/Alert";
 function Login(props) {
   useEffect(() => {
     try{
-      localStorage.removeItem("user.uid")
-      localStorage.removeItem("user.level")
-      localStorage.removeItem("categoryid")
-      localStorage.removeItem("testname")
-      localStorage.removeItem("testid")
+      localStorage.clear();
     } catch(err) {
       console.log(err)
     }

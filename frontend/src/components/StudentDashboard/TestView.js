@@ -1,178 +1,152 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import TimerIcon from '@material-ui/icons/Timer';
-import PersonIcon from '@material-ui/icons/Person';
-import HelpIcon from '@material-ui/icons/Help';
-import Questions from './Questions';
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { createSubmission, useAuthState, viewQuestions4Client } from "../../context";
 import Timer from './Timer';
-import { NavLoading } from '../Loading';
-import { useAuthState } from '../../context';
-
-const drawerWidth = 240;
+import TestRedirect from "./TestRedirect";
+import SimpleNav from "../SimpleNav";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
+  formControl: {
+    margin: theme.spacing(3),
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
+  button: {
+    margin: theme.spacing(1, 1, 0, 0),
   },
 }));
 
-export default function MiniDrawer() {
+function TestView() {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [{ loading }] = useAuthState();
+  const [{ questions, loading }, dispatch] = useAuthState()
+  const [selected, setSelected] = React.useState([]);
+  const [helperText, setHelperText] = React.useState("Choose wisely");
+  const [error, setError] = useState(false)
+  const testid = localStorage.getItem("testid")
+  const total = localStorage.getItem("totalMarks")
+  const timer = localStorage.getItem("timer")
+  const testname = localStorage.getItem("testname")
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+console.log(testid, testname, timer, total)
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  useEffect(() => {
+    if (testid === "undefined" || total === "undefined" || testname === "undefined" || timer === "undefined") setError(true)
+    viewQuestions4Client(dispatch, testid )
+  },[dispatch, testid])
+
+  const selector = React.useCallback(
+    (key, ans) =>
+      setSelected((selected) => ({
+        ...selected,
+        [key]: {
+          ...selected[key],
+          qid: key,
+          ans
+        },
+      })),
+    []
+  )
+
+  const getMarks = () => {
+    let answers = Object.assign({}, ...questions.map((x) => ({[x.qid]: x.correctAns})))
+    let marks = Object.assign({}, ...questions.map((x) => ({[x.qid]: x.marks})))
+    let totalmarks = 0
+    for (let i in selected) {
+      if(selected[i].ans === answers[i]) {
+        totalmarks = totalmarks + marks[i]
+      }
+    }
+    return(totalmarks)
+  }
+
+  const handleRadioChange = (e, qid) => {
+    const data = e.target.value
+    selector(qid, data)
+    setHelperText(" ");
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const result = getMarks()
+    const answers = Object.values(selected)
+    // alert("You got" + " " + result)
+    if (!error) createSubmission(dispatch, testid, result, answers )
+  }
+  console.log(error)
+  if (error) return <Redirect to="/subject-test-view" />
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          
-          <Typography variant="h6" noWrap>
-            Attempt the following questions:
-          </Typography>
-        
-        </Toolbar>
-        {loading ? <NavLoading /> : <></>}
-      </AppBar>
-      
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
+    <div>
+    {loading ? <SimpleNav heading={"Attempt all the questions:"}/> :
+    <>
+      <SimpleNav heading={"Attempt all the questions:"}/>
+      <Timer />
+      <form className="container " onSubmit={handleSubmit}>
+        {questions.map(
+          ({
+            question,
+            optionA,
+            optionB,
+            optionC,
+            optionD,
+            qid,
+            marks
+          }, index) => (
+            <div className="card mt-3 rounded-lg shadow-lg" key={qid}>
+              <div className="card-header">
+               <h4> QNo.{index+1} {question}</h4>
+              </div>
+              <div className="card-body">
+              <p className="float-right">{marks} marks</p>
+                  <FormControl
+                    component="fieldset"
+                    className={classes.formControl}
+                  >
+                    <RadioGroup
+                      aria-label="quiz"
+                      name="quiz"
+                      value={selected[index]}
+                      onChange={(e) => handleRadioChange(e, qid)}
+                    >
+                      <FormControlLabel
+                        value="a"
+                        control={<Radio />}
+                        label={optionA}
+                      />
+                      <FormControlLabel
+                        value="b"
+                        control={<Radio />}
+                        label={optionB}
+                      />
+                      <FormControlLabel
+                        value="c"
+                        control={<Radio />}
+                        label={optionC}
+                      />
+                      <FormControlLabel
+                        value="d"
+                        control={<Radio />}
+                        label={optionD}
+                      />
+                    </RadioGroup>
+                    <FormHelperText>{helperText}</FormHelperText>
+                  </FormControl>
+              </div>
+            </div>
+          )
+        )}
+        <div className="d-flex justify-content-center mt-5 mb-3">
+          <TestRedirect handleSubmit={handleSubmit}/>
         </div>
-        <Divider />
-        <List>
-            <ListItem button>
-              <ListItemIcon> <PersonIcon /></ListItemIcon>
-              <ListItemText primary={"User"} />
-            </ListItem>
-        </List>
-        <Divider />
-        <List>
-            <ListItem button>
-              <ListItemIcon> <HelpIcon /></ListItemIcon>
-              <ListItemText primary={"Help"} />
-            </ListItem>
-        </List>
-        <List>
-            
-        </List>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {/* <div className="align-items-center card-text  row">
-          <h1 className="col-sm-10">Test</h1>
-          <TimerIcon /> <Timer />
-        </div> */}
-        <Questions />
-      </main>
+      </form>
+      </>}
     </div>
   );
 }
+
+export default TestView;

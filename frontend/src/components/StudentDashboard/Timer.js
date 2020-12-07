@@ -34,9 +34,8 @@ export default function Timer() {
           Times Up!!
         </div>
       ) : (<>{minutes >= 0 ? (
-        <div className="container col-sm-10 text-right">
-          <span className="text-info">
-            
+        <div className="container col-sm-10 text-right mt-4">
+          <span className="text-warning">
             <strong>
               <TimerIcon /> Time Left
             </strong>

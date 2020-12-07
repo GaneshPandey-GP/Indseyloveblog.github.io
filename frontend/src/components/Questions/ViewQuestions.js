@@ -8,6 +8,7 @@ import { useAuthState, viewQuestions } from "../../context";
 import { NavLoading } from "../Loading";
 import { Card, CardActions, CardContent, Divider } from "@material-ui/core";
 import UpdateQn, { UpdateQn2 } from "./UpdateQn";
+import SimpleNav from "../SimpleNav";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ViewQuestions() {
   const [testname, setTestname] = useState(localStorage.getItem("testname"));
-  const [{ loading, questions }, dispatch] = useAuthState();
+  const [{ questions }, dispatch] = useAuthState();
 
   useEffect(() => {
     viewQuestions(dispatch, localStorage.getItem("testid"));
@@ -26,14 +27,7 @@ export default function ViewQuestions() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <Typography variant="h6">
-            Questions of "{testname}"
-          </Typography>
-        </Toolbar>
-        {loading ? <NavLoading /> : <></>}
-      </AppBar>
+      <SimpleNav heading={`Questions of ${testname}`} />
       <Grid container spacing={3}>
         {questions.map(
           (

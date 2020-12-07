@@ -218,7 +218,7 @@ export const getCategories4Client = async (dispatch, categoryid) => {
 
 export const createSubmission = async (dispatch, testid, result, answers) => {
   dispatch({
-    type: "START_LOADING",
+    type: "START_LOAD",
   });
   const config = {
     headers: {
@@ -226,14 +226,16 @@ export const createSubmission = async (dispatch, testid, result, answers) => {
     },
   };
   const body = {
-    "database": "ExaminationSystem",
-    "collection": "submissions",
-    testid,
-    result,
-    "document":{
-      "userid": parseInt(localStorage.getItem("user.uid")),
+    database: "ExaminationSystem",
+    collection: "submissions",
+
+    document:{
+      testid,
+      result,
       answers,
-      total: parseInt(localStorage.getItem("totalMarks"))
+      userid: parseInt(localStorage.getItem("user.uid")),
+      total: parseInt(localStorage.getItem("totalMarks")),
+      testname: localStorage.getItem("testname")
     }
   }
 
@@ -243,6 +245,43 @@ export const createSubmission = async (dispatch, testid, result, answers) => {
     console.log(res.data)
     dispatch({
       type: "SUBMISSION_SUCCESS",
+    })
+  } catch (err) {
+    dispatch({
+      type: "SUBMISSION_FAIL",
+    });
+  }
+}
+
+
+export const viewResults = async (dispatch, testid, result, answers) => {
+  const results = []
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "submissions",
+    Filter:{
+      userid: parseInt(localStorage.getItem("user.uid")),
+    }
+  }
+
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/viewResults`, body, config);
+    console.log(res.data)
+    res.data.map((result) => {
+      return results.push(result);
+    })
+    dispatch({
+      type: "GET_RESULTS",
+      results: results,
     });
   } catch (err) {
     dispatch({
