@@ -254,7 +254,7 @@ export const createSubmission = async (dispatch, testid, result, answers) => {
 }
 
 
-export const viewResults = async (dispatch, testid, result, answers) => {
+export const viewResults = async (dispatch) => {
   const results = []
   dispatch({
     type: "START_LOADING",
@@ -282,6 +282,44 @@ export const viewResults = async (dispatch, testid, result, answers) => {
     dispatch({
       type: "GET_RESULTS",
       results: results,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}
+
+export const viewSubmission = async (dispatch, testid, submissionID) => {
+  const submission = []
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "submissions",
+    Filter:{
+      userid: parseInt(localStorage.getItem("user.uid")),
+      testid,
+      submissionID: parseInt(submissionID)
+    }
+  }
+
+  // console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/viewSubmission`, body, config);
+    // console.log(res.data)
+    res.data.map((ques) => {
+      return submission.push(ques);
+    })
+    dispatch({
+      type: "GET_SUBMISSION",
+      submission: submission,
     });
   } catch (err) {
     dispatch({

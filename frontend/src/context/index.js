@@ -25,6 +25,7 @@ import {
   getSubjects4Client,
   createSubmission,
   viewResults,
+  viewSubmission
 } from "./Actions/ClientActions";
 
 import { AuthProvider, useAuthState } from "./context";
@@ -54,5 +55,6 @@ export {
   getTests4Client,
   getSubjects4Client,
   createSubmission,
-  viewResults
+  viewResults,
+  viewSubmission
 };

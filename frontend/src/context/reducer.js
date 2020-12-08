@@ -8,6 +8,7 @@ export const initialState = {
   tests: [],
   questions: [],
   results: [],
+  submission: [],
   errorMessage: null,
 };
 
@@ -123,6 +124,12 @@ export const reducer = (initialState, action) => {
         loading: false,
         results: action.results
       };
+      case 'GET_SUBMISSION': 
+      return {
+        ...initialState,
+        submission: action.submission,
+        loading: false,
+      }
       default:
         return initialState
   }

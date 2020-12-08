@@ -61,7 +61,7 @@ export default function TestRedirect({ handleSubmit }) {
                   color="primary"
                   variant="contained"
                 >
-                  View Submission
+                  View Results
                 </Button>
               </Link>
 

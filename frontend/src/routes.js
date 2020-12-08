@@ -12,6 +12,7 @@ import Questions from "./pages/Questions";
 import StudentView from "./pages/StudentView";
 import history from './config/history'
 import Results from "./components/StudentDashboard/Results";
+import Submission from "./components/StudentDashboard/Submission";
 
 const BaseRouter = () => (
     <Router history={history}>
@@ -25,6 +26,7 @@ const BaseRouter = () => (
                 <StudPrivateRoute exact path="/test" component={TestView} /> 
                 <AdmPrivateRoute exact path="/sub-admin-dashboard" component={SubAdminDashboard} />
                 <StudPrivateRoute exact path="/stud-dashboard" component={StudentDashboard} />
+                <StudPrivateRoute exact path="/submission" component={Submission} />
                 <StudPrivateRoute exact path="/results" component={Results} />
                 <Route exact path="*" component={NotFound} />
             </Switch>
