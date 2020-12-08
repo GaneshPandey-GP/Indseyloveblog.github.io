@@ -9,7 +9,6 @@ import { getTests4Client } from "../../context";
 import History from "./History";
 import { Redirect } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
-
   head: {
     color: "#3f51b5",
     fontFamily: "'Times New Roman', Times, serif",
@@ -39,60 +38,68 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     "&:hover": {
       boxShadow: "7px 8px 10px #3f51b5",
-      cursor: 'pointer'
+      cursor: "pointer",
     },
   },
 }));
 
 function SelectSubject() {
-  const classes = useStyles()
-  const [show, setShow] = useState(false)
-  const [{ subjects, loading }, dispatch] = useAuthState()
-  const [error, setError] = useState(false)
-  const category = localStorage.getItem("category")
-  const categoryid = localStorage.getItem("categoryid")
+  const classes = useStyles();
+  const [show, setShow] = useState(false);
+  const [{ subjects, loading }, dispatch] = useAuthState();
+  const [error, setError] = useState(false);
+  const category = localStorage.getItem("category");
+  const categoryid = localStorage.getItem("categoryid");
 
   useEffect(() => {
-    try{
-      localStorage.removeItem("testid")
-      localStorage.removeItem("testtime")
-      localStorage.removeItem("testname")
-      localStorage.removeItem("totalMarks")
-      localStorage.removeItem("timer")
-    }catch(err){
-      console.log(err)
+    try {
+      localStorage.removeItem("testid");
+      localStorage.removeItem("testtime");
+      localStorage.removeItem("testname");
+      localStorage.removeItem("totalMarks");
+      localStorage.removeItem("timer");
+    } catch (err) {
+      console.log(err);
     }
-    if (categoryid === null || category === null) setError(true)
-
-  }, [])
+    if (categoryid === null || category === null) setError(true);
+  }, []);
 
   const handleClick = (subid) => {
-    getTests4Client(dispatch, subid)
-    setShow(true)
-  }
+    getTests4Client(dispatch, subid);
+    setShow(true);
+  };
 
-  if (error) return <Redirect to="/stud-dashboard" />
+  if (error) return <Redirect to="/stud-dashboard" />;
 
   return (
     <>
       <Nav />
-        <div className={classes.main}>
-          <div className="container">
-          <History/>
-            <div className={classes.bodyCard}>
-              {subjects.map(({ subname, subid }) => (
-                <Grid container spacing={3} key={subid}>
-                  <Grid item xs={12}  >
-                    <Paper className={classes.paper} onClick={() => handleClick(subid)}>
-                      {subname}
-                    </Paper>
+      {loading ? (
+        <div></div>
+      ) : (
+        <div>
+          <div className={classes.main}>
+            <div className="container">
+              <History />
+              <div className={classes.bodyCard}>
+                {subjects.map(({ subname, subid }) => (
+                  <Grid container spacing={3} key={subid}>
+                    <Grid item xs={12}>
+                      <Paper
+                        className={classes.paper}
+                        onClick={() => handleClick(subid)}
+                      >
+                        {subname}
+                      </Paper>
+                    </Grid>
                   </Grid>
-                </Grid>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
+          {show && loading === false ? <TestCard /> : <></>}
         </div>
-        {show && loading === false ? <TestCard /> : <></>}
+      )}
     </>
   );
 }

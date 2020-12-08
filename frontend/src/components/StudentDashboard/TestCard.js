@@ -37,16 +37,22 @@ const useStyles = makeStyles((theme) => ({
 
 export const TestCard = () => {
   const [{ tests }] = useAuthState();
+  var retrievedData = localStorage.getItem("testsGiven");
+  var testsGiven = JSON.parse(retrievedData)
 
   useEffect((testtime, testid, testname, totalMarks) => {
-    handleTestClick(testtime, testid, testname, totalMarks);
-  }, []);
+    handleTestClick(testtime, testid, testname, totalMarks)
+  }, [tests]);
 
   const handleTestClick = (testtime, testid, testname, totalMarks) => {
     localStorage.setItem("timer", testtime)
     localStorage.setItem("testid", testid)
     localStorage.setItem("testname", testname)
     localStorage.setItem("totalMarks", totalMarks)
+  }
+  
+  const handleSubmissionClick = (testid) => {
+    localStorage.setItem("testid", testid)
   }
   const classes = useStyles();
   return (
@@ -83,7 +89,21 @@ export const TestCard = () => {
                       </div>
                     </CardContent>
                     <CardActions>
-                      <Link to="test" className="btn btn-outline-info btn-lg btn-block">
+                    {testsGiven.find((value) => value === testid) ? 
+
+                      (<Link to="/submission" className="btn btn-outline-info btn-lg btn-block">
+                        <button
+                          onClick={() =>
+                            handleSubmissionClick(
+                              testid,
+                            )
+                          }
+                          className="btn "
+                        >
+                          View Submission
+                        </button>
+                      </Link>) :
+                      (<Link to="/test" className="btn btn-outline-info btn-lg btn-block">
                         <button
                           onClick={() =>
                             handleTestClick(
@@ -97,7 +117,8 @@ export const TestCard = () => {
                         >
                           Start
                         </button>
-                      </Link>
+                      </Link>)
+                      }
                     </CardActions>
                   </Card>
                 </div>

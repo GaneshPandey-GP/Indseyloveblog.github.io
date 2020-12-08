@@ -28,12 +28,11 @@ function Submission() {
   const classes = useStyles();
   const [{ submission, questions, loading }, dispatch] = useAuthState();
   const  testid = localStorage.getItem("testid")
-  const  submissionID = localStorage.getItem("submissionID")
   let yourSoln = [];
   let result = [];
 
   useEffect(() => {
-    viewSubmission(dispatch, testid, submissionID);
+    viewSubmission(dispatch, testid);
     viewQuestions4Client(dispatch, testid)
   }, []);
 

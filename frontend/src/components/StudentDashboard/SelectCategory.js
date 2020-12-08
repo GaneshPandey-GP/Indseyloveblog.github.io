@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SelectCategory() {
   const classes = useStyles();
-  const [{ loading, categories }, dispatch] = useAuthState();
+  const [{ loading, categories }] = useAuthState();
 
   const clickHandler = (categoryid, category) => {
     localStorage.setItem("categoryid", categoryid)
@@ -53,7 +53,7 @@ function SelectCategory() {
       ) : (
         <div className={classes.main}>
           <div className="container">
-            <h4 className="">Select a Category</h4>
+            <h4>Select a Category</h4>
             <div className={classes.bodyCard}>
               {categories.map(({ categoryName, categoryid }, index) => (
                 <Grid container spacing={4} key={categoryid}>

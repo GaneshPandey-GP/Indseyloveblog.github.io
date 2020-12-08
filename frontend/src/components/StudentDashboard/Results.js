@@ -17,12 +17,11 @@ const Results = () => {
       console.log(err)
     }
     viewResults(dispatch)
-    handleClick(testid, submissionID)
+    handleClick(testid)
   }, [])
 
-  const handleClick = (testid, submissionID) =>{
+  const handleClick = (testid) =>{
     localStorage.setItem("testid", testid)
-    localStorage.setItem("submissionID", submissionID)
   }
   console.log(results)
   return (
@@ -47,7 +46,7 @@ const Results = () => {
                 <td>{result}</td>
                 <td>
                   <Link to="/submission">
-                  <Button variant="contained" color="primary" fullWidth onClick={() => handleClick(testid, submissionID)}>
+                  <Button variant="contained" color="primary" fullWidth onClick={() => handleClick(testid)}>
                     View
                   </Button>
                   </Link>
