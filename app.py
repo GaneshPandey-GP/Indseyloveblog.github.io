@@ -188,6 +188,18 @@ def update_subject():
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
+@app.route('/updateUser', methods=['POST'])
+def update_user():
+    data = request.json
+    if data is None or data == {} or 'DataToBeUpdated' not in data:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+    obj1 = MongoAPI(data)
+    response = obj1.update()
+    return Response(response=json.dumps(response),
+                    status=200,
+                    mimetype='application/json')
 @app.route('/getTests', methods=['POST'])
 def get_tests():
     data = request.json
