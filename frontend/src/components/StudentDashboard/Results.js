@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Nav from "./Nav";
 import { useAuthState, viewResults } from "../../context";
+import { Link } from "react-router-dom";
 
 const Results = () => {
   const [{results}, dispatch] = useAuthState()
-  useEffect(() => {
+  useEffect((testid, submissionID) => {
     try{
       localStorage.removeItem("testid")
       localStorage.removeItem("testtime")
@@ -16,8 +17,13 @@ const Results = () => {
       console.log(err)
     }
     viewResults(dispatch)
+    handleClick(testid, submissionID)
   }, [])
 
+  const handleClick = (testid, submissionID) =>{
+    localStorage.setItem("testid", testid)
+    localStorage.setItem("submissionID", submissionID)
+  }
   console.log(results)
   return (
     <>
@@ -35,14 +41,16 @@ const Results = () => {
               </tr>
             </thead>
             <tbody>
-              {results.map(({result, submissionID, testname, total}) => (<tr key={submissionID}>
+              {results.map(({result, submissionID, testname, total, testid}) => (<tr key={submissionID}>
                 <th scope="row">{testname}</th>
                 <td>{total}</td>
                 <td>{result}</td>
                 <td>
-                  <Button variant="contained" color="primary" fullWidth>
+                  <Link to="/submission">
+                  <Button variant="contained" color="primary" fullWidth onClick={() => handleClick(testid, submissionID)}>
                     View
                   </Button>
+                  </Link>
                 </td>
               </tr>))}
             </tbody>
