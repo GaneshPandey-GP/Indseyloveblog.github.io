@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'Navbar.html' %}
+<div class="page-heading">
+  <div class="container">
+    <div class="heading-content">
+      <h1>Our <em>Blog</em></h1>
+    </div>
+  </div>
+</div>
+
+
+<div class="blog-entries">
+  <div class="container">
+    <div class="col-md-8">
+      <div class="blog-posts">
+        <div class="row">
+          {% for data in post %}
+          <div class="col-md-12">
+            <div class="blog-post">
+              <img src="{{data.image.url}}" alt="">
+              <div class="text-content text-info">
+                <span><a href="#"><i class="fa fa-user" aria-hidden="true"></i> {{request.user.username}}</a> &nbsp; <a
+                    href="#"><i class="fa fa-clock-o" aria-hidden="true"></i> {{data.publish_date|timesince}} ago</a>
+                </span>
+                <h2>{{data.title}}</h2>
+                <p>Proin at augue quam. In laoreet arcu id lacus fringilla auctor. Etiam rutrum aliquet nisl, eu
+                  fermentum elit fermentum sed. Donec finibus urna sed sollicitudin egestas. In hac habitasse platea
+                  dictumst.
+                  <br><br>Phasellus purus turpis, porta non lectus vitae, laoreet blandit diam. Suspendisse elementum
+                  ligula at purus gravida, vel malesuada dolor accumsan. Morbi finibus dapibus ex, ut finibus felis.</p>
+                <div class="simple-btn">
+                  <a href="{% url 'postview' data.slug %}">continue reading</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+
+          <div class="col-md-12">
+            <ul class="page-number">
+              {% if post.has_previous %}
+              <a href="?{{page_request_var}}=1 {% if request.GET.q %}&q={{request.GET.q}}{% endif %}  ">&laquo;
+                first</a>
+              <a
+                href="?{{page_request_var}}={{ post.previous_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">previous</a>
+              {% endif %}
+
+              <span class="current text-danger">
+                Page {{ post.number }} of {{ post.paginator.num_pages }}
+              </span>
+
+              {% if post.has_next %}
+              <a
+                href="?{{page_request_var}}={{ post.next_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">next</a>
+              <a
+                href="?{{page_request_var}}={{ post.paginator.num_pages }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">last
+                &raquo;</a>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+
+      <!-- <div class="search">
+                        <fieldset>
+                            <input name="search" type="text" class="form-control" id="search" placeholder="Search..." required>
+                        </fieldset>
+                    </div> -->
+      {% include 'sidebar.html' %}
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal button -->
+<div class="popup-icon">
+  <button id="modBtn" class="modal-btn"><img src="img/contact-icon.png" alt=""></button>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <!-- Modal Content -->
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h3 class="header-title">Say hello to <em>Highway</em></h3>
+      <div class="close-btn"><img src="img/close_contact.png" alt=""></div>
+    </div>
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <div class="col-md-6 col-md-offset-3">
+        <form id="contact" action="" method="post">
+          <div class="row">
+            <div class="col-md-12">
+              <fieldset>
+                <input name="name" type="text" class="form-control" id="name" placeholder="Your name..." required>
+              </fieldset>
+            </div>
+            <div class="col-md-12">
+              <fieldset>
+                <input name="email" type="email" class="form-control" id="email" placeholder="Your email..." required>
+              </fieldset>
+            </div>
+            <div class="col-md-12">
+              <fieldset>
+                <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your message..."
+                  required></textarea>
+              </fieldset>
+            </div>
+            <div class="col-md-12">
+              <fieldset>
+                <button type="submit" id="form-submit" class="btn">Send Message Now</button>
+              </fieldset>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<section class="overlay-menu">
+  <div class="container">
+    <div class="row">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="index.html">Home - Full-width</a>
+          </li>
+          <li>
+            <a href="masonry.html">Home - Masonry</a>
+          </li>
+          <li>
+            <a href="grid.html">Home - Small-width</a>
+          </li>
+          <li>
+            <a href="about.html">About Us</a>
+          </li>
+          <li>
+            <a href="blog.html">Blog Entries</a>
+          </li>
+          <li>
+            <a href="single-post.html">Single Post</a>
+          </li>
+        </ul>
+        <p>We create awesome templates for you</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
