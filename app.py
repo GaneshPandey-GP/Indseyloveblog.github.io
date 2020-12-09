@@ -389,8 +389,8 @@ def create_link():
     data = request.json
     data2=json.loads('{"database":"ExaminationSystem","collection":"sequences"}')
     obj2 = MongoAPI(data2)
-    print(obj2.getSequences()[0].get('subjectSequence'))
-    cid=(obj2.getSequences()[0].get('subjectSequence'))
+    print(obj2.getSequences()[0].get('linkSequence'))
+    cid=(obj2.getSequences()[0].get('linkSequence'))
     print(cid)
     data['document']['linkid']=cid
     if data is None or data == {}:
