@@ -227,14 +227,17 @@ export const createSubmission = async (dispatch, testid, result, answers) => {
   const body = {
     database: "ExaminationSystem",
     collection: "submissions",
-
     document:{
       testid,
       result,
       answers,
       userid: parseInt(localStorage.getItem("user.uid")),
       total: parseInt(localStorage.getItem("totalMarks")),
-      testname: localStorage.getItem("testname")
+      testname: localStorage.getItem("testname"),
+      fname: localStorage.getItem("fname"),
+      lname: localStorage.getItem("lname"),
+      email: localStorage.getItem("email"),
+      contact: localStorage.getItem("contact"),
     }
   }
 
@@ -357,6 +360,9 @@ export const updateUser = async (dispatch, testid) => {
 }
 
 export const readUser = async (dispatch) => {
+  dispatch({
+    type: "START_LOAD",
+  });
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -373,10 +379,11 @@ export const readUser = async (dispatch) => {
 
   try {
     const res = await axios.post(`${baseURL}/readUsers`, body, config)
+    console.log(res.data)
     dispatch({
       type: "LOAD_USER",
       user: res.data
-    });
+    })
   } catch (err) {
     dispatch({
       type: "ACTION_FAIL",

@@ -4,9 +4,8 @@ import { readUser, useAuthState } from "../context";
 import { getCategories4Client } from "../context";
 
 export default function StudentDashboard() {
-  const [{ user }, dispatch] = useAuthState();
+  const [{ }, dispatch] = useAuthState();
   useEffect(() => {
-    readUser(dispatch)
     try {
       localStorage.removeItem("testid");
       localStorage.removeItem("testtime");
@@ -20,7 +19,6 @@ export default function StudentDashboard() {
     }
     getCategories4Client(dispatch);
   }, []);
-  localStorage.setItem("testsGiven", JSON.stringify(user[0].testsGiven))
   return (
     <>
       <SelectCategory />
