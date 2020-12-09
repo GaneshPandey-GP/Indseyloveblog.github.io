@@ -11,7 +11,10 @@ export default function StudentDashboard() {
     readUser(dispatch)
   }, [])
   localStorage.setItem("testsGiven", JSON.stringify(user[0].testsGiven))
-
+  localStorage.setItem("contact", user[0].contact)
+  localStorage.setItem("email", user[0].email)
+  localStorage.setItem("lname", user[0].lname)
+  localStorage.setItem("fname", user[0].fname)
   return (
     <>
       <SelectSubject />
