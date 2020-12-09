@@ -14,6 +14,7 @@ import {
   createCategory,
   updateCategory,
   getCategories,
+  viewSubmissions
 } from "./Actions/Sub-adminActions";
 
 import {
@@ -59,4 +60,5 @@ export {
   viewResults,
   viewSubmission,
   readUser,
+  viewSubmissions,
 };
