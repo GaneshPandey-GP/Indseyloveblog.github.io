@@ -82,7 +82,7 @@ function TestView() {
     // alert("You got" + " " + result)
     if (!error) createSubmission(dispatch, testid, result, answers )
   }
-  console.log(error)
+  
   if (error) return <Redirect to="/subject-test-view" />
 
   return (

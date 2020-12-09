@@ -29,6 +29,8 @@ import { useAuthState } from "../../context";
 import { NavLoading } from "../Loading";
 import CreateCategory from "./CreateCategory";
 import ViewCategory from "./ViewCategory";
+import CreateLink from "./CreateLink";
+import ViewLink from "./ViewLink";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -130,18 +132,15 @@ function LDrawer() {
           <Divider />
           <CreateCategory/>
           <CreateSub />
+          <CreateLink />
+          <CreateTest />
+          
           <ViewCategory/>
           <ViewSubjects />
-          <CreateTest />
+          <ViewLink />
         </List>
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Settings"} />
-          </ListItem>
           <ListItem button>
             <ListItemIcon>
               <ExitToAppIcon />

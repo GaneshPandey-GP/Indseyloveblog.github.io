@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { loginUser, useAuthState } from "../context";
 import { Loading } from "../components/Loading";
 import { useForm } from "react-hook-form";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import Alert from "@material-ui/lab/Alert";
 
 function Login(props) {

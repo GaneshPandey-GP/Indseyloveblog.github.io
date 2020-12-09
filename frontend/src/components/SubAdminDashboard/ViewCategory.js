@@ -59,7 +59,7 @@ export default function ViewCategory() {
           <ListItemIcon>
             <LibraryBooksIcon />
           </ListItemIcon>
-          <ListItemText primary={"Categories"} />
+          <ListItemText primary={"View Categories"} />
         </ListItem>
         <Drawer
           anchor={"right"}

@@ -14,7 +14,10 @@ import {
   createCategory,
   updateCategory,
   getCategories,
-  viewSubmissions
+  viewSubmissions,
+  createLink,
+  getLinks,
+  updateLink
 } from "./Actions/Sub-adminActions";
 
 import {
@@ -27,7 +30,8 @@ import {
   createSubmission,
   viewResults,
   viewSubmission,
-  readUser
+  readUser,
+  getLinks4Client
 } from "./Actions/ClientActions";
 
 import { AuthProvider, useAuthState } from "./context";
@@ -61,4 +65,8 @@ export {
   viewSubmission,
   readUser,
   viewSubmissions,
+  createLink,
+  getLinks,
+  updateLink,
+  getLinks4Client
 };

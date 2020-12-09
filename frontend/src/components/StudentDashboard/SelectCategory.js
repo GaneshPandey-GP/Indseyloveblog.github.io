@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import { useAuthState } from "../../context";
 import Chip from "@material-ui/core/Chip";
 import Nav from "./Nav";
+import LinkCarousel from "./LinkCarousel";
 
 const useStyles = makeStyles((theme) => ({
   bodyCard: {
@@ -53,6 +54,7 @@ function SelectCategory() {
       ) : (
         <div className={classes.main}>
           <div className="container">
+          <LinkCarousel />
             <h4>Select a Category</h4>
             <div className={classes.bodyCard}>
               {categories.map(({ categoryName, categoryid }, index) => (
