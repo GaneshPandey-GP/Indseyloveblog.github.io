@@ -60,8 +60,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Submission() {
   const [{ submission, loading }, dispatch] = useAuthState();
   useEffect(() => {
-    const contect = localStorage.getItem("contact")
-    console.log("cont",contect)
+
     viewSubmissions(dispatch);
   }, []);
   const classes = useStyles();

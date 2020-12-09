@@ -37,8 +37,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 15,
     color: theme.palette.text.secondary,
     "&:hover": {
-      boxShadow: "7px 8px 10px #3f51b5",
+      boxShadow: "7px 8px 10px #3f51b5",color:"#3f51b5",
       cursor: "pointer",
+    },
+    
+    "&:active": {
+      backgroundColor: "#acb1c5",
     },
   },
 }));
