@@ -13,14 +13,14 @@ import StudentView from "./pages/StudentView";
 import history from './config/history'
 import Results from "./components/StudentDashboard/Results";
 import Submission from "./components/StudentDashboard/Submission";
-
+import SubAdminSubmission from "./components/SubAdminDashboard/SubAdminSubmission"
 const BaseRouter = () => (
     <Router history={history}>
             <Switch>
                 <Route exact path="/login" component={Login} /> 
                 <Route exact path="/sub-admin-login" component={SubAdminLogin} />
                 <Route exact path="/register" component={Register} />
-
+                <Route exact path="/sub-admin-submission" component={SubAdminSubmission} />
                 <AdmPrivateRoute exact path="/add-questions" component={Questions} />
                 <StudPrivateRoute exact path="/subject-test-view" component={StudentView} />
                 <StudPrivateRoute exact path="/test" component={TestView} /> 

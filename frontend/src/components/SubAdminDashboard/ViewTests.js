@@ -42,7 +42,7 @@ export default function ViewTests() {
   return (
     <>
     <div className="d-flex justify-content-between">
-      <Typography variant="h6" id="tableTitle" component="div">
+      <Typography variant="h4" id="tableTitle" component="div">
         Tests
       </Typography>
       <SubjectFilter />
@@ -56,8 +56,9 @@ export default function ViewTests() {
             <TableCell className={classes.header}>Name of the test</TableCell>
             <TableCell className={classes.header}>Subject</TableCell>
             <TableCell className={classes.header}>Duration(mins)</TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            <TableCell className={classes.header}>View Questions</TableCell>
+            <TableCell className={classes.header}>View submission</TableCell>
+            <TableCell className={classes.header}>Edit Test</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -70,6 +71,9 @@ export default function ViewTests() {
               <TableCell component="th" scope="row">{testtime}</TableCell>
               <TableCell component="th" scope="row">
                <Link to={{pathname: "/add-questions"}} ><button type="button" className="btn btn-info" onClick={() => clickHandler(testid, testname)}>Questions</button></Link> 
+              </TableCell>
+              <TableCell component="th" scope="row">
+               <Link to={{pathname: "/sub-admin-submission"}} ><button type="button" className="btn btn-primary" onClick={() => clickHandler(testid, testname)}>Submissions</button></Link> 
               </TableCell>
               <TableCell component="th" scope="row">
                <UpdateTest initialTestName={testname} initialSubjectid={subjectid} initialTestTime={testtime} testid={testid}/>

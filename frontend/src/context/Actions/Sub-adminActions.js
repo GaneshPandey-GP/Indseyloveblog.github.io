@@ -571,3 +571,39 @@ export const getCategories = async (dispatch, categoryid) => {
     });
   }
 };
+
+
+export const viewSubmissions = async (dispatch) => {
+  const submissions = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "submissions",
+    Filter:{
+      testid: localStorage.getItem("testid"),
+    }
+}
+
+  try {
+    const res = await axios.post(`${baseURL}/viewResults`, body, config);
+    console.log(res.data);
+    res.data.map((submission) => {
+      return submissions.push(submission);
+    });
+    dispatch({
+      type: "GET_SUBMISSION",
+      submission: submissions,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};

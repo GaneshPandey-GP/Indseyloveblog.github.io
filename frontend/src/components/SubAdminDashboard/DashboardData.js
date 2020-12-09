@@ -55,22 +55,12 @@ export default function DashboardData() {
       >
         <div className={classes.drawerHeader} />
         <Grid container spacing={3} className="mt-3">
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={12}>
             <Paper className={classes.paper}>
               <ViewTests />
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={12} md={6}>
-            <Paper className={classes.paper}>
-              <Typography
-                className={classes.title}
-                color="textPrimary"
-                gutterBottom
-              >
-                Submissions
-              </Typography>
-            </Paper>
-          </Grid>
+          
         </Grid>
       </main>
     </div>
