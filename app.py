@@ -18,6 +18,7 @@ from pymongo import MongoClient
 ### collection:"name",
 ### username:"username",
 ### password:"password"
+
 class MongoAPI:
     def __init__(self, data):
         self.client = MongoClient("mongodb+srv://allplayertest:qwerty1234@ayushparida.sqwfq.mongodb.net/ExaminationSystem?retryWrites=true&w=majority")
