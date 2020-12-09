@@ -136,7 +136,7 @@ export const updateSubject = async (dispatch, subid, subname) => {
   }
 };
 
-export const getTests = async (dispatch, subid) => {
+export const getTests = async (dispatch, subjectid) => {
   const tests = [];
   dispatch({
     type: "START_LOADING",
@@ -150,7 +150,7 @@ export const getTests = async (dispatch, subid) => {
     database: "ExaminationSystem",
     collection: "tests",
     Filter: {
-      subid,
+      subjectid,
       createdBy: parseInt(localStorage.getItem("user.uid")),
     },
   };

@@ -15,7 +15,7 @@ export default function TestRedirect({ handleSubmit }) {
   const [open, setOpen] = React.useState(false);
   const [{ load }] = useAuthState();
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"))
 
   const handleClickOpen = (e) => {
     setOpen(true)
@@ -54,14 +54,14 @@ export default function TestRedirect({ handleSubmit }) {
               <DialogContentText>
                 Your response has been recorded.
               </DialogContentText>
-              <Link to="results">
+              <Link to="submission">
                 <Button
                   autoFocus
                   onClick={handleClose}
                   color="primary"
                   variant="contained"
                 >
-                  View Results
+                  View Submission
                 </Button>
               </Link>
 

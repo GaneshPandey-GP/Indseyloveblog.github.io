@@ -32,12 +32,17 @@ function TestView() {
   const timer = localStorage.getItem("timer")
   const testname = localStorage.getItem("testname")
 
-console.log(testid, testname, timer, total)
-
   useEffect(() => {
     if (testid === "undefined" || total === "undefined" || testname === "undefined" || timer === "undefined") setError(true)
-    viewQuestions4Client(dispatch, testid )
-  },[dispatch, testid])
+    viewQuestions4Client(dispatch, testid)
+  },[testid, testname])
+
+  useEffect(() => {
+    var testsGiven = JSON.parse(localStorage.getItem('testsGiven'))
+    console.log(testsGiven)
+    testsGiven.push(parseInt(testid))
+    localStorage.setItem('testsGiven', JSON.stringify(testsGiven))
+  },[])
 
   const selector = React.useCallback(
     (key, ans) =>

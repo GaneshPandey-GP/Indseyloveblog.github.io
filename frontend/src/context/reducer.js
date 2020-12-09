@@ -19,7 +19,13 @@ export const reducer = (initialState, action) => {
         return {
           ...initialState,
           loading: true
-        };
+        }
+      case 'LOAD_USER':
+        return{
+          ...initialState,
+          loading: false,
+          user: action.user
+        }
       case 'LOGIN_SUCCESS':
         localStorage.setItem('user.level', action.payload[0].level);
         localStorage.setItem('user.uid', action.payload[0].uid);
