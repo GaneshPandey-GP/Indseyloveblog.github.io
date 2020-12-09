@@ -14,6 +14,7 @@ import history from './config/history'
 import Results from "./components/StudentDashboard/Results";
 import Submission from "./components/StudentDashboard/Submission";
 import SubAdminSubmission from "./components/SubAdminDashboard/SubAdminSubmission"
+
 const BaseRouter = () => (
     <Router history={history}>
             <Switch>
@@ -28,6 +29,7 @@ const BaseRouter = () => (
                 <StudPrivateRoute exact path="/stud-dashboard" component={StudentDashboard} />
                 <StudPrivateRoute exact path="/submission" component={Submission} />
                 <StudPrivateRoute exact path="/results" component={Results} />
+
                 <Route exact path="*" component={NotFound} />
             </Switch>
     </Router>

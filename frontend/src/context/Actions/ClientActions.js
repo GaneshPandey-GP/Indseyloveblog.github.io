@@ -241,14 +241,12 @@ export const createSubmission = async (dispatch, testid, result, answers) => {
     }
   }
 
-  console.log(body)
   try {
-    const res = await axios.post(`${baseURL}/createSubmission`, body, config);
-    console.log(res.data)
-    updateUser(dispatch)
+    await axios.post(`${baseURL}/createSubmission`, body, config);
     dispatch({
       type: "SUBMISSION_SUCCESS",
     })
+    updateUser(dispatch)
   } catch (err) {
     dispatch({
       type: "SUBMISSION_FAIL",
@@ -329,7 +327,7 @@ export const viewSubmission = async (dispatch, testid) => {
 
 export const updateUser = async (dispatch, testid) => {
   dispatch({
-    type: "START_LOADING",
+    type: "START_LOAD",
   });
   const config = {
     headers: {
@@ -340,14 +338,13 @@ export const updateUser = async (dispatch, testid) => {
     database: 'ExaminationSystem',
     collection: 'users',
     Filter:{
-      userid: localStorage.getItem("user.uid")
+      uid: parseInt(localStorage.getItem("user.uid"))
     },
    DataToBeUpdated: {
       testsGiven: JSON.parse(localStorage.getItem('testsGiven'))
   }}
-  console.log(body)
   try {
-    await axios.post(`${baseURL}/updateUser`, body, config)
+    const res = await axios.post(`${baseURL}/updateUser`, body, config)
     readUser(dispatch);
     dispatch({
       type: "ACTION_SUCCESS",
@@ -390,3 +387,37 @@ export const readUser = async (dispatch) => {
     });
   }
 }
+
+export const getLinks4Client = async (dispatch) => {
+  const links = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "links",
+    Filter: {
+    },
+  };
+
+  try {
+    const res = await axios.post(`${baseURL}/getLinks`, body, config);
+    console.log(res.data)
+    res.data.map((link) => {
+      return links.push(link);
+    });
+    dispatch({
+      type: "GET_LINKS",
+      links: links,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};

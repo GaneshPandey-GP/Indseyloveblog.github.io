@@ -572,7 +572,6 @@ export const getCategories = async (dispatch, categoryid) => {
   }
 };
 
-
 export const viewSubmissions = async (dispatch) => {
   const submissions = [];
   dispatch({
@@ -600,6 +599,112 @@ export const viewSubmissions = async (dispatch) => {
     dispatch({
       type: "GET_SUBMISSION",
       submission: submissions,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};
+
+export const createLink = async (dispatch, link, linktitle) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "links",
+    document: {
+      link,
+      linktitle,
+      createdBy: localStorage.getItem("user.uid"),
+      isActive: 1,
+    }
+  };
+
+  try {
+    await axios.post(`${baseURL}/createLink`, body, config);
+    getLinks(dispatch);
+    dispatch({
+      type: "ACTION_SUCCESS",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateLink = async (dispatch, linkid, link, linktitle) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "links",
+    Filter: {
+      linkid,
+    },
+    DataToBeUpdated: {
+      createdBy: localStorage.getItem("user.uid"),
+      isActive: 1,
+      link,
+      linktitle,
+    },
+  };
+  console.log(body);
+  try {
+    const res = await axios.post(`${baseURL}/updateLink`, body, config);
+    getLinks(dispatch);
+    res.data.status === 1
+      ? dispatch({
+          type: "ACTION_SUCCESS",
+        })
+      : dispatch({
+          type: "ACTION_FAIL",
+        });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};
+
+export const getLinks = async (dispatch) => {
+  const links = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "links",
+    Filter: {
+      createdBy: localStorage.getItem("user.uid"),
+    },
+  };
+
+  try {
+    const res = await axios.post(`${baseURL}/getLinks`, body, config);
+    console.log(res.data)
+    res.data.map((link) => {
+      return links.push(link);
+    });
+    dispatch({
+      type: "GET_LINKS",
+      links: links,
     });
   } catch (err) {
     dispatch({

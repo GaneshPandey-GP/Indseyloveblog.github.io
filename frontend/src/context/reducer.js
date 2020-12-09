@@ -9,6 +9,7 @@ export const initialState = {
   questions: [],
   results: [],
   submission: [],
+  links: [],
   errorMessage: null,
 };
 
@@ -23,7 +24,7 @@ export const reducer = (initialState, action) => {
       case 'LOAD_USER':
         return{
           ...initialState,
-          loading: false,
+          load: true,
           user: action.user
         }
       case 'LOGIN_SUCCESS':
@@ -79,9 +80,16 @@ export const reducer = (initialState, action) => {
           questions: action.questions,
           loading: false
         }
+      case 'GET_LINKS':
+        return {
+          ...initialState,
+          links: action.links,
+          loading: false
+        }
       case 'ACTION_SUCCESS':
         return {
           ...initialState,
+          load: false
         }
       case 'ACTION_FAIL':
         return {

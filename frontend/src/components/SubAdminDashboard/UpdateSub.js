@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UpdateSub({subname, subid}) {
   const [sub, setSub] = useState("");
-  const [{isAuthenticated, loading}, dispatch] = useAuthState()
+  const [{}, dispatch] = useAuthState()
   const [valueError, setValueError] = React.useState('')
 
   const handleSubmit = (e) => {
