@@ -60,15 +60,18 @@ const useStyles = makeStyles((theme) => ({
 export default function Submission() {
   const [{ submission, loading }, dispatch] = useAuthState();
   useEffect(() => {
+    const contect = localStorage.getItem("contact")
+    console.log("cont",contect)
     viewSubmissions(dispatch);
   }, []);
   const classes = useStyles();
   console.log("result",submission)
-
+ 
   const clickHandler = (testid, testname) => {
     localStorage.setItem("testid", testid);
     localStorage.setItem("testname", testname);
   };
+ 
 
   if (loading)
     return (
@@ -93,7 +96,7 @@ export default function Submission() {
             <div className="card mt-5">
               <div className="row">
                 <h3 className="col-sm-10 text-left">Result</h3>
-               <CSVLink data={submission.map( ({ result, submissionID, testname, total, testid, userid }) => ({ Student_Id:userid,Test_Name: testname,Total_Marks:total,Marks_Achieved:result }))}>Download Result</CSVLink> 
+               <Button className="col-sm-2"><CSVLink className=" text-left text-decoration-none " data={submission.map( ({  fname, lname, contact, email, result, submissionID, testname, total, testid, userid }) => ({  First_name: fname, Last_name: lname, Contact: contact, Email: email, Student_Id:userid,Test_Name: testname,Total_Marks:total,Marks_Achieved:result}))}>Download Result</CSVLink> </Button>
               </div>
               <table className="table table-hover card-body">
                 <thead className="table-primary">
