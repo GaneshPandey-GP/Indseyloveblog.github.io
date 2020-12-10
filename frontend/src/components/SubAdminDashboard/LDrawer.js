@@ -13,7 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
   Avatar,
-} from "@material-ui/core";
+  } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -31,6 +31,8 @@ import CreateCategory from "./CreateCategory";
 import ViewCategory from "./ViewCategory";
 import CreateLink from "./CreateLink";
 import ViewLink from "./ViewLink";
+import UpdateName from "./UpdateName";
+import HomeIcon from '@material-ui/icons/Home';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -62,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
   },
 }));
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 function LDrawer() {
   const classes = useStyles();
@@ -70,7 +75,7 @@ function LDrawer() {
 
   const handleDrawerOpen = () => {
     setOpen(true)};
-  const [{subjects, loading}, dispatch] = useAuthState()
+  const [{subjects, loading, user}, dispatch] = useAuthState()
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -96,7 +101,7 @@ function LDrawer() {
             <MenuTwoToneIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Welcome Sub_admin
+            Welcome {user[0].fname} {user[0].lname}
           </Typography>
         </Toolbar>
         {loading ? <NavLoading /> : <></>}
@@ -125,10 +130,15 @@ function LDrawer() {
           <Avatar className="container">
             <PersonIcon />
           </Avatar>
-          <ListItemText
-            primary={"T3KRAJ"}
-            className="d-flex justify-content-center mb-2 mt-2"
-          />
+          <UpdateName ifname={user[0].fname} ilname={user[0].lname}/>
+          <ListItem button>
+          <ListItemLink href="/sub-admin-dashboard">
+          <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            
+            <ListItemText primary={"Home"} /></ListItemLink>
+          </ListItem>
           <Divider />
           <CreateCategory/>
           <CreateSub />
@@ -142,10 +152,13 @@ function LDrawer() {
         <Divider />
         <List>
           <ListItem button>
+          <ListItemLink href="/sub-admin-login">
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>
+            
             <ListItemText primary={"Logout"} />
+            </ListItemLink>
           </ListItem>
         </List>
       </Drawer>

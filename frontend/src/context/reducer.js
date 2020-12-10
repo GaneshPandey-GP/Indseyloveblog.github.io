@@ -24,7 +24,8 @@ export const reducer = (initialState, action) => {
       case 'LOAD_USER':
         return{
           ...initialState,
-          load: true,
+          load: false,
+          loading: false,
           user: action.user
         }
       case 'LOGIN_SUCCESS':
@@ -131,6 +132,7 @@ export const reducer = (initialState, action) => {
       return {
         ...initialState,
         load: false,
+        loading: false
       }
       case 'GET_RESULTS': 
       return {
