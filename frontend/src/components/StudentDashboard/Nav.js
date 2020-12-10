@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 50,
     color: "#ffff",
   },
- 
+
   link: {
     fontSize: 15,
     fontWeight: 50,
@@ -72,7 +72,7 @@ function Nav() {
               aria-label="open drawer"
               className={classes.home}
             >
-             <Link className={classes.link} to=".">
+             <Link className={classes.link} to="/stud-dashboard">
                 Home
               </Link>
             </IconButton>
