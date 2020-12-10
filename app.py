@@ -76,6 +76,7 @@ def register():
     print(cid)
     
     data['document']['uid']=cid
+    data['document']['testsGiven']=[]
     if data is None or data == {}:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
@@ -264,7 +265,7 @@ def update_question():
     oldMarks=data['oldMarks']
     newMarks=data['DataToBeUpdated']['marks']
     testid=data['testid']
-    marksChange=newMarks-oldMarks
+    marksChange=int(newMarks)-int(oldMarks)
     data4=json.loads('{"database":"ExaminationSystem","collection":"tests","Filter":{"testid":'+str(testid)+'}}')
     obj4=MongoAPI(data4)
     test=obj4.readWithFilter()
