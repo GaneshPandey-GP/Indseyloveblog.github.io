@@ -16,7 +16,7 @@ import Submission from "./components/StudentDashboard/Submission";
 import SubAdminSubmission from "./components/SubAdminDashboard/SubAdminSubmission"
 
 const BaseRouter = () => (
-    <Router history={history}>
+    <Router>
             <Switch>
                 <Route exact path="/login" component={Login} /> 
                 <Route exact path="/sub-admin-login" component={SubAdminLogin} />

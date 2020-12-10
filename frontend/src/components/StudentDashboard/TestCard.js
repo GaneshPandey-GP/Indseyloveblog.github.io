@@ -37,8 +37,13 @@ const useStyles = makeStyles((theme) => ({
 
 export const TestCard = () => {
   const [{ tests }] = useAuthState();
-  var retrievedData = localStorage.getItem("testsGiven");
-  var testsGiven = JSON.parse(retrievedData)
+  try{
+    var retrievedData = localStorage.getItem("testsGiven");
+    var testsGiven = JSON.parse(retrievedData)
+  }catch(err){
+    console.log(err)
+  }
+  
 
   useEffect((testtime, testid, testname, totalMarks) => {
     handleTestClick(testtime, testid, testname, totalMarks)
@@ -89,7 +94,7 @@ export const TestCard = () => {
                       </div>
                     </CardContent>
                     <CardActions>
-                    {testsGiven.find((value) => value === testid) ? 
+                    {testsGiven && testsGiven.find((value) => value === testid) ? 
 
                       (<Link to="/submission" className="btn btn-outline-info btn-lg btn-block">
                         <button

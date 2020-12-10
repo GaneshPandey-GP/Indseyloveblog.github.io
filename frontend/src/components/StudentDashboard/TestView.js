@@ -38,10 +38,14 @@ function TestView() {
   },[testid, testname])
 
   useEffect(() => {
-    var testsGiven = JSON.parse(localStorage.getItem('testsGiven'))
-    console.log(testsGiven)
-    testsGiven.push(parseInt(testid))
-    localStorage.setItem('testsGiven', JSON.stringify(testsGiven))
+    try{
+      var testsGiven = JSON.parse(localStorage.getItem('testsGiven'))
+      testsGiven.push(parseInt(testid))
+      localStorage.setItem('testsGiven', JSON.stringify(testsGiven))
+    }catch(err){
+      console.log(err)
+    }
+    
   },[])
 
   const selector = React.useCallback(
