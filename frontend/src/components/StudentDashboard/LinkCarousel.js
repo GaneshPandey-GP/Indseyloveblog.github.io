@@ -11,11 +11,11 @@ function LinkCarousel() {
       setIndex(selectedIndex);
     };
     return (
-        <Carousel activeIndex={index} onSelect={handleSelect} className="mt-2 mb-4" indicators={false}>
+        <Carousel activeIndex={index} onSelect={handleSelect} className="mt-2 mb-4 text-bolder" style={{background:"#b8daff"}}  indicators={false}>
         {links.map(({link, linktitle, linkid}) => 
             (<Carousel.Item className="text-center" key={linkid}>
                 <Typography variant="h6" gutterBottom>{linktitle}</Typography>
-                <a href={link}><Typography variant="body2" gutterBottom>{link}</Typography></a>
+                <Typography variant="body2" gutterBottom>{link}</Typography>
             </Carousel.Item>))}
         </Carousel>
     );
