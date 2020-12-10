@@ -19,7 +19,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import MenuTwoToneIcon from "@material-ui/icons/MenuTwoTone";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import SettingsIcon from "@material-ui/icons/Settings";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PersonIcon from "@material-ui/icons/Person";
 import CreateSub from "./CreateSub";
@@ -32,7 +31,6 @@ import ViewCategory from "./ViewCategory";
 import CreateLink from "./CreateLink";
 import ViewLink from "./ViewLink";
 import UpdateName from "./UpdateName";
-import HomeIcon from '@material-ui/icons/Home';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -131,14 +129,6 @@ function LDrawer() {
             <PersonIcon />
           </Avatar>
           <UpdateName ifname={user[0].fname} ilname={user[0].lname}/>
-          <ListItem button>
-          <ListItemLink href="/sub-admin-dashboard">
-          <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            
-            <ListItemText primary={"Home"} /></ListItemLink>
-          </ListItem>
           <Divider />
           <CreateCategory/>
           <CreateSub />

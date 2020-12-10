@@ -14,6 +14,7 @@ import {
 import Timer from "./Timer";
 import TestRedirect from "./TestRedirect";
 import SimpleNav from "../SimpleNav";
+import History from "../History";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -67,6 +68,7 @@ function Submission() {
             ) : (
               <div></div>
             )}
+            <History history={""} />
 
             {result.map(
               (

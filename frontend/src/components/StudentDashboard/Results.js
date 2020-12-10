@@ -5,10 +5,11 @@ import { useAuthState, viewResults } from "../../context";
 import { viewSubmission } from "../../context";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
+import History from "../History";
 const Results = () => {
-  const [{ results, submission, loading }, dispatch] = useAuthState();
+  const [{ results, submission }, dispatch] = useAuthState();
 
-  useEffect((testid, submissionID) => {
+  useEffect((testid) => {
     try {
       localStorage.removeItem("testid");
       localStorage.removeItem("testtime");
@@ -30,8 +31,9 @@ const Results = () => {
   return (
     <>
       <Nav />
-      <div className="container text-center ">
-        <div className="card mt-5">
+      <div className="container ">
+      <History history={""} />
+        <div className="card mt-5 text-center">
           <div className="row">
             <h3 className="col-sm-10 text-left">Result</h3>
             <Button className="col-sm-2">

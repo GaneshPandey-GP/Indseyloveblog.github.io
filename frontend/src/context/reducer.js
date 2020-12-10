@@ -41,6 +41,7 @@ export const reducer = (initialState, action) => {
         return {
           ...initialState,
           isAuthenticated: true,
+          user: action.payload,
           loading: false
         }
       case 'SIGNUP_FAIL':

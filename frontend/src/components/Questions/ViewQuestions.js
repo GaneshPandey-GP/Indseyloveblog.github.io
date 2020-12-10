@@ -9,6 +9,7 @@ import { NavLoading } from "../Loading";
 import { Card, CardActions, CardContent, Divider } from "@material-ui/core";
 import UpdateQn, { UpdateQn2 } from "./UpdateQn";
 import SimpleNav from "../SimpleNav";
+import History from "../History";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,8 @@ export default function ViewQuestions() {
     <div className={classes.root}>
       <SimpleNav heading={`Questions of ${testname}`} />
       <Grid container spacing={3}>
+      <div className="ml-5 mt-5"><History history={testname} /></div>
+      
         {questions.map(
           (
             {

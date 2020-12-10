@@ -6,8 +6,9 @@ import { useAuthState } from "../../context";
 import Nav from "./Nav";
 import { TestCard } from "./TestCard";
 import { getTests4Client } from "../../context";
-import History from "./History";
+import History from "../History";
 import { Redirect } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   head: {
     color: "#3f51b5",
@@ -84,7 +85,7 @@ function SelectSubject() {
         <div>
           <div className={classes.main}>
             <div className="container">
-              <History />
+              <History history={category} />
               <div className={classes.bodyCard}>
                 {subjects.map(({ subname, subid }) => (
                   <Grid container spacing={3} key={subid}>
