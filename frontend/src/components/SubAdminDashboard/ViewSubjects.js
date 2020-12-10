@@ -11,8 +11,8 @@ import {
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { useAuthState } from "../../context";
 import UpdateSub from "./UpdateSub";
-import Skeleton from "@material-ui/lab/Skeleton";
 import { Loading } from "../Loading";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   list: {
@@ -27,6 +27,7 @@ const useStyles = makeStyles({
 });
 
 export default function ViewSubjects() {
+  let history = useHistory();
   const [{ subjects, loading }, dispatch] = useAuthState();
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -72,28 +73,3 @@ export default function ViewSubjects() {
   );
 }
 
-function Loader() {
-  const classes = useStyles();
-  return (
-    <div className={classes.loader}>
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-    </div>
-  );
-}

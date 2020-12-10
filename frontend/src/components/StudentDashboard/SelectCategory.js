@@ -49,7 +49,7 @@ function SelectCategory() {
   const clickHandler = (categoryid, category) => {
     localStorage.setItem("categoryid", categoryid)
     localStorage.setItem("category", category)
-  };
+  }
   return (
     <>
     <Nav />

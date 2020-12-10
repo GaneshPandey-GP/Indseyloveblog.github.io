@@ -39,6 +39,7 @@ export default function UpdateName({ifname, ilname}) {
     if (fname === '' || lname === '')
       setValueError("Enter the values!")
     else
+      setValueError("")
       updateUserName(dispatch, fname, lname);
   }
 

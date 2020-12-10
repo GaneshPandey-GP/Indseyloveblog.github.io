@@ -66,7 +66,7 @@ export const Signup = async (
     dispatch({
       type: 'SIGNUP_SUCCESS',
       payload: res.data,
-    });
+    })
   } catch (err) {
     dispatch({
       type: 'SIGNUP_FAIL',
