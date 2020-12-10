@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
-# Create your models here.
+from django.contrib.auth.models import User
 
 
 class CreatePost(models.Model):
@@ -13,10 +13,21 @@ class CreatePost(models.Model):
 
     def __str__(self): 
         return self.title
+        
+    @property
+    def get_comnents(self):
+        return self.comments.all().order_by('-publish_date')
+class Comment(models.Model): 
+    user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+    post = models.ForeignKey(CreatePost,on_delete=models.CASCADE,blank=True,null=True,related_name="comments")
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    content = models.TextField()
+    publish_date = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=True)
 
-# class Comment(models.Model): 
-#     post = models.ForeignKey(CreatePost,on_delete=models.CASCADE,blank=True,null=True)
-#     Name = models.
+    def __str__(self): 
+        return f'comment by {self.name}' 
 
 
 

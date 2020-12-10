@@ -1,3 +1,14 @@
+.round-btn {display: inline;height: 40px; width: 40px; background:#fff;border-radius: 50%;float: left;margin: 15px 8px;box-shadow: 2px 2px 5px 0px rgb(82, 0, 67);border: 1px solid;/*border: 1px solid #622657;*/}
+.round-btn a {display: block !important;padding: 7px 12px;font-size: 18px;border-radius: 50%;}
+.round-btn .icon {padding: 3px;}
+.round-btn .icon img{height: 24px; width: 32px;margin-top: 6px;}
+.btn-facebook a {color: #3b5998;padding: 8px 13px;}
+.btn-linkedin a {color: #007bb6;}
+.btn-twitter a{color: #1c9deb;}
+.btn-instagram a{color: #dd3f5c;}
+.btn-whatsapp a{color: #155E54;}
+.btn-envelop a{color: #D6403A;font-size: 15px; padding: 9px 12px;}
+.standard_header .standard_social_links {margin-left: 1rem;}
 .footer-dark {
   padding: 20px 0;
   color: #f0f9ff;
@@ -91,10 +102,11 @@
 .footer-dark .newsletter input[type="text"] {
   width: 100%;
   background:#39cfca;
-  color: #333;
+  color: #000000;
+  font-weight: 600;
   border: 1px solid #222;
   padding: 14px 20px;
-  font-size:15px;
+  font-size:12px;
   border-radius: 50px;
   margin-top: 12px;
 }
@@ -105,5 +117,9 @@
   border: 0;
   top: 26px;
   font-size: 17px;
-  color: #333;
+  color: #030303;
+}
+@media(max-width:768px){
+ footer .round-btn {
+  margin: 15px 4px;}
 }

@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
 body {
-  font-family: 'Kanit', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   background-color:#282d32;
 }
 
@@ -278,9 +279,15 @@ nav {
 #video-container .video-content .inner h1 {
   font-size: 64px;
   text-transform: uppercase;
-  color: #f7d8f5;
+  color:  #f8f8f8;
+  text-shadow: 1px -1px 0 #42afac;
   font-weight: 700;
   text-align: center;
+}
+#video-container .video-content .inner h1:hover{
+  /* transform: perspective(1000px) rotate(-6deg);  */
+  font-size: 70px;
+  text-shadow: 1px -1px 0 #290366;
 }
 
 #video-container .video-content .inner em {
@@ -300,8 +307,8 @@ nav {
 
 #video-container .video-content .inner p {
   color: #fff;
-  font-size: 22px;
-  font-weight: 200;
+  font-size: 30px;
+  font-weight: 600;
   letter-spacing: 1.5px;
   text-align: center;
   padding: 0px 30px;

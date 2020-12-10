@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .forms import CreatePostform
+from django.shortcuts import render, redirect,reverse
+from .forms import CreatePostform, CommentForm
 from .models import CreatePost
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
@@ -49,9 +49,17 @@ def Create(request):
 
 def PostView(request,slug):
     post = CreatePost.objects.get(slug=slug)
+    form = CommentForm()
+    if request.method == "POST":
+        form = CommentForm(request.POST or None)
+        if form.is_valid:
+                form.instance.user = request.user
+                form.instance.post = post
+                form.save()
+                return redirect(reverse('postview',kwargs={'slug':post.slug}))
     images = CreatePost.objects.order_by('-publish_date')[0:8]
     Latest_post = CreatePost.objects.order_by('-publish_date')[0:3]
-    context = {"post":post,"images":images,"latest_post":Latest_post}
+    context = {"post":post,"images":images,"latest_post":Latest_post,"form":form}
     return render(request, "single-post.html",context)
  
 def Update(request, slug):

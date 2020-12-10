@@ -60,6 +60,29 @@
           </div>
         </div>
       </div>
+
+
+      {% for comment in post.get_comnents %}
+      <div class="card">
+        {% if not request.user.is_staff or not request.user.is_superuser %}
+        <div>Anonymous</div>
+        {% else %}
+        <h4><i class="fa fa-user-circle-o" aria-hidden="true"></i>{{comment.user.username}}</h4>
+        {%endif %}
+        <p class="date">{{comment.publish_date|timesince}} ago</p>
+        <div>{{comment.content}}</div>
+      </div>
+      <hr>
+      {% endfor %}
+      <hr/>
+      <div>
+        <h3 class="text-info">Leave Your message</h3>
+        {% load crispy_forms_tags %}
+        <form method="POST">{% csrf_token %}
+          {{form|crispy}}
+          <button class="btn btn-primary">Comment</button>
+        </form>
+      </div>
     </div>
     <div class="col-md-4">
       <div class="side-bar">
