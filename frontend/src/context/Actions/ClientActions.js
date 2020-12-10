@@ -323,6 +323,11 @@ export const viewSubmission = async (dispatch, testid) => {
 }
 
 export const updateUser = async (dispatch, testid) => {
+  try{
+    var tests = JSON.parse(localStorage.getItem('testsGiven'))
+  }catch(err){
+    console.log(err)
+  }
   dispatch({
     type: "START_LOAD",
   });
@@ -338,7 +343,7 @@ export const updateUser = async (dispatch, testid) => {
       uid: parseInt(localStorage.getItem("user.uid"))
     },
    DataToBeUpdated: {
-      testsGiven: JSON.parse(localStorage.getItem('testsGiven'))
+      testsGiven: tests
   }}
   try {
     const res = await axios.post(`${baseURL}/updateUser`, body, config)
@@ -373,6 +378,7 @@ export const readUser = async (dispatch) => {
 
   try {
     const res = await axios.post(`${baseURL}/readUsers`, body, config)
+    console.log(res.data)
     dispatch({
       type: "LOAD_USER",
       user: res.data

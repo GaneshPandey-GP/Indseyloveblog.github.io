@@ -19,6 +19,7 @@ export default function StudentDashboard() {
     }
     getCategories4Client(dispatch);
     getLinks4Client(dispatch)
+    readUser(dispatch)
   }, []);
   return (
     <>

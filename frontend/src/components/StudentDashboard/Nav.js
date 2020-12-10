@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Nav() {
   const classes = useStyles();
-  const [{ loading, categories }, dispatch] = useAuthState();
+  const [{ loading }] = useAuthState();
   return (
     <>
       <div className={classes.root}>
@@ -85,24 +85,15 @@ function Nav() {
                 Results
               </Link>
             </IconButton>
-            {/* <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              className={classes.home}
-            >
-              <Link className={classes.link} style={{textDecoration:"none"}} to="">
-                Profile
-              </Link>
-            </IconButton> */}
-            <IconButton
+            <Link to="/login"><IconButton
               color="inherit"
               aria-label="open drawer"
               edge="end"
               className={classes.home}
             >
               <ExitToAppIcon />
-              <Link t0="/login" >Logout</Link>
-            </IconButton>
+              Logout
+            </IconButton></Link>
           </Toolbar>
           {loading ? <NavLoading /> : <></>}
         </AppBar>
