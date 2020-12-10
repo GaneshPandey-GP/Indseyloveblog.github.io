@@ -27,7 +27,7 @@ const BaseRouter = () => (
                 <StudPrivateRoute exact path="/test" component={TestView} /> 
                 <AdmPrivateRoute exact path="/sub-admin-dashboard" component={SubAdminDashboard} />
                 <StudPrivateRoute exact path="/stud-dashboard" component={StudentDashboard} />
-                <StudPrivateRoute exact path="/submission" component={Submission} />
+                <Route exact path="/submission" component={Submission} />
                 <StudPrivateRoute exact path="/results" component={Results} />
 
                 <Route exact path="*" component={NotFound} />

@@ -15,7 +15,7 @@ function LinkCarousel() {
         {links.map(({link, linktitle, linkid}) => 
             (<Carousel.Item className="text-center" key={linkid}>
                 <Typography variant="h6" gutterBottom>{linktitle}</Typography>
-                <Typography variant="body2" gutterBottom>{link}</Typography>
+                <a href={link}><Typography variant="body2" gutterBottom>{link}</Typography></a>
             </Carousel.Item>))}
         </Carousel>
     );

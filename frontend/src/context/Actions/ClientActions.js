@@ -19,7 +19,6 @@ export const loginUser = async (dispatch, { username, password }) => {
   };
   try {
     const res = await axios.post(`${baseURL}/login`, body, config);
-    console.log(res.data[0].level);
     res.data[0].level === 2
       ? dispatch({
           type: 'LOGIN_SUCCESS',
@@ -272,10 +271,8 @@ export const viewResults = async (dispatch) => {
     }
   }
 
-  console.log(body)
   try {
     const res = await axios.post(`${baseURL}/viewResults`, body, config);
-    console.log(res.data)
     res.data.map((result) => {
       return results.push(result);
     })
@@ -376,7 +373,6 @@ export const readUser = async (dispatch) => {
 
   try {
     const res = await axios.post(`${baseURL}/readUsers`, body, config)
-    console.log(res.data)
     dispatch({
       type: "LOAD_USER",
       user: res.data
@@ -407,7 +403,6 @@ export const getLinks4Client = async (dispatch) => {
 
   try {
     const res = await axios.post(`${baseURL}/getLinks`, body, config);
-    console.log(res.data)
     res.data.map((link) => {
       return links.push(link);
     });

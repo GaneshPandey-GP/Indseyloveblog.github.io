@@ -32,7 +32,6 @@ export default function ViewSubjects() {
   const [state, setState] = React.useState({
     right: false,
   });
-console.log(subjects)
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
   };

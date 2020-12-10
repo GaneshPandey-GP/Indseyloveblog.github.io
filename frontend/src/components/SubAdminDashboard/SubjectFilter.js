@@ -19,7 +19,8 @@ function SubjectList(props) {
   };
 
   const handleListItemClick = (e, value) => {
-    getTests(dispatch, value)
+    const subjectid = String(value)
+    getTests(dispatch, subjectid)
     onClose(value);
   }
 
