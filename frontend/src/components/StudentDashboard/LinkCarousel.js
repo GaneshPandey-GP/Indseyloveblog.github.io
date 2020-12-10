@@ -11,7 +11,7 @@ function LinkCarousel() {
       setIndex(selectedIndex);
     };
     return (
-        <Carousel activeIndex={index} onSelect={handleSelect} className="mt-2 mb-4" indicators={false}>
+        <Carousel activeIndex={index} onSelect={handleSelect} className="mt-2 mb-4 text-bolder" style={{background:"#b8daff"}}  indicators={false}>
         {links.map(({link, linktitle, linkid}) =>
             (<Carousel.Item className="text-center" key={linkid}>
                 <Typography variant="h6" gutterBottom>{linktitle}</Typography>

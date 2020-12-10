@@ -31,7 +31,6 @@ export default function ViewLink() {
   const [state, setState] = React.useState({
     right: false,
   });
-console.log(links)
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
   };

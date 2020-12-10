@@ -85,7 +85,7 @@ function Nav() {
                 Results
               </Link>
             </IconButton>
-            <IconButton
+            {/* <IconButton
               color="inherit"
               aria-label="open drawer"
               className={classes.home}
@@ -93,7 +93,7 @@ function Nav() {
               <Link className={classes.link} style={{textDecoration:"none"}} to="">
                 Profile
               </Link>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -101,7 +101,7 @@ function Nav() {
               className={classes.home}
             >
               <ExitToAppIcon />
-              Logout
+              <Link t0="/login" >Logout</Link>
             </IconButton>
           </Toolbar>
           {loading ? <NavLoading /> : <></>}

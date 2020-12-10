@@ -17,7 +17,8 @@ import {
   viewSubmissions,
   createLink,
   getLinks,
-  updateLink
+  updateLink,
+  updateUserName
 } from "./Actions/Sub-adminActions";
 
 import {
@@ -68,5 +69,6 @@ export {
   createLink,
   getLinks,
   updateLink,
-  getLinks4Client
+  getLinks4Client,
+  updateUserName
 };
