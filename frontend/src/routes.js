@@ -10,7 +10,6 @@ import { AdmPrivateRoute, StudPrivateRoute  } from "./config/PrivateRoute";
 import SubAdminLogin from "./pages/SubAdminLogin";
 import Questions from "./pages/Questions";
 import StudentView from "./pages/StudentView";
-import history from './config/history'
 import Results from "./components/StudentDashboard/Results";
 import Submission from "./components/StudentDashboard/Submission";
 import SubAdminSubmission from "./components/SubAdminDashboard/SubAdminSubmission"
