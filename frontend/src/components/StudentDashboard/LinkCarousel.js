@@ -12,7 +12,7 @@ function LinkCarousel() {
     };
     return (
         <Carousel activeIndex={index} onSelect={handleSelect} className="mt-2 mb-4" indicators={false}>
-        {links.map(({link, linktitle, linkid}) => 
+        {links.map(({link, linktitle, linkid}) =>
             (<Carousel.Item className="text-center" key={linkid}>
                 <Typography variant="h6" gutterBottom>{linktitle}</Typography>
                 <Typography variant="body2" gutterBottom>{link}</Typography>
