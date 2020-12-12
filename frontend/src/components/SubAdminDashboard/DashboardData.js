@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
+    background:"#ffff",
+    boxShadow: "2px 3px 10px #3f51b5",
+    
   },
   drawerHeader: {
     display: "flex",

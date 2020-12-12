@@ -62,15 +62,18 @@ export default function Register() {
   if (isAuthenticated) return <Redirect to="/login" />
 
   return (
+    <div className="background">
+
+   
     <div className="Wrapper container d-flex align-items-center justify-content-center">
       <div
         className="registrationFormContainer"
-        style={{ backgroundColor: "#ffe" }}
+        style={{ backgroundColor: "#ffffffc2" }}
       >
         <fieldset className="border p-3 rounded">
           <div className="header mb-3">
-            <h1 className="text-center bold text-info">Register</h1>
-            <h6 className="text-center text-info">Create your account.</h6>
+            <h1 className="text-center bold text-primary">Register</h1>
+            <h6 className="text-center text-primary">Create your account.</h6>
           </div>
           <ScopedCssBaseline />
           <form
@@ -280,6 +283,7 @@ export default function Register() {
           </form>
         </fieldset>
       </div>
+    </div>
     </div>
   )
 }

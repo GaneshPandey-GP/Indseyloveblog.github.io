@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+    background:"#fff"
   },
   header: {
     fontWeight: 'bold'

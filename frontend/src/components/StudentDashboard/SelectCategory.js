@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import Nav from "./Nav";
 import LinkCarousel from "./LinkCarousel";
 import { yellow } from "@material-ui/core/colors";
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles((theme) => ({
   bodyCard: {
@@ -50,11 +51,12 @@ function SelectCategory() {
     localStorage.setItem("categoryid", categoryid)
     localStorage.setItem("category", category)
   }
+  //if (loading) return (<><Skeleton variant="rect" height={30}/><br/><Skeleton variant="rect" height={165} /></>)
   return (
     <>
     <Nav />
-      {loading ? (
-        <div></div>
+      {loading ? (<div className="container">
+        <div className="row"><div  className="col-sm-12 mb-4" ><Skeleton variant="rect" height={80}/></div><br/><div className="col-sm-4" ><Skeleton variant="rect" height={70}/></div><br/><div className="col-sm-4" ><Skeleton variant="rect" height={70}/></div><br/><div className="col-sm-4" ><Skeleton variant="rect" height={70}/></div><br/></div></div>
       ) : (
         <div className={classes.main}>
           <div className="container">
