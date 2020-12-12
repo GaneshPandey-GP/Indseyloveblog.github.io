@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Paper, Grid, Divider } from "@material-ui/core";
+import { Paper, Grid } from "@material-ui/core";
 import LDrawer from "./LDrawer";
 import ViewTests from './ViewTests'
 
@@ -55,7 +55,7 @@ export default function DashboardData() {
       >
         <div className={classes.drawerHeader} />
         <Grid container spacing={3} className="mt-3">
-          <Grid item xs={12} sm={12} md={12}>
+          <Grid item xs={12}>
             <Paper className={classes.paper}>
               <ViewTests />
             </Paper>

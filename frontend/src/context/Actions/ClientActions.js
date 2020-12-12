@@ -82,10 +82,11 @@ export const logout = (dispatch) => {
 };
 
 export const getSubjects4Client = async (dispatch, categoryid) => {
+  const subjects = []
   dispatch({
     type: "START_LOADING",
   });
-  const subjects = [];
+  
   const config = {
     headers: {
       "Content-Type": "application/json",

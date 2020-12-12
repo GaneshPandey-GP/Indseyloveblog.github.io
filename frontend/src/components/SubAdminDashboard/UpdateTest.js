@@ -12,7 +12,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { TextField } from '@material-ui/core';
 import { useAuthState } from '../../context';
-import EditIcon from '@material-ui/icons/Edit';
 import { updateTest } from '../../context';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 

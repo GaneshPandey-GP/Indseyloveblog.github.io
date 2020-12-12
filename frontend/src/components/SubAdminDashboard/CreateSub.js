@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateSub() {
   const [open, setOpen] = React.useState(false);
-  const [{ isAuthenticated, loading, categories }, dispatch] = useAuthState();
+  const [{ categories }, dispatch] = useAuthState();
   const [valueError, setValueError] = React.useState("");
 
   const [sub, setSub] = useState("");

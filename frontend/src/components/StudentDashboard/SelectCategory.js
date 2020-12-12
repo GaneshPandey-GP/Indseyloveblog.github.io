@@ -2,11 +2,10 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import { useAuthState } from "../../context";
+import { getSubjects4Client, useAuthState } from "../../context";
 import Paper from "@material-ui/core/Paper";
 import Nav from "./Nav";
 import LinkCarousel from "./LinkCarousel";
-import { yellow } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   bodyCard: {
@@ -44,10 +43,11 @@ const useStyles = makeStyles((theme) => ({
 
 function SelectCategory() {
   const classes = useStyles();
-  const [{ loading, categories }] = useAuthState();
+  const [{ loading, categories }, dispatch] = useAuthState();
 
   const clickHandler = (categoryid, category) => {
     localStorage.setItem("categoryid", categoryid)
+    getSubjects4Client(dispatch, categoryid)
     localStorage.setItem("category", category)
   }
   return (
