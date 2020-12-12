@@ -8,6 +8,7 @@ import { TestCard } from "./TestCard";
 import { getTests4Client } from "../../context";
 import History from "../History";
 import { Redirect } from "react-router-dom";
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4),
     fontWeight: 700,
     whiteSpace: "nowrap",
-    background: "transparent",
+    background: "#fff",
     borderBottom: "1px solid #fff",
     fontSize: 15,
     color: theme.palette.text.secondary,
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     },
     
     "&:active": {
-      backgroundColor: "#acb1c5",
+      backgroundColor: "#b8daff",
     },
   },
 }));
@@ -75,12 +76,15 @@ function SelectSubject() {
   };
 
   if (error) return <Redirect to="/stud-dashboard" />;
-
+  
   return (
     <>
       <Nav />
       {loading ? (
-        <div></div>
+        <div className="container">
+        <div className="row mb-5"><div  className="col-sm-12 mb-5" ><Skeleton variant="rect" height={50}/></div><br/><div className="col-sm-4 mb-5" ><Skeleton variant="rect" height={65}/></div><br/><div className="col-sm-4 mb-5" ><Skeleton variant="rect" height={65}/></div><br/><div className="col-sm-4 mb-5" ><Skeleton variant="rect" height={65}/></div><br/></div>
+        { show && loading === true ? (<div className="row mt-5"><div  className="col-sm-12 mt-5" ><Skeleton variant="rect" height={50}/></div><br/><div className="col-sm-4 mt-5" ><Skeleton variant="rect" height={180}/></div><br/><div className="col-sm-4 mt-5" ><Skeleton variant="rect" height={180}/></div><br/><div className="col-sm-4 mt-5" ><Skeleton variant="rect" height={180}/></div><br/></div>):<></>}
+        </div>
       ) : (
         <div>
           <div className={classes.main}>
