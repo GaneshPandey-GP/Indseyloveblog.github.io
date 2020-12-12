@@ -6,11 +6,17 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { createSubmission, useAuthState, viewQuestions4Client } from "../../context";
-import Timer from './Timer';
+import {
+  createSubmission,
+  useAuthState,
+  viewQuestions4Client,
+} from "../../context";
+import Timer from "./Timer";
 import TestRedirect from "./TestRedirect";
 import SimpleNav from "../SimpleNav";
 import { Redirect } from "react-router-dom";
+import Skeleton from "@material-ui/lab/Skeleton";
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -23,30 +29,45 @@ const useStyles = makeStyles((theme) => ({
 
 function TestView() {
   const classes = useStyles();
-  const [{ questions, loading }, dispatch] = useAuthState()
+  const [{ questions, loading }, dispatch] = useAuthState();
   const [selected, setSelected] = React.useState([]);
   const [helperText, setHelperText] = React.useState("Choose wisely");
-  const [error, setError] = useState(false)
-  const testid = localStorage.getItem("testid")
-  const total = localStorage.getItem("totalMarks")
-  const timer = localStorage.getItem("timer")
-  const testname = localStorage.getItem("testname")
+  const [error, setError] = useState(false);
+  const testid = localStorage.getItem("testid");
+  const total = localStorage.getItem("totalMarks");
+  const timer = localStorage.getItem("timer");
+  const testname = localStorage.getItem("testname");
+
+  const testtime = parseInt(localStorage.getItem("timer"));
+  const min = localStorage.getItem("min");
+  const sec = localStorage.getItem("sec");
+  const [minutes, setMinutes] = useState(min);
+  const [seconds, setSeconds] = useState(sec);
+  // console.log(minutes)
+  // console.log(seconds)
+  useEffect(() => {
+    if (
+      testid === "undefined" ||
+      total === "undefined" ||
+      testname === "undefined" ||
+      timer === "undefined"
+    )
+      setError(true);
+    viewQuestions4Client(dispatch, testid);
+   
+   
+  
+  }, [testid, testname]);
 
   useEffect(() => {
-    if (testid === "undefined" || total === "undefined" || testname === "undefined" || timer === "undefined") setError(true)
-    viewQuestions4Client(dispatch, testid)
-  },[testid, testname])
-
-  useEffect(() => {
-    try{
-      var testsGiven = JSON.parse(localStorage.getItem('testsGiven'))
-      testsGiven.push(parseInt(testid))
-      localStorage.setItem('testsGiven', JSON.stringify(testsGiven))
-    }catch(err){
-      console.log(err)
+    try {
+      var testsGiven = JSON.parse(localStorage.getItem("testsGiven"));
+      testsGiven.push(parseInt(testid));
+      localStorage.setItem("testsGiven", JSON.stringify(testsGiven));
+    } catch (err) {
+      console.log(err);
     }
-    
-  },[])
+  }, []);
 
   const selector = React.useCallback(
     (key, ans) =>
@@ -55,105 +76,159 @@ function TestView() {
         [key]: {
           ...selected[key],
           qid: key,
-          ans
+          ans,
         },
       })),
     []
-  )
+  );
 
   const getMarks = () => {
-    let answers = Object.assign({}, ...questions.map((x) => ({[x.qid]: x.correctAns})))
-    let marks = Object.assign({}, ...questions.map((x) => ({[x.qid]: x.marks})))
-    let totalmarks = 0
+    let answers = Object.assign(
+      {},
+      ...questions.map((x) => ({ [x.qid]: x.correctAns }))
+    );
+    let marks = Object.assign(
+      {},
+      ...questions.map((x) => ({ [x.qid]: x.marks }))
+    );
+    let totalmarks = 0;
     for (let i in selected) {
-      if(selected[i].ans === answers[i]) {
-        totalmarks = totalmarks + marks[i]
+      if (selected[i].ans === answers[i]) {
+        totalmarks = totalmarks + marks[i];
       }
     }
-    return(totalmarks)
-  }
+    return totalmarks;
+  };
 
   const handleRadioChange = (e, qid) => {
-    const data = e.target.value
-    selector(qid, data)
+    const data = e.target.value;
+    selector(qid, data);
     setHelperText(" ");
-  }
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    const result = getMarks()
-    const answers = Object.values(selected)
-    // alert("You got" + " " + result)
-    if (!error) createSubmission(dispatch, testid, result, answers )
-  }
+    const result = getMarks();
+    const answers = Object.values(selected);
+    e.preventDefault();
+    if (!error) createSubmission(dispatch, testid, result, answers);
+  };
+
+  // useEffect(() => {
+  //   //setMinutes(localStorage.getItem("min"));
+  //   if (minutes > -1 ) return;
+  //   const intervelID = setInterval(() => {
+  //     setMinutes(localStorage.getItem("min"));
+  //    console.log(localStorage.getItem("min"))
+  //     // minutes === 0 ? setSeconds(0) : setSeconds(59);
+  //   }, 1000);
+  //   return () => {
+     
+  //     clearInterval(intervelID);
+  //   };
+  // }, [minutes]);
+
+  useEffect(() => {
+    // localStorage.setItem("sec",seconds)
+    if (minutes === 0 && seconds===0) {console.log("WORKING")}
+    if (!seconds) return;
+    const intervelID = setInterval(() => {
+      setSeconds(localStorage.getItem("sec"));
+      setMinutes(localStorage.getItem("min"));
+      
+      
+    }, 1000);
+
+    return () => {
+    
+      clearInterval(intervelID);
+    };
+  }, [seconds]);
   
-  if (error) return <Redirect to="/subject-test-view" />
+  if (error) return <Redirect to="/subject-test-view" />;
+  
+if(minutes===0 && seconds===0){alert("Time")}
 
   return (
     <div>
-    {loading ? <SimpleNav heading={"Attempt all the questions:"}/> :
-    <>
-      <SimpleNav heading={"Attempt all the questions:"}/>
-      <Timer />
-      <form className="container " onSubmit={handleSubmit}>
-        {questions.map(
-          ({
-            question,
-            optionA,
-            optionB,
-            optionC,
-            optionD,
-            qid,
-            marks
-          }, index) => (
-            <div className="card mt-3 rounded-lg shadow-lg" key={qid}>
-              <div className="card-header">
-               <h4> QNo.{index+1} {question}</h4>
-              </div>
-              <div className="card-body">
-              <p className="float-right">{marks} marks</p>
-                  <FormControl
-                    component="fieldset"
-                    className={classes.formControl}
-                  >
-                    <RadioGroup
-                      aria-label="quiz"
-                      name="quiz"
-                      value={selected[index]}
-                      onChange={(e) => handleRadioChange(e, qid)}
+      {loading ? (
+        <>
+          <SimpleNav heading={"Attempt all the questions:"}  />
+        
+          <div className="container mt-5">
+            <Skeleton variant="rect" height={90} />
+            <br />
+            <Skeleton variant="rect" height={165} />
+            <Skeleton variant="rect" height={165} />
+            <Skeleton variant="rect" height={50} />
+            <br />
+            <Skeleton variant="rect" height={165} />
+            <Skeleton variant="rect" height={165} />
+          </div>
+        </>
+      ) : (
+        <>
+       
+          <SimpleNav heading={"Attempt all the questions:"} />
+          <Timer handleSubmit={handleSubmit} />
+          <form className="container " id="form" onSubmit={handleSubmit}>  {minutes}  {seconds}
+            {questions.map(
+              (
+                { question, optionA, optionB, optionC, optionD, qid, marks },
+                index
+              ) => (
+                <div className="card mt-3 rounded-lg shadow-lg" key={qid}>
+                  <div className="card-header">
+                    <h4>
+                      {" "}
+                      QNo.{index + 1} {question}
+                    </h4>
+                  </div>
+                  <div className="card-body">
+                    <p className="float-right">{marks} marks</p>
+                    <FormControl
+                      component="fieldset"
+                      className={classes.formControl}
                     >
-                      <FormControlLabel
-                        value="a"
-                        control={<Radio />}
-                        label={optionA}
-                      />
-                      <FormControlLabel
-                        value="b"
-                        control={<Radio />}
-                        label={optionB}
-                      />
-                      <FormControlLabel
-                        value="c"
-                        control={<Radio />}
-                        label={optionC}
-                      />
-                      <FormControlLabel
-                        value="d"
-                        control={<Radio />}
-                        label={optionD}
-                      />
-                    </RadioGroup>
-                    <FormHelperText>{helperText}</FormHelperText>
-                  </FormControl>
-              </div>
+                      <RadioGroup
+                        aria-label="quiz"
+                        name="quiz"
+                        value={selected[index]}
+                        onChange={(e) => handleRadioChange(e, qid)}
+                      >
+                        <FormControlLabel
+                          value="a"
+                          control={<Radio />}
+                          label={optionA}
+                        />
+                        <FormControlLabel
+                          value="b"
+                          control={<Radio />}
+                          label={optionB}
+                        />
+                        <FormControlLabel
+                          value="c"
+                          control={<Radio />}
+                          label={optionC}
+                        />
+                        <FormControlLabel
+                          value="d"
+                          control={<Radio />}
+                          label={optionD}
+                        />
+                      </RadioGroup>
+                      <FormHelperText>{helperText}</FormHelperText>
+                    </FormControl>
+                  </div>
+                </div>
+              )
+            )}
+            <div className="d-flex justify-content-center mt-5 mb-3">
+              <TestRedirect handleSubmit={handleSubmit} />
+              {/* <TestRedirect handleSubmit={handleSubmits}/> */}
             </div>
-          )
-        )}
-        <div className="d-flex justify-content-center mt-5 mb-3">
-          <TestRedirect handleSubmit={handleSubmit}/>
-        </div>
-      </form>
-      </>}
+          </form>
+        </>
+      )}
     </div>
   );
 }
