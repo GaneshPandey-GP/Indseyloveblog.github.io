@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: "7px 8px 10px #3f51b5",color:"#3f51b5",
     },
     "&:active": {
-      backgroundColor: "#acb1c5",
+      backgroundColor: "#b8daff",
     },
   },
 }));

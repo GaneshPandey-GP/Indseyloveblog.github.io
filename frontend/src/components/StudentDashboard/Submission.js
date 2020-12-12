@@ -5,6 +5,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import Skeleton from '@material-ui/lab/Skeleton';
 import {
   useAuthState,
   viewQuestions,
@@ -55,7 +56,7 @@ function Submission() {
   return (
     <div>
       {loading ? (
-        <SimpleNav heading={"Attempt all the questions:"} />
+        <><SimpleNav heading={"Attempt all the questions:"} /><div className="container mt-5"><Skeleton variant="rect" height={90}/><br/><Skeleton variant="rect" height={165} /><Skeleton variant="rect" height={165} /><Skeleton variant="rect" height={50}/><br/><Skeleton variant="rect" height={165} /><Skeleton variant="rect" height={165} /></div></>
       ) : (
         <>
           <SimpleNav heading={"Your Submission"} />
