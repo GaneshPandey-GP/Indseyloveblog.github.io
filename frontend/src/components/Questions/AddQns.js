@@ -107,7 +107,11 @@ export default function AddQns(props) {
   };
 
   return (
-    <div className="d-flex justify-content-around mt-5 mb-5">
+    
+ <>
+   {loading ? <div></div> : (
+    <div className="d-flex justify-content-around mt-5 mb-5" style={{backgroundColor:"#fff"}}>
+  
       <Button
         onClick={handleClickOpen}
         variant="contained"
@@ -283,6 +287,8 @@ export default function AddQns(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </div> )}
+    </>
   );
+  
 }

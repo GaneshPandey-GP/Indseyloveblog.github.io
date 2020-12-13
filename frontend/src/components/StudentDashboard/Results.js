@@ -6,8 +6,10 @@ import { viewSubmission } from "../../context";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import History from "../History";
+import Skeleton from '@material-ui/lab/Skeleton';
+
 const Results = () => {
-  const [{ results, submission }, dispatch] = useAuthState();
+  const [{ results, submission, loading }, dispatch] = useAuthState();
 
   useEffect((testid) => {
     try {
@@ -28,9 +30,11 @@ const Results = () => {
     localStorage.setItem("testid", testid);
   };
   console.log(results);
+  // if (loading) return (<><Skeleton variant="rect" height={30}/><br/><Skeleton variant="rect" height={165} /></>)
   return (
     <>
       <Nav />
+      {loading?( <div className="container"><Skeleton variant="rect" height={50}/><br/><Skeleton variant="rect" height={295} /></div>):
       <div className="container ">
       <History history={""} />
         <div className="card mt-5 text-center">
@@ -89,7 +93,7 @@ const Results = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div>}
     </>
   );
 };
