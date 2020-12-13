@@ -34,7 +34,7 @@ const Results = () => {
   return (
     <>
       <Nav />
-      {loading?( <div className="container"><Skeleton variant="rect" height={30}/><br/><Skeleton variant="rect" height={295} /></div>):
+      {loading?( <div className="container"><Skeleton variant="rect" height={50}/><br/><Skeleton variant="rect" height={295} /></div>):
       <div className="container ">
       <History history={""} />
         <div className="card mt-5 text-center">

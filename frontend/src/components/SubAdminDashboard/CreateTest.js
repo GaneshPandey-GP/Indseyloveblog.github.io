@@ -53,9 +53,9 @@ export default function CreateTest() {
       else {
         setValueError("")
         createTest(dispatch, testName, subjectid, testTime)
-      }
-    if (valueError === '')
-      handleClose()    
+        resetForm()
+        handleClose()
+      }  
   };
 
   const handleClickOpen = () => {
@@ -64,7 +64,13 @@ export default function CreateTest() {
 
   const handleClose = () => {
     setOpen(false);
-  };
+  }
+
+  const resetForm = () =>{
+    setSubjectid("")
+    setTestName("")
+    setTestTime("")
+  }
   return (
     <div>
       <ListItem button onClick={handleClickOpen}>

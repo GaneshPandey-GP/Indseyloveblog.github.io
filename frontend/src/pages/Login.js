@@ -27,6 +27,7 @@ function Login(props) {
 
   return (
     <>
+    <div className="wrapper">
       <div className="login-box">
         <i className="fas fa-user-circle fa-4x head"></i>
 
@@ -97,6 +98,7 @@ function Login(props) {
             <Link to="/register">{"Already have an account? Sign In"}</Link>
           </div>
         </form>
+      </div>
       </div>
     </>
   );

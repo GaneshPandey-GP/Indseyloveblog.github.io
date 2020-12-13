@@ -5,7 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { useAuthState, viewQuestions } from "../../context";
-import { NavLoading } from "../Loading";
+import Skeleton from '@material-ui/lab/Skeleton';
 import { Card, CardActions, CardContent, Divider } from "@material-ui/core";
 import UpdateQn, { UpdateQn2 } from "./UpdateQn";
 import SimpleNav from "../SimpleNav";
@@ -14,12 +14,17 @@ import History from "../History";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    backgroundColoe:"#ffff",
+   
   },
+  card:{
+    boxShadow: "27px 18px 10px #a3b1c4",
+  }
 }));
 
 export default function ViewQuestions() {
   const [testname, setTestname] = useState(localStorage.getItem("testname"));
-  const [{ questions }, dispatch] = useAuthState();
+  const [{ questions, loading }, dispatch] = useAuthState();
 
   useEffect(() => {
     viewQuestions(dispatch, localStorage.getItem("testid"));
@@ -28,8 +33,8 @@ export default function ViewQuestions() {
 
   return (
     <div className={classes.root}>
-      <SimpleNav heading={`Questions of ${testname}`} />
-      <Grid container spacing={3}>
+      {loading ? (<><SimpleNav heading={`Questions of ${testname}`}/> <div className="container mt-5"><div className="mt-2"><Skeleton variant="rect" height={65} /><br/><Skeleton variant="rect" height={165} /></div><br/><div className="mt-2"><Skeleton variant="rect" height={65} /><br/><Skeleton variant="rect" height={165} /></div><br/><div className="mt-2"><Skeleton variant="rect" height={65} /><br/><Skeleton variant="rect" height={165} /></div><br/></div></>):
+     ( <Grid container spacing={3}>
       <div className="ml-5 mt-5"><History history={testname} /></div>
       
         {questions.map(
@@ -47,8 +52,8 @@ export default function ViewQuestions() {
             },
             index
           ) => (
-            <Grid item xs={12} key={qid}>
-              <Card className="mt-3 ml-4 mr-4">
+            <Grid item xs={12} key={qid} >
+              <Card className="mt-3 ml-4 mr-4 " className={classes.card}>
                 {type === 1 ? (
                   <>
                     <CardContent>
@@ -121,7 +126,7 @@ export default function ViewQuestions() {
             </Grid>
           )
         )}
-      </Grid>
+      </Grid>)}
     </div>
   );
 }

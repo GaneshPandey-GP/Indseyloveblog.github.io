@@ -52,7 +52,7 @@ function Submission() {
 
 
   console.log(submission);
-
+ 
   return (
     <div>
       {loading ? (

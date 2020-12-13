@@ -28,6 +28,9 @@ export default function SubAdminLogin() {
   if (isAuthenticated) return <Redirect to="/sub-admin-dashboard" />;
 
   return (
+    <div className="wrapper">
+
+    
     <div className="login-box">
       <i className="fas fa-user-circle fa-4x head"></i>
 
@@ -98,6 +101,7 @@ export default function SubAdminLogin() {
           <Link to="/register">{"Already have an account? Sign In"}</Link>
         </div>
       </form>
+    </div>
     </div>
   );
 }

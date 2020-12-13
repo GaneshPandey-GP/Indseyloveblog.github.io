@@ -72,28 +72,4 @@ export default function ViewCategory() {
   );
 }
 
-function Loader() {
-  const classes = useStyles();
-  return (
-    <div className={classes.loader}>
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-      <Skeleton variant="rect" height={25} />
-      <br />
-    </div>
-  );
-}
+

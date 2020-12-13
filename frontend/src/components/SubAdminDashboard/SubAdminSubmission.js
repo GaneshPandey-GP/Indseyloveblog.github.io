@@ -41,7 +41,8 @@ export default function Submission() {
   return (
     <>
       <SimpleNav heading={"Submissions"} />
-          <div className="container">
+      {loading?( <div className="container mt-5"><Skeleton variant="rect" height={50}/><br/><Skeleton variant="rect" height={320} /></div>):
+          (<div className="container">
             <div className="mt-4"><History history={""} /></div>
             <div className="card mt-4 text-center">
               <div className="row">
@@ -85,7 +86,7 @@ export default function Submission() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div>)}
     </>
   );
 }

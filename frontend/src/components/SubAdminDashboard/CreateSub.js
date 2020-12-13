@@ -47,11 +47,20 @@ export default function CreateSub() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (sub === "") setValueError("Enter the subject name!");
-    else subjectCreate(dispatch, sub, categoryid);
-    if (valueError === "") handleClose();
+    if (sub === "" || categoryid === "") setValueError("Enter the subject name!");
+    else{
+      setValueError("")
+      subjectCreate(dispatch, sub, categoryid)
+      handleClose()
+      resetForm()
+    }
   }
 
+  const resetForm = () =>{
+    setSub("")
+    setCategoryid("")
+  }
+  
   const classes = useStyles()
   return (
     <div>
