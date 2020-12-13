@@ -141,7 +141,7 @@ def create_subject():
 def create_test():
     data = request.json
     print(data)
-    data4=json.loads('{"database":"ExaminationSystem","collection":"subjects","Filter":{"subid":'+data["document"]["subjectid"]+'}}')
+    data4=json.loads('{"database":"ExaminationSystem","collection":"subjects","Filter":{"subid":'+data["document"]["subid"]+'}}')
     obj4 = MongoAPI(data4)
     subname=(obj4.readWithFilter()[0].get('subname'))
     data['document']['subname']=subname
