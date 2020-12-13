@@ -42,7 +42,6 @@ export default function UpdateName({ifname, ilname}) {
       updateUserName(dispatch, fname, lname);
   }
 
-  console.log(fname, lname)
   return (
     <div className={classes.root}>
 

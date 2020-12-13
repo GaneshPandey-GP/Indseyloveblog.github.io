@@ -68,12 +68,14 @@ export const TestCard = () => {
       {loading ? <Loading /> : 
         <div className="container">
           <div className="row mt-4">
-            {tests === [] ? (
-              <h2 className="col-sm-12 text-center card-header ">
-                No tests Available!
+            {tests.length === 0 ? (
+              <h2 className="col-sm-12 text-center text-secondary border border-info p-3">
+                Tests Not Available!
               </h2>
             ) : (
-              <></>
+              <h2 className="col-sm-12 text-center card-header text-secondary">
+                Tests
+              </h2>
             )}
             {tests.map(
               ({ testname, testid, subname, testtime, totalMarks }) => (

@@ -27,12 +27,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UpdateTest({initialTestTime, initialSubjectid, initialTestName, testid}) {
+export default function UpdateTest({initialTestTime, initialSubid, initialTestName, testid}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [subid, setSubid] = React.useState(parseInt(initialSubjectid));
+  const [subid, setSubid] = React.useState(parseInt(initialSubid));
   const [{subjects}, dispatch] = useAuthState()
   const [testname, setTestname] = useState(initialTestName)
+  const [subname, setSubname] = useState("")
+
   const [testtime, setTesttime] = React.useState(initialTestTime)
   const [valueError, setValueError] = React.useState()
 
@@ -49,14 +51,19 @@ export default function UpdateTest({initialTestTime, initialSubjectid, initialTe
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if ( testname === '' || subid === '' || testtime === 0 ) 
+    if ( testname === '' || subid === '' || subname === '' || testtime === 0 ) 
       setValueError("Enter all the values!")
       else {
-        updateTest(dispatch, testname, testid, testtime, subid)
+        setValueError("")
+        updateTest(dispatch, testname, testid, testtime, subid, subname)
       }
     if (valueError === '')
       handleClose()    
   };
+
+  const handleSubName = (e, subname) => {
+    setSubname(subname)
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -93,14 +100,14 @@ export default function UpdateTest({initialTestTime, initialSubjectid, initialTe
                   id="select-subject"
                   defaultValue=""
                   value={subid}
-                  onChange={(e) => handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e,)}
                   input={<Input id="select-subject-label" />}
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
                   {subjects.map(({subname, subid}) =>
-                    <MenuItem key={subid} value={subid} >{subname}</MenuItem>
+                    <MenuItem key={subid} value={subid} onClick={(e) => handleSubName(e, subname)}>{subname}</MenuItem>
                   )}
                 </Select>
               </FormControl>
