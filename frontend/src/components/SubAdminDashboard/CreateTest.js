@@ -29,14 +29,14 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateTest() {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
-  const [subjectid, setSubjectid] = React.useState('');
+  const [subid, setSubid] = React.useState('');
   const [{subjects}, dispatch] = useAuthState()
   const [testName, setTestName] = useState('')
   const [testTime, setTestTime] = React.useState(0)
   const [valueError, setValueError] = React.useState('')
 
   const handleInputChange = (e) => {
-    setSubjectid(String(e.target.value) || '');
+    setSubid(String(e.target.value) || '');
   }
 
   const handleTestNameChange = (e) =>{
@@ -48,14 +48,14 @@ export default function CreateTest() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if ( testName === '' || subjectid === '' || testTime <= 0 ) 
+    if ( testName === '' || subid === '' || testTime <= 0 ) 
       setValueError("Enter the valid values!")
       else {
         setValueError("")
-        createTest(dispatch, testName, subjectid, testTime)
-      }
-    if (valueError === '')
-      handleClose()    
+        createTest(dispatch, testName, subid, testTime)
+        resetForm()
+        handleClose()
+      }  
   };
 
   const handleClickOpen = () => {
@@ -64,7 +64,13 @@ export default function CreateTest() {
 
   const handleClose = () => {
     setOpen(false);
-  };
+  }
+
+  const resetForm = () =>{
+    setSubid("")
+    setTestName("")
+    setTestTime("")
+  }
   return (
     <div>
       <ListItem button onClick={handleClickOpen}>
@@ -96,7 +102,7 @@ export default function CreateTest() {
                 <Select
                   id="select-subject"
                   defaultValue=""
-                  value={subjectid}
+                  value={subid}
                   onChange={(e) => handleInputChange(e)}
                   input={<Input id="select-subject-label" />}
                 >

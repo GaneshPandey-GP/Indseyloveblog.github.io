@@ -14,8 +14,8 @@ import QueueIcon from "@material-ui/icons/Queue";
 
 export default function CreateCategory() {
   const [open, setOpen] = React.useState(false);
-  const [{isAuthenticated, loading}, dispatch] = useAuthState()
-  const [valueError, setValueError] = React.useState('')
+  const [{}, dispatch] = useAuthState();
+  const [valueError, setValueError] = React.useState("");
 
   const [categoryName, setCategory] = useState("");
   const handleClickOpen = () => {
@@ -27,12 +27,16 @@ export default function CreateCategory() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (categoryName === '')
-      setValueError("Enter the Category")
-    else
+    if (categoryName === "") setValueError("Enter the Category");
+    else {
+      setValueError("");
       createCategory(dispatch, categoryName);
-    if (valueError === '')
-      handleClose()    
+      resetForm();
+      handleClose();
+    }
+  };
+  const resetForm = () => {
+    setCategory("");
   };
   return (
     <div>
@@ -40,14 +44,14 @@ export default function CreateCategory() {
         <ListItemIcon>
           <QueueIcon />
         </ListItemIcon>
-        <ListItemText primary={"Create category" } />
+        <ListItemText primary={"Create category"} />
       </ListItem>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <form onSubmit={handleSubmit} style={{minWidth: 300}}>
+        <form onSubmit={handleSubmit} style={{ minWidth: 300 }}>
           <DialogContent>
             <TextField
               autoFocus
@@ -60,7 +64,11 @@ export default function CreateCategory() {
               onChange={(e) => setCategory(e.target.value)}
             />
           </DialogContent>
-          {valueError ? <p className="text-small text-danger ml-4">{valueError}</p>: <p></p>}
+          {valueError ? (
+            <p className="text-small text-danger ml-4">{valueError}</p>
+          ) : (
+            <p></p>
+          )}
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Cancel

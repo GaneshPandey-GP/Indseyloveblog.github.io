@@ -3,7 +3,7 @@
   
   height: 100vh;
   display: flex;
-  background-image: url(./images/register2.jpeg);
+  background-image: url(../images/register.jpg);
   background-size: cover;
 }
 .Wrapper {
@@ -97,7 +97,7 @@ background-color: transparent;
     width: 450px;
     height: 300vh;
     display: flex;
-    background-image: url(./images/register1.jpg);
+    background-image: url(../images/register1.jpg);
     background-size: cover;
   }
 }
@@ -109,7 +109,7 @@ background-color: transparent;
     width: 450px;
     height: 300vh;
     display: flex;
-    background-image: url(./images/register1.jpg);
+    background-image: url(../images/register1.jpg);
     background-size: cover;
   }
 }
@@ -121,7 +121,7 @@ background-color: transparent;
     width: 450px;
     height: 300vh;
     display: flex;
-    background-image: url(./images/register1.jpg);
+    background-image: url(../images/register1.jpg);
     background-size: cover;
   }
 }

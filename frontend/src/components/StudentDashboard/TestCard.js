@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { useAuthState, viewQuestions4Client } from "../../context";
 import { Link } from "react-router-dom";
 import { CardActions, Drawer } from "@material-ui/core";
+import { Loading } from "../Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const TestCard = () => {
-  const [{ tests }] = useAuthState();
+  const [{ tests, loading }] = useAuthState();
   try{
     var retrievedData = localStorage.getItem("testsGiven");
     var testsGiven = JSON.parse(retrievedData)
@@ -62,17 +63,19 @@ export const TestCard = () => {
   const classes = useStyles();
   return (
     <>
-      
       <div className={classes.main}>
       <hr />
+      {loading ? <Loading /> : 
         <div className="container">
           <div className="row mt-4">
-            {tests[0] ? (
-              <h2 className="col-sm-12 text-center card-header ">
-                Tests
+            {tests.length === 0 ? (
+              <h2 className="col-sm-12 text-center text-secondary border border-info p-3">
+                Tests Not Available!
               </h2>
             ) : (
-              <></>
+              <h2 className="col-sm-12 text-center card-header text-secondary">
+                Tests
+              </h2>
             )}
             {tests.map(
               ({ testname, testid, subname, testtime, totalMarks }) => (
@@ -130,7 +133,7 @@ export const TestCard = () => {
               )
             )}
           </div>
-        </div>
+        </div>}
       </div>
     </>
   );

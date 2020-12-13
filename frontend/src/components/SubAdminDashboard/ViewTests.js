@@ -63,7 +63,7 @@ export default function ViewTests() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tests.map(({testname, testid, subname, subjectid, testtime}) => (
+          {tests.map(({testname, testid, subname, subid, testtime}) => (
             <TableRow key={testid}>
               <TableCell component="th" scope="row">
                 {testname}
@@ -77,7 +77,7 @@ export default function ViewTests() {
                <Link to={{pathname: "/sub-admin-submission"}} ><button type="button" className="btn btn-primary" onClick={() => clickHandler(testid, testname)}>Submissions</button></Link> 
               </TableCell>
               <TableCell component="th" scope="row">
-               <UpdateTest initialTestName={testname} initialSubjectid={subjectid} initialTestTime={testtime} testid={testid}/>
+               <UpdateTest initialTestName={testname} initialSubid={subid} initialTestTime={testtime} testid={testid} initialSubName={subname}/>
               </TableCell>
             </TableRow>
           ))}

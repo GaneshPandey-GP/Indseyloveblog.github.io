@@ -14,8 +14,8 @@ import QueueIcon from "@material-ui/icons/Queue";
 
 export default function CreateLink() {
   const [open, setOpen] = React.useState(false);
-  const [{isAuthenticated, loading}, dispatch] = useAuthState()
-  const [valueError, setValueError] = React.useState('')
+  const [{}, dispatch] = useAuthState();
+  const [valueError, setValueError] = React.useState("");
 
   const [link, setLink] = useState("");
   const [linktitle, setLinkTitle] = useState("");
@@ -29,28 +29,34 @@ export default function CreateLink() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (link === '')
-      setValueError("Enter the Link")
-    else
-      setValueError("")
+    if (link === "") setValueError("Enter the Link");
+    else {
+      setValueError("");
       createLink(dispatch, link, linktitle);
-    if (valueError === '')
-      handleClose()    
+      resetForm();
+      handleClose();
+    }
   };
+
+  const resetForm = () => {
+    setLink("");
+    setLinkTitle("");
+  };
+
   return (
     <div>
       <ListItem button onClick={handleClickOpen}>
         <ListItemIcon>
           <QueueIcon />
         </ListItemIcon>
-        <ListItemText primary={"Create Link" } />
+        <ListItemText primary={"Create Link"} />
       </ListItem>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <form onSubmit={handleSubmit} style={{minWidth: 300}}>
+        <form onSubmit={handleSubmit} style={{ minWidth: 300 }}>
           <DialogContent>
             <TextField
               autoFocus
@@ -73,7 +79,11 @@ export default function CreateLink() {
               onChange={(e) => setLink(e.target.value)}
             />
           </DialogContent>
-          {valueError ? <p className="text-small text-danger ml-4">{valueError}</p>: <p></p>}
+          {valueError ? (
+            <p className="text-small text-danger ml-4">{valueError}</p>
+          ) : (
+            <p></p>
+          )}
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Cancel

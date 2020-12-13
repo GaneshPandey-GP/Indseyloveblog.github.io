@@ -134,7 +134,7 @@ export const updateSubject = async (dispatch, subid, subname) => {
   }
 };
 
-export const getTests = async (dispatch, subjectid) => {
+export const getTests = async (dispatch, subid) => {
   const tests = [];
   dispatch({
     type: "START_LOADING",
@@ -149,7 +149,7 @@ export const getTests = async (dispatch, subjectid) => {
     collection: "tests",
     Filter: {
       createdBy: parseInt(localStorage.getItem("user.uid")),
-      subjectid,
+      subid,
     },
   };
   try {
@@ -168,7 +168,7 @@ export const getTests = async (dispatch, subjectid) => {
   }
 };
 
-export const createTest = async (dispatch, testname, subjectid, testtime) => {
+export const createTest = async (dispatch, testname, subid, testtime) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -182,7 +182,7 @@ export const createTest = async (dispatch, testname, subjectid, testtime) => {
     collection: "tests",
     document: {
       testname,
-      subjectid,
+      subid,
       testtime,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
@@ -207,7 +207,8 @@ export const updateTest = async (
   testname,
   testid,
   testtime,
-  subid
+  subid,
+  subname
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -228,10 +229,11 @@ export const updateTest = async (
       testname,
       testtime: parseInt(testtime),
       subid: parseInt(subid),
+      subname,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
     },
-  };
+  }
   try {
     await axios.post(`${baseURL}/updateTest`, body, config);
     getTests(dispatch);

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateSub() {
   const [open, setOpen] = React.useState(false);
-  const [{ isAuthenticated, loading, categories }, dispatch] = useAuthState();
+  const [{ categories }, dispatch] = useAuthState();
   const [valueError, setValueError] = React.useState("");
 
   const [sub, setSub] = useState("");
@@ -47,11 +47,20 @@ export default function CreateSub() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (sub === "") setValueError("Enter the subject name!");
-    else subjectCreate(dispatch, sub, categoryid);
-    if (valueError === "") handleClose();
+    if (sub === "" || categoryid === "") setValueError("Enter the subject name!");
+    else{
+      setValueError("")
+      subjectCreate(dispatch, sub, categoryid)
+      handleClose()
+      resetForm()
+    }
   }
 
+  const resetForm = () =>{
+    setSub("")
+    setCategoryid("")
+  }
+  
   const classes = useStyles()
   return (
     <div>

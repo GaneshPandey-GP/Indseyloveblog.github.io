@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -19,7 +19,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import MenuTwoToneIcon from "@material-ui/icons/MenuTwoTone";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import "bootstrap/dist/css/bootstrap.min.css";
 import PersonIcon from "@material-ui/icons/Person";
 import CreateSub from "./CreateSub";
 import ViewSubjects from "./ViewSubjects";
@@ -73,7 +72,7 @@ function LDrawer() {
 
   const handleDrawerOpen = () => {
     setOpen(true)};
-  const [{subjects, loading, user}, dispatch] = useAuthState()
+  const [{ loading, user}, dispatch] = useAuthState()
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -88,7 +87,6 @@ function LDrawer() {
         })}
       >
         <Toolbar>
-        {/* {loading ? <NavLoading /> : <></>} */}
           <IconButton
             color="inherit"
             aria-label="open drawer"

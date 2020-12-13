@@ -82,10 +82,11 @@ export const logout = (dispatch) => {
 };
 
 export const getSubjects4Client = async (dispatch, categoryid) => {
+  const subjects = []
   dispatch({
     type: "START_LOADING",
   });
-  const subjects = [];
+  
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -159,7 +160,7 @@ export const getTests4Client = async (dispatch, subid) => {
     database: "ExaminationSystem",
     collection: "tests",
     Filter: {
-      subjectid: String(subid)
+      subid: subid
     }
   };
 
@@ -378,7 +379,6 @@ export const readUser = async (dispatch) => {
 
   try {
     const res = await axios.post(`${baseURL}/readUsers`, body, config)
-    console.log(res.data)
     dispatch({
       type: "LOAD_USER",
       user: res.data

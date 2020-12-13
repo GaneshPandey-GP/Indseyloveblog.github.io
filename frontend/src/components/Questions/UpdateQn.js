@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns, imarks}) {
+export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns, imarks, setLoad}) {
   const testid = localStorage.getItem('testid')
   const [open, setOpen] = React.useState(false);
   const [correctAns, setCorrectAns] = useState(icorrectAns)
@@ -59,6 +59,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
         setValueError("")
         updateQuestion(dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, marks, testid, imarks)
         handleClose()
+        setLoad(false)
       }
   }
 
