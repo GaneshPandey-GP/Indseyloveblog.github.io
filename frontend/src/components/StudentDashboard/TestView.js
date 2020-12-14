@@ -16,7 +16,7 @@ import TestRedirect from "./TestRedirect";
 import SimpleNav from "../SimpleNav";
 import { Redirect } from "react-router-dom";
 import Skeleton from "@material-ui/lab/Skeleton";
-
+import TimesUp from './TimesUp';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -38,13 +38,10 @@ function TestView() {
   const timer = localStorage.getItem("timer");
   const testname = localStorage.getItem("testname");
 
-  const testtime = parseInt(localStorage.getItem("timer"));
-  const min = localStorage.getItem("min");
-  const sec = localStorage.getItem("sec");
-  const [minutes, setMinutes] = useState(min);
-  const [seconds, setSeconds] = useState(sec);
-  // console.log(minutes)
-  // console.log(seconds)
+  // const min = parseInt(localStorage.getItem("min"));
+  // const sec =  parseInt(localStorage.getItem("sec"));
+  const [minutes, setMinutes] = useState(parseInt(localStorage.getItem("min")));
+  const [seconds, setSeconds] = useState(parseInt(localStorage.getItem("sec")));
   useEffect(() => {
     if (
       testid === "undefined" ||
@@ -113,29 +110,12 @@ function TestView() {
     if (!error) createSubmission(dispatch, testid, result, answers);
   };
 
-  // useEffect(() => {
-  //   //setMinutes(localStorage.getItem("min"));
-  //   if (minutes > -1 ) return;
-  //   const intervelID = setInterval(() => {
-  //     setMinutes(localStorage.getItem("min"));
-  //    console.log(localStorage.getItem("min"))
-  //     // minutes === 0 ? setSeconds(0) : setSeconds(59);
-  //   }, 1000);
-  //   return () => {
-     
-  //     clearInterval(intervelID);
-  //   };
-  // }, [minutes]);
 
   useEffect(() => {
-    // localStorage.setItem("sec",seconds)
-    if (minutes === 0 && seconds===0) {console.log("WORKING")}
     if (!seconds) return;
     const intervelID = setInterval(() => {
-      setSeconds(localStorage.getItem("sec"));
-      setMinutes(localStorage.getItem("min"));
-      
-      
+      setSeconds(parseInt(localStorage.getItem("sec")));
+      setMinutes(parseInt(localStorage.getItem("min")));
     }, 1000);
 
     return () => {
@@ -146,8 +126,6 @@ function TestView() {
   
   if (error) return <Redirect to="/subject-test-view" />;
   
-if(minutes===0 && seconds===0){alert("Time")}
-
   return (
     <div>
       {loading ? (
@@ -167,9 +145,10 @@ if(minutes===0 && seconds===0){alert("Time")}
         </>
       ) : (
         <>
-       
+        {(minutes===0 && seconds===0)? <> <TimesUp handleSubmit={handleSubmit}/></>: (
+          <>
           <SimpleNav heading={"Attempt all the questions:"} />
-          <Timer handleSubmit={handleSubmit} />
+          <Timer/>
           <form className="container " id="form" onSubmit={handleSubmit}>  {minutes}  {seconds}
             {questions.map(
               (
@@ -224,9 +203,11 @@ if(minutes===0 && seconds===0){alert("Time")}
             )}
             <div className="d-flex justify-content-center mt-5 mb-3">
               <TestRedirect handleSubmit={handleSubmit} />
-              {/* <TestRedirect handleSubmit={handleSubmits}/> */}
+              
             </div>
           </form>
+          </>
+          )}
         </>
       )}
     </div>
