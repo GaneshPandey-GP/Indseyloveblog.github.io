@@ -182,7 +182,7 @@ export const createTest = async (dispatch, testname, subid, testtime) => {
     collection: "tests",
     document: {
       testname,
-      subid,
+      subid: String(subid),
       testtime,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
