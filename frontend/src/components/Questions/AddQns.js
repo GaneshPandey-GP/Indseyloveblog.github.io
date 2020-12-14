@@ -4,8 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
-// import { makeStyles } from '@material-ui/core/styles';
-import { useLocation } from "react-router-dom";
 import {
   Button,
   FormControl,
@@ -15,7 +13,8 @@ import {
   TextField,
 } from "@material-ui/core";
 import { addQuestion, addQuestion2, useAuthState } from "../../context";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import AddCircleIcon from "@material-ui/icons/AddCircle"
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -91,20 +90,32 @@ export default function AddQns(props) {
         optionD,
         correctAns,
         marks
-      );
+      )
+      props.setLoad(false)
+      formReset()
       handleClose();
     }
   };
-
+  console.log(props)
   const handleFormSubmit2 = (e) => {
     e.preventDefault();
     if (question2 === "" || marks2 <= 0 || marks2 === "") setValueError("Enter valid values!");
     else {
       setValueError("");
       addQuestion2(dispatch, testid, question2, marks2);
+      props.setLoad(false)
+      formReset2()
       handleClose2();
     }
   };
+const formReset = () => {
+  setQnData("")
+  setCorrectAns("")
+}
+
+const formReset2 = () => {
+  setQnData2("")
+}
 
   return (
     

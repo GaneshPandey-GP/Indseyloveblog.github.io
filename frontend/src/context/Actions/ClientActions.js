@@ -160,7 +160,7 @@ export const getTests4Client = async (dispatch, subid) => {
     database: "ExaminationSystem",
     collection: "tests",
     Filter: {
-      subid: subid
+      subid: String(subid)
     }
   };
 

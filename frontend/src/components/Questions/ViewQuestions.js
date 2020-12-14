@@ -8,6 +8,7 @@ import { Card, CardActions, CardContent, Divider } from "@material-ui/core";
 import UpdateQn, { UpdateQn2 } from "./UpdateQn";
 import SimpleNav from "../SimpleNav";
 import History from "../History";
+import AddQns from "./AddQns";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,10 +27,10 @@ export default function ViewQuestions() {
   const [load, setLoad] = useState(true);
 
   const [{ questions, loading }, dispatch] = useAuthState();
-
+  const testid = localStorage.getItem("testid")
   useEffect(() => {
-    viewQuestions(dispatch, localStorage.getItem("testid"));
-  }, [dispatch]);
+    viewQuestions(dispatch, testid);
+  }, [testid]);
   const classes = useStyles();
 
   return (
@@ -164,6 +165,7 @@ export default function ViewQuestions() {
           )}
         </Grid>
       )}
+      <AddQns setLoad={setLoad}/>
     </div>
   );
 }
