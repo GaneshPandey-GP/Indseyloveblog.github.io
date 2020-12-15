@@ -1,6 +1,6 @@
 import {
   subjectCreate,
-  adminlogin,
+  subAdminLogin,
   getSubjects,
   updateSubject,
   createTest,
@@ -20,6 +20,8 @@ import {
   updateLink,
   updateUserName
 } from "./Actions/Sub-adminActions";
+
+import {adminLogin} from "./Actions/AdminActions" 
 
 import {
   Signup,
@@ -41,11 +43,12 @@ export {
   AuthProvider,
   useAuthState,
   Signup,
+  subAdminLogin,
   loginUser,
   subjectCreate,
   getSubjects,
   updateSubject,
-  adminlogin,
+  adminLogin,
   createTest,
   getTests,
   updateTest,

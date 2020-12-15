@@ -16,10 +16,7 @@ return(
                     <p>Please Submit Your Test.</p>
                   </div>
                   <div className="modal-footer">
-                   
                     <TestRedirect handleSubmit={props.handleSubmit} />
-                    
-                   
                   </div>
                 </div>
               </div>

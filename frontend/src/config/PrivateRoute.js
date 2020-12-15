@@ -30,3 +30,18 @@ export const StudPrivateRoute = ({ component: Component, ...rest }) => (
     }
   />
 );
+
+export const AdminPrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      localStorage.getItem("user.level") === '3' ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{ pathname: "/admin" }}
+        />
+      )
+    }
+  />
+);
