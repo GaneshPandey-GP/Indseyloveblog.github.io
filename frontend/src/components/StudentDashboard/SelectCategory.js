@@ -61,7 +61,7 @@ function SelectCategory() {
       ) : (
         <div className={classes.main}>
           <div className="container">
-          <LinkCarousel />
+        
             <h4>Select a Category</h4>
             <div className={classes.bodyCard}>
               {categories.map(({ categoryName, categoryid }, index) => (
@@ -80,6 +80,11 @@ function SelectCategory() {
                 </Grid>
               ))}
             </div>
+            <div className="mt-5">
+               <h4>Links</h4>
+            <LinkCarousel />
+            </div>
+           
           </div>
         </div>
       )}
