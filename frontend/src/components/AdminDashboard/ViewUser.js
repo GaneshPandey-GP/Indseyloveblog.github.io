@@ -14,6 +14,7 @@ import { useAuthState } from "../../context";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { Loading } from "../Loading";
 import UserDetail from "./UserDetail";
+import UpdateUser from "./UpdateUser";
 
 const useStyles = makeStyles({
   list: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ViewUser({user, text}) {
+export default function ViewUser({ user, text }) {
   const [{ users, loading }, dispatch] = useAuthState();
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -45,9 +46,23 @@ export default function ViewUser({user, text}) {
       role="presentation"
     >
       <List>
-        { loading ? (<Loading />) : (user.map(({ fname, uid, lname, contact, email, testsGiven}) =>
-            <UserDetail fname={fname} lname={lname} uid={uid} contact={contact} email={email} testsGiven={testsGiven} key={uid}/>
-        ))}
+        {loading ? (
+          <Loading />
+        ) : (
+          user.map(({ fname, uid, lname, contact, email, testsGiven }) => (
+            <>
+              <UserDetail
+                fname={fname}
+                lname={lname}
+                uid={uid}
+                contact={contact}
+                email={email}
+                testsGiven={testsGiven}
+                key={uid}
+              />
+            </>
+          ))
+        )}
       </List>
     </div>
   );
@@ -72,5 +87,3 @@ export default function ViewUser({user, text}) {
     </div>
   );
 }
-
-
