@@ -20,16 +20,11 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import MenuTwoToneIcon from "@material-ui/icons/MenuTwoTone";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonIcon from "@material-ui/icons/Person";
-import CreateSub from "../SubAdminDashboard/CreateSub";
-import ViewSubjects from "../SubAdminDashboard/ViewSubjects";
-import CreateTest from "../SubAdminDashboard/CreateTest";
-import { useAuthState } from "../../context";
+import { createAdmin, createSubAdmin, useAuthState } from "../../context";
 import { NavLoading } from "../Loading";
-import CreateCategory from "../SubAdminDashboard/CreateCategory";
-import ViewCategory from "../SubAdminDashboard/ViewCategory";
-import CreateLink from "../SubAdminDashboard/CreateLink";
-import ViewLink from "../SubAdminDashboard/ViewLink";
-import UpdateName from "../SubAdminDashboard/UpdateName";
+import CreateUser from "./CreateUser";
+import ViewUser from "./ViewUser";
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +60,7 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-function LDrawer() {
+function LDrawer({admins, subAdmins, clients}) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -126,20 +121,19 @@ function LDrawer() {
           <Avatar className="container">
             <PersonIcon />
           </Avatar>
-          {/* <UpdateName ifname={user[0].fname} ilname={user[0].lname}/> */}
-          {/* <Divider /> */}
-          <CreateCategory/>
-
-          <ViewLink />
+          <CreateUser heading="Create Admin" registerUser={createAdmin}/>
+          <CreateUser heading="Create Sub Admin" registerUser={createSubAdmin}/>
+          <ViewUser user={admins} text={"View Admins"}/>
+          <ViewUser user={subAdmins} text={"View Sub Admins"}/>
+          <ViewUser user={clients} text={"View Clients"}/>
         </List>
         <Divider />
         <List>
           <ListItem button>
-          <ListItemLink href="/sub-admin-login">
+          <ListItemLink href="/admin">
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>
-            
             <ListItemText primary={"Logout"} />
             </ListItemLink>
           </ListItem>

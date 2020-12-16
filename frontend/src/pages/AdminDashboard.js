@@ -10,7 +10,8 @@ function AdminDashboard() {
     // getTests(dispatch)
     // getCategories(dispatch)
     // getLinks(dispatch)
-    readUser(dispatch)
+    // readUser(dispatch)
+
   }, [])
   return (
     <>
