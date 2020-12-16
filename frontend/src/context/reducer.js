@@ -1,6 +1,7 @@
 export const initialState = {
   isAuthenticated: false,
   user: [{}],
+  users: [{}],
   loading: false,
   load: false,
   subjects: [],
@@ -26,7 +27,8 @@ export const reducer = (initialState, action) => {
           ...initialState,
           load: false,
           loading: false,
-          user: action.user
+          user: action.user,
+          users: action.users
         }
       case 'LOGIN_SUCCESS':
         localStorage.setItem('user.level', action.payload[0].level);

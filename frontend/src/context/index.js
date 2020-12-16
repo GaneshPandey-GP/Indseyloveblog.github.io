@@ -1,6 +1,6 @@
 import {
   subjectCreate,
-  adminlogin,
+  subAdminLogin,
   getSubjects,
   updateSubject,
   createTest,
@@ -18,8 +18,17 @@ import {
   createLink,
   getLinks,
   updateLink,
-  updateUserName
+  updateUserName,
 } from "./Actions/Sub-adminActions";
+
+import {
+  adminLogin,
+  createAdmin,
+  createSubAdmin,
+  getTests4Admin,
+  readUser4Admin,
+  getSubjects4Admin
+} from "./Actions/AdminActions";
 
 import {
   Signup,
@@ -32,7 +41,7 @@ import {
   viewResults,
   viewSubmission,
   readUser,
-  getLinks4Client
+  getLinks4Client,
 } from "./Actions/ClientActions";
 
 import { AuthProvider, useAuthState } from "./context";
@@ -41,11 +50,12 @@ export {
   AuthProvider,
   useAuthState,
   Signup,
+  subAdminLogin,
   loginUser,
   subjectCreate,
   getSubjects,
   updateSubject,
-  adminlogin,
+  adminLogin,
   createTest,
   getTests,
   updateTest,
@@ -70,5 +80,10 @@ export {
   getLinks,
   updateLink,
   getLinks4Client,
-  updateUserName
+  updateUserName,
+  createAdmin,
+  createSubAdmin,
+  getTests4Admin,
+  readUser4Admin,
+  getSubjects4Admin
 };

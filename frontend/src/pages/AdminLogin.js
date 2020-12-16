@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { subAdminLogin, useAuthState } from "../context";
+import { adminLogin, useAuthState } from "../context";
 import { useForm } from "react-hook-form";
 import "./Login.css";
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
@@ -8,7 +8,7 @@ import { Loading } from "../components/Loading";
 
 
 
-export default function SubAdminLogin() {
+export default function AdminLogin() {
   const { register, handleSubmit, errors } = useForm();
   const [{ loading, isAuthenticated, errorMessage }, dispatch] = useAuthState()
   useEffect(() => {
@@ -20,12 +20,12 @@ export default function SubAdminLogin() {
   },[])
   const onSubmit = (data, e) => {
     e.preventDefault();
-    subAdminLogin(dispatch, data);
+    adminLogin(dispatch, data)
     console.log(data);
   };
 
 
-  if (isAuthenticated) return <Redirect to="/sub-admin-dashboard" />;
+  if (isAuthenticated) return <Redirect to="/admin-dashboard" />
 
   return (
     <div className="wrapper">
@@ -94,11 +94,6 @@ export default function SubAdminLogin() {
           <button type="submit" className="btn btn-primary btns">
           {loading? <Loading />: "Login"}
           </button>
-        </div>
-        <div className="links">
-          <Link to="/"> {"Forgot Password?"}</Link>
-          <br />
-          <Link to="/register">{"Already have an account? Sign In"}</Link>
         </div>
       </form>
     </div>

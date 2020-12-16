@@ -2,7 +2,7 @@ import axios from "axios";
 import { readUser } from "./ClientActions";
 const baseURL = "http://127.0.0.1:5001";
 
-export const adminlogin = async (dispatch, { username, password }) => {
+export const subAdminLogin = async (dispatch, { username, password }) => {
   dispatch({
     type: "START_LOADING",
   });
