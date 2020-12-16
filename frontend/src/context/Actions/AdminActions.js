@@ -207,3 +207,37 @@ export const getSubjects4Admin = async (dispatch, categoryid) => {
     });
   }
 };
+
+export const updateAdminSiteUser = async (dispatch, fname, lname,  contact, email, iuid ) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: 'ExaminationSystem',
+    collection: 'users',
+    Filter:{
+      uid: iuid
+    },
+   DataToBeUpdated: {
+      fname,
+      lname,
+      contact,
+      email
+  }}
+  try {
+    const res = await axios.post(`${baseURL}/updateUser`, body, config)
+    readUser4Admin(dispatch);
+    dispatch({
+      type: "ACTION_SUCCESS",
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}

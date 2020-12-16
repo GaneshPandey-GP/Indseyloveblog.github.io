@@ -27,7 +27,8 @@ import {
   createSubAdmin,
   getTests4Admin,
   readUser4Admin,
-  getSubjects4Admin
+  getSubjects4Admin,
+  updateAdminSiteUser
 } from "./Actions/AdminActions";
 
 import {
@@ -85,5 +86,6 @@ export {
   createSubAdmin,
   getTests4Admin,
   readUser4Admin,
-  getSubjects4Admin
+  getSubjects4Admin,
+  updateAdminSiteUser
 };
