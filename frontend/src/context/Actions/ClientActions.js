@@ -254,7 +254,7 @@ export const createSubmission = async (dispatch, testid, result, answers) => {
   }
 }
 
-export const viewResults = async (dispatch) => {
+export const viewResults4Client = async (dispatch) => {
   const results = []
   dispatch({
     type: "START_LOADING",
@@ -288,7 +288,7 @@ export const viewResults = async (dispatch) => {
   }
 }
 
-export const viewSubmission = async (dispatch, testid) => {
+export const viewSubmission4Client = async (dispatch, testid) => {
   const submission = []
   dispatch({
     type: "START_LOADING",
@@ -306,12 +306,13 @@ export const viewSubmission = async (dispatch, testid) => {
       testid,
     }
   }
-
+  console.log(body)
   try {
     const res = await axios.post(`${baseURL}/viewSubmission`, body, config);
     res.data.map((ques) => {
       return submission.push(ques);
     })
+    localStorage.removeItem("testname")
     dispatch({
       type: "GET_SUBMISSION",
       submission: submission,
@@ -323,7 +324,7 @@ export const viewSubmission = async (dispatch, testid) => {
   }
 }
 
-export const updateUser = async (dispatch, testid) => {
+export const updateUser = async (dispatch) => {
   try{
     var tests = JSON.parse(localStorage.getItem('testsGiven'))
   }catch(err){
@@ -348,7 +349,7 @@ export const updateUser = async (dispatch, testid) => {
   }}
   try {
     const res = await axios.post(`${baseURL}/updateUser`, body, config)
-    readUser(dispatch);
+    readUser4Client(dispatch);
     dispatch({
       type: "ACTION_SUCCESS",
     });
@@ -359,7 +360,7 @@ export const updateUser = async (dispatch, testid) => {
   }
 }
 
-export const readUser = async (dispatch) => {
+export const readUser4Client = async (dispatch) => {
   dispatch({
     type: "START_LOAD",
   });

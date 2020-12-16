@@ -87,7 +87,8 @@ function TestView() {
     let marks = Object.assign(
       {},
       ...questions.map((x) => ({ [x.qid]: x.marks }))
-    );
+    )
+
     let totalmarks = 0;
     for (let i in selected) {
       if (selected[i].ans === answers[i]) {
@@ -103,9 +104,11 @@ function TestView() {
     setHelperText(" ");
   };
 
-  const handleSubmit = (e) => {
     const result = getMarks();
     const answers = Object.values(selected);
+    
+  const handleSubmit = (e) => {
+
     e.preventDefault();
     if (!error) createSubmission(dispatch, testid, result, answers);
   };
@@ -203,7 +206,6 @@ function TestView() {
             )}
             <div className="d-flex justify-content-center mt-5 mb-3">
               <TestRedirect handleSubmit={handleSubmit} />
-              
             </div>
           </form>
           </>

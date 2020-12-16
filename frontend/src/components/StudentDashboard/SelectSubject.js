@@ -84,34 +84,12 @@ function SelectSubject() {
   return (
     <>
       <Nav />
-      {loading && load ? (
-        <div className="container">
-          <div className="row mb-5">
-            <div className="col-sm-12 mb-5">
-              <Skeleton variant="rect" height={50} />
-            </div>
-            <br />
-            <div className="col-sm-4 mb-5">
-              <Skeleton variant="rect" height={65} />
-            </div>
-            <br />
-            <div className="col-sm-4 mb-5">
-              <Skeleton variant="rect" height={65} />
-            </div>
-            <br />
-            <div className="col-sm-4 mb-5">
-              <Skeleton variant="rect" height={65} />
-            </div>
-            <br />
-          </div>
-        </div>
-      ) : (
         <div>
           <div className={classes.main}>
             <div className="container">
               <History history={category} />
               {loading && load ? (
-                <Loading />
+                <Loader />
               ) : (
                 <div className={classes.bodyCard}>
                   {subjects.length === 0 ? (
@@ -151,9 +129,30 @@ function SelectSubject() {
             <></>
           )}
         </div>
-      )}
     </>
   );
 }
 
 export default SelectSubject;
+
+const Loader = () => {
+  return(
+    <div className="container mt-3">
+    <div className="row mb-5">
+      <div className="col-sm-4 mb-5">
+        <Skeleton variant="rect" height={65} />
+      </div>
+      <br />
+      <div className="col-sm-4 mb-5">
+        <Skeleton variant="rect" height={65} />
+      </div>
+      <br />
+      <div className="col-sm-4 mb-5">
+        <Skeleton variant="rect" height={65} />
+      </div>
+      <br />
+    </div>
+  </div>
+  )
+  
+};

@@ -9,7 +9,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import {
   useAuthState,
   viewQuestions4Client,
-  viewSubmission4Client,
+  viewSubmission,
 } from "../../context";
 import SimpleNav from "../SimpleNav";
 import History from "../History";
@@ -24,17 +24,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Submission() {
+function ViewSubmission() {
   const classes = useStyles();
   const [{ submission, questions, loading }, dispatch] = useAuthState();
   const testid = localStorage.getItem("testid");
+  const submitID = localStorage.getItem("submitID");
+
   let yourSoln = [];
   let result = [];
 
   useEffect(() => {
-    viewSubmission4Client(dispatch, testid);
+    viewSubmission(dispatch, testid, submitID);
     viewQuestions4Client(dispatch, testid);
-  }, [testid, dispatch]);
+  }, []);
 
   submission.map((ques) => yourSoln.push(ques.answers));
   try {
@@ -52,12 +54,12 @@ function Submission() {
     console.log(err);
   }
 
-  if (testid === null || testid === 'undefined') return <Redirect to="/your-results" />;
+  if ((testid === null || testid === 'undefined') && (submitID === null || submitID === 'undefined')) return <Redirect to="/your-results" />;
   return (
     <div>
       {loading ? (
         <>
-          <SimpleNav heading={"Your Submission"} />
+          <SimpleNav heading={"View Submission"} />
           <div className="container mt-5">
             <Skeleton variant="rect" height={90} />
             <br />
@@ -159,4 +161,4 @@ function Submission() {
   );
 }
 
-export default Submission;
+export default ViewSubmission;
