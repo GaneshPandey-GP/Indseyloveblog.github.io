@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { useAuthState, viewQuestions } from "../../context";
+import { updateQuestion, updateQuestion4Admin, useAuthState, viewQuestions, viewQuestions4Admin } from "../../context";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { Card, CardActions, CardContent, Divider } from "@material-ui/core";
 import UpdateQn, { UpdateQn2 } from "./UpdateQn";
@@ -23,16 +23,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ViewQuestions() {
   const initial = localStorage.getItem("testname")
+  const level = localStorage.getItem("user.level")
+
   const [testname, setTestname] = useState(initial);
   const [load, setLoad] = useState(true);
 
-  const [{ questions, loading }, dispatch] = useAuthState();
+  const [{ questions, loading, isAuthenticated }, dispatch] = useAuthState();
   const testid = localStorage.getItem("testid")
   useEffect(() => {
-    viewQuestions(dispatch, testid);
+    level === 1 ?
+    viewQuestions(dispatch, testid) : viewQuestions4Admin(dispatch, testid)
   }, [testid]);
   const classes = useStyles();
-
+  console.log(isAuthenticated)
   return (
     <div className={classes.root}>
 
@@ -129,6 +132,8 @@ export default function ViewQuestions() {
                                 qid={qid}
                                 imarks={marks}
                                 setLoad = {setLoad}
+                              updateQuestion = {level === 1 ? updateQuestion : updateQuestion4Admin}
+
                               />
                             </CardActions>
                           </CardContent>
@@ -165,7 +170,9 @@ export default function ViewQuestions() {
           )}
         </Grid>
       )}
-      <AddQns setLoad={setLoad}/>
+      {level === 1 ?
+      <AddQns setLoad={setLoad}/> : <></>
+      }
     </div>
   );
 }

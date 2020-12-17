@@ -12,7 +12,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { TextField } from '@material-ui/core';
 import { useAuthState } from '../../context';
-import { updateTest } from '../../context';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UpdateTest({initialTestTime, initialSubid, initialTestName, testid}) {
+export default function UpdateTest({initialTestTime, initialSubid, initialTestName, testid, updateTest, createdBy}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [subid, setSubid] = React.useState(parseInt(initialSubid));
@@ -50,12 +49,13 @@ export default function UpdateTest({initialTestTime, initialSubid, initialTestNa
     setTesttime(e.target.value);
 
   const handleFormSubmit = (e) => {
+    console.log(testname, subid, subname, testtime)
     e.preventDefault();
     if ( testname === '' || subid === '' || subname === '' || testtime === 0 ) 
       setValueError("Enter all the values!")
       else {
         setValueError("")
-        updateTest(dispatch, testname, testid, testtime, subid, subname)
+        updateTest(dispatch, testname, testid, testtime, subid, subname, createdBy)
       }
     if (valueError === '')
       handleClose()    
