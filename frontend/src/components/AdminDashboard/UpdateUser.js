@@ -5,7 +5,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Accordion from '@material-ui/core/Accordion';
 import { useAuthState } from '../../context';
 import { updateAdminSiteUser } from '../../context';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -13,6 +12,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import Alert from "@material-ui/lab/Alert";
 import { Loading } from "../Loading";
 import { useForm } from "react-hook-form";
+import { Divider, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 export default function UpdateTest({ifname, ilname, icontact, iemail, itestsGiven, iuid}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-//   const [subid, setSubid] = React.useState(parseInt(initialSubid));
   const [fname, setFname] = useState(ifname)
   const [lname, setLname] = useState(ilname)
   
@@ -55,7 +54,7 @@ export default function UpdateTest({ifname, ilname, icontact, iemail, itestsGive
   const [formError, setFormError] = useState("");
   const { register, handleSubmit, errors } = useForm();
  
-  const [{ isAuthenticated, loading }, dispatch] = useAuthState();
+  const [{loading }, dispatch] = useAuthState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,16 +68,17 @@ export default function UpdateTest({ifname, ilname, icontact, iemail, itestsGive
     
       <EditOutlinedIcon onClick={handleClickOpen} style={{cursor: 'pointer'}}/>
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-        <form className={classes.container} id="test-form"  noValidate autoComplete="off">
-        <DialogTitle>Update User</DialogTitle>
-
+        <form className={classes.container} id="update-user-form"  noValidate autoComplete="off">
+        <DialogTitle>Update Details of {fname} {lname}</DialogTitle>
+        <Divider />
           <DialogContent>
           <form
           onSubmit={handleFormSubmit}
           autoComplete="off"
-          className="col mt-3 p-5"
+          className="col mt-3 p-2"
         >
           <div className="form-group">
+          <Typography color="textSecondary" variant="body2">First Name</Typography>
             <input
               onChange={(e) => setFname(e.target.value)}
               required
@@ -105,6 +105,8 @@ export default function UpdateTest({ifname, ilname, icontact, iemail, itestsGive
             )}
           </div>
           <div className="form-group">
+          <Typography color="textSecondary" variant="body2">Last Name</Typography>
+
             <input
               onChange={(e) => setLname(e.target.value)}
               required
@@ -128,6 +130,8 @@ export default function UpdateTest({ifname, ilname, icontact, iemail, itestsGive
             )}
           </div>
           <div className="form-group">
+          <Typography color="textSecondary" variant="body2">Contact</Typography>
+
             <input
               required
               onChange={(e) => setContact(e.target.value)}
@@ -155,6 +159,8 @@ export default function UpdateTest({ifname, ilname, icontact, iemail, itestsGive
             )}
           </div>
           <div className="form-group">
+          <Typography color="textSecondary" variant="body2">Email</Typography>
+
             <input
               required
               onChange={(e) => setEmail(e.target.value)}

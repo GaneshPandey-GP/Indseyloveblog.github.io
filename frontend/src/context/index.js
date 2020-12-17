@@ -29,7 +29,10 @@ import {
   getTests4Admin,
   readUser4Admin,
   getSubjects4Admin,
-  updateAdminSiteUser
+  updateAdminSiteUser,
+  viewQuestions4Admin,
+  updateQuestion4Admin,
+  updateTest4Admin,
 } from "./Actions/AdminActions";
 
 import {
@@ -89,5 +92,8 @@ export {
   getTests4Admin,
   readUser4Admin,
   getSubjects4Admin,
-  updateAdminSiteUser
+  updateAdminSiteUser,
+  viewQuestions4Admin,
+  updateQuestion4Admin,
+  updateTest4Admin
 };

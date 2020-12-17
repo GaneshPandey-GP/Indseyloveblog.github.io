@@ -6,7 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {useLocation} from "react-router-dom";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@material-ui/core";
-import { updateQuestion, updateQuestion2, useAuthState } from '../../context';
+import { updateQuestion2, useAuthState } from '../../context';
 import EditIcon from '@material-ui/icons/Edit';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns, imarks, setLoad}) {
+export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns, imarks, setLoad, updateQuestion}) {
   const testid = localStorage.getItem('testid')
   const [open, setOpen] = React.useState(false);
   const [correctAns, setCorrectAns] = useState(icorrectAns)
