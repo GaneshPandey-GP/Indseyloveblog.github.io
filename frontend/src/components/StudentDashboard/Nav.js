@@ -81,7 +81,7 @@ function Nav() {
               aria-label="open drawer"
               className={classes.home}
             >
-              <Link className={classes.link} to="/results">
+              <Link className={classes.link} to="/your-results">
                 Results
               </Link>
             </IconButton>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { readUser } from "./ClientActions";
+import { readUser4Client } from "./ClientActions";
 const baseURL = "http://127.0.0.1:5001";
 
 export const subAdminLogin = async (dispatch, { username, password }) => {
@@ -328,7 +328,7 @@ export const addQuestion2 = async (dispatch, testid, question, marks) => {
       type: "ACTION_FAIL",
     });
   }
-};
+}
 
 export const viewQuestions = async (dispatch, testid) => {
   const questions = [];
@@ -455,7 +455,7 @@ export const updateQuestion2 = async (
       type: "ACTION_FAIL",
     });
   }
-};
+}
 
 export const createCategory = async (dispatch, categoryName) => {
   dispatch({
@@ -485,7 +485,7 @@ export const createCategory = async (dispatch, categoryName) => {
   } catch (err) {
     console.log(err);
   }
-};
+}
 
 export const updateCategory = async (dispatch, categoryid, categoryName) => {
   dispatch({
@@ -524,7 +524,7 @@ export const updateCategory = async (dispatch, categoryid, categoryName) => {
       type: "ACTION_FAIL",
     });
   }
-};
+}
 
 export const getCategories = async (dispatch, categoryid) => {
   const categories = [];
@@ -559,10 +559,10 @@ export const getCategories = async (dispatch, categoryid) => {
       type: "ACTION_FAIL",
     });
   }
-};
+}
 
-export const viewSubmissions = async (dispatch) => {
-  const submissions = [];
+export const viewResults = async (dispatch) => {
+  const results = []
   dispatch({
     type: "START_LOADING",
   });
@@ -577,23 +577,59 @@ export const viewSubmissions = async (dispatch) => {
     Filter:{
       testid: localStorage.getItem("testid"),
     }
-}
+  }
 
   try {
     const res = await axios.post(`${baseURL}/viewResults`, body, config);
-    res.data.map((submission) => {
-      return submissions.push(submission);
-    });
+    res.data.map((result) => {
+      return results.push(result);
+    })
     dispatch({
-      type: "GET_SUBMISSION",
-      submission: submissions,
+      type: "GET_RESULTS",
+      results: results,
     });
   } catch (err) {
     dispatch({
       type: "ACTION_FAIL",
     });
   }
-};
+}
+
+export const viewSubmission = async (dispatch, testid, submitID) => {
+  const submission = []
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "submissions",
+    Filter:{
+      testid,
+      submissionID : parseInt(submitID)
+    }
+  }
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/viewSubmission`, body, config);
+    res.data.map((ques) => {
+      return submission.push(ques);
+    })
+    localStorage.removeItem("testname")
+    dispatch({
+      type: "GET_SUBMISSION",
+      submission: submission,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}
 
 export const createLink = async (dispatch, link, linktitle) => {
   dispatch({
@@ -720,7 +756,7 @@ export const updateUserName = async (dispatch, fname, lname) => {
   }}
   try {
     const res = await axios.post(`${baseURL}/updateUser`, body, config)
-    readUser(dispatch);
+    readUser4Client(dispatch);
     dispatch({
       type: "ACTION_SUCCESS",
     });
