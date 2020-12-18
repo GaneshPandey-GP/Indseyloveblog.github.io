@@ -6,7 +6,7 @@ import TestRedirect from "./TestRedirect";
 export default function Timer(props) {
   const testtime = parseInt(localStorage.getItem("timer"));
   
-  const [minutes, setMinutes] = useState(1 - 1);
+  const [minutes, setMinutes] = useState(testtime - 1);
   const [seconds, setSeconds] = useState(59);
   useEffect(() => {
     localStorage.setItem("min",minutes)

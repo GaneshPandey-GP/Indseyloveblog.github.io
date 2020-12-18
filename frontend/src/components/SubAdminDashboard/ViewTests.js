@@ -26,10 +26,11 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ViewTests({
-  updateTest,
-}) {
-  const [{ tests, loading }] = useAuthState();
+
+
+export default function ViewTests(props) {
+  const [{tests, loading}, dispatch] = useAuthState()
+
   const classes = useStyles();
 
   const clickHandler = (testid, testname) => {
@@ -48,12 +49,20 @@ export default function ViewTests({
   console.log(tests);
   return (
     <>
-      <div className="d-flex justify-content-between">
-        <Typography variant="h4" id="tableTitle" component="div">
-          Tests
-        </Typography>
-        <SubjectFilter />
-      </div>
+
+    <div className="d-flex justify-content-between text-right">
+      <Typography variant="h4" id="tableTitle" component="div">
+      {props.toggle === 1 ? "": "Tests"}
+      </Typography>
+      <SubjectFilter />
+    </div>
+   
+   
+   
+     
+     
+
+     
 
       <TableContainer>
         <Table className={classes.table} aria-label="simple table">
@@ -65,6 +74,7 @@ export default function ViewTests({
               <TableCell className={classes.header}>View Questions</TableCell>
               <TableCell className={classes.header}>View submission</TableCell>
               <TableCell className={classes.header}>Edit Test</TableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -108,7 +118,7 @@ export default function ViewTests({
                     initialTestTime={testtime}
                     testid={testid}
                     initialSubName={subname}
-                    updateTest={updateTest}
+                    updateTest={props.updateTest}
                     createdBy={createdBy}
                   />
                 </TableCell>

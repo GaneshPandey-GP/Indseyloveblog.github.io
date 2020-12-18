@@ -125,7 +125,6 @@ function LDrawer({admins, subAdmins, clients}) {
           <CreateUser heading="Create Sub Admin" registerUser={createSubAdmin}/>
           <ViewUser user={admins} text={"View Admins"}/>
           <ViewUser user={subAdmins} text={"View Sub Admins"}/>
-          <ViewUser user={clients} text={"View Clients"}/>
         </List>
         <Divider />
         <List>
