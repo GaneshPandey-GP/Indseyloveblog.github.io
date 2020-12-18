@@ -152,7 +152,7 @@ function TestView() {
           <>
           <SimpleNav heading={"Attempt all the questions:"} />
           <Timer/>
-          <form className="container " id="form" onSubmit={handleSubmit}>  {minutes}  {seconds}
+          <form className="container " id="form" onSubmit={handleSubmit}>  
             {questions.map(
               (
                 { question, optionA, optionB, optionC, optionD, qid, marks },

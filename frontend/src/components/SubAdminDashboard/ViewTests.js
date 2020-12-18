@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function ViewTests() {
+export default function ViewTests(props) {
   const [{tests, loading}, dispatch] = useAuthState()
   const classes = useStyles();
 
@@ -42,15 +42,17 @@ export default function ViewTests() {
 
   return (
     <>
-    <div className="d-flex justify-content-between">
+    <div className="d-flex justify-content-between text-right">
       <Typography variant="h4" id="tableTitle" component="div">
-        Tests
+      {props.toggle === 1 ? "": "Tests"}
       </Typography>
       <SubjectFilter />
     </div>
-    
+   
     <TableContainer>
-
+    
+   
+     
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
