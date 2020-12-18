@@ -88,16 +88,16 @@ export default function DashboardData() {
           <Paper className={classes.paper}> 
               <ViewClients clients={clients}/>
             </Paper> 
-  </Grid>
+        </Grid>
             
             
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Paper className={classes.paper}>
               <ViewTests updateTest={updateTest4Admin} />
             </Paper>
 
-          </Grid>
+          </Grid> */}
         
         </Grid>
       </main>
