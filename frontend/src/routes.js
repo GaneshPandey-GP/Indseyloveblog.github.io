@@ -25,14 +25,11 @@ const BaseRouter = () => (
                 <Route exact path="/admin" component={AdminLogin} />
                 <Route exact path="/sub-admin-login" component={SubAdminLogin} />
                 <Route exact path="/register" component={Register} />
-                
+                <Route exact path="/add-questions" component={Questions} />
+                <Route exact path="/results" component={SAResults} />
+                <Route exact path="/view-submission" component={ViewSubmission} />
                 <AdminPrivateRoute exact path="/admin-dashboard" component={AdminDashboard} />
-
-                <SubAdminPrivateRoute exact path="/add-questions" component={Questions} />
-                <SubAdminPrivateRoute exact path="/results" component={SAResults} />
-                <SubAdminPrivateRoute exact path="/view-submission" component={ViewSubmission} />
                 <SubAdminPrivateRoute exact path="/sub-admin-dashboard" component={SubAdminDashboard} />
-
                 <StudPrivateRoute exact path="/stud-dashboard" component={StudentDashboard} />
                 <StudPrivateRoute exact path="/test" component={TestView} /> 
                 <StudPrivateRoute exact path="/subject-test-view" component={StudentView} />

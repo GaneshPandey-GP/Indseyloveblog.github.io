@@ -4,8 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Grid } from "@material-ui/core";
 import LDrawer from "./LDrawer";
 import ViewTests from '../SubAdminDashboard/ViewTests'
+
 import ViewClients from './ViewClients'
-import { getSubjects4Admin, getTests4Admin, readUser4Admin, useAuthState } from "../../context";
+
+import { getSubjects4Admin, getTests4Admin, readUser4Admin, viewQuestions4Admin, updateQuestion4Admin, updateTest4Admin, useAuthState } from "../../context";
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -78,17 +81,24 @@ export default function DashboardData() {
       >
         <div className={classes.drawerHeader} />
         <Grid container spacing={3} className="mt-3">
+
        
           <Grid item xs={12}> 
          
           <Paper className={classes.paper}> 
               <ViewClients clients={clients}/>
             </Paper> 
+  </Grid>
+            
+            
 
-            
-            
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <ViewTests updateTest={updateTest4Admin} />
+            </Paper>
+
           </Grid>
-          
+        
         </Grid>
       </main>
     </div>
