@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Nav() {
   const classes = useStyles();
-  const [{ loading }] = useAuthState();
+  const [{ loading }, dispatch] = useAuthState();
   return (
     <>
       <div className={classes.root}>
@@ -85,11 +85,13 @@ function Nav() {
                 Results
               </Link>
             </IconButton>
-            <Link to="/login"><IconButton
+            <Link to="/login">
+            <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="end"
-              className={classes.home}
+              className={classes.link}
+              onClick={()=> dispatch({type: "LOGOUT"})}
             >
               <ExitToAppIcon />
               Logout

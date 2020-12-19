@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Grid } from "@material-ui/core";
 import LDrawer from "./LDrawer";
 import ViewTests from './ViewTests'
-import { updateTest } from "../../context";
+import { getTests, updateTest } from "../../context";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +61,7 @@ export default function DashboardData() {
         <Grid container spacing={3} className="mt-3">
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <ViewTests updateTest={updateTest}/>
+              <ViewTests updateTest={updateTest} getTests={getTests}/>
             </Paper>
           </Grid>
           

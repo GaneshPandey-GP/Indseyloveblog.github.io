@@ -115,8 +115,11 @@ export const createSubAdmin = async (
   }
 }
 
-export const getTests4Admin = async (dispatch) => {
+export const getTests4Admin = async (dispatch, subid) => {
   const tests = [];
+  if(subid!=undefined){
+    subid = String(subid)
+  }
   dispatch({
     type: "START_LOADING",
   });
@@ -129,6 +132,7 @@ export const getTests4Admin = async (dispatch) => {
     database: "ExaminationSystem",
     collection: "tests",
     Filter: {
+      subid
     }
   };
 

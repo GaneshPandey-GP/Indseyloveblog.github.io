@@ -7,20 +7,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { IconButton, Tooltip } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import { useAuthState, getTests } from '../../context';
+import { useAuthState } from '../../context';
 
 
 function SubjectList(props) {
   const [{subjects}, dispatch] = useAuthState()
-  const { onClose, selectedValue, open } = props;
+  const { onClose, selectedValue, open, getTests } = props;
 
   const handleClose = () => {
     onClose(selectedValue);
   };
 
   const handleListItemClick = (e, value) => {
-    const subid = String(value)
-    getTests(dispatch, subid)
+    getTests(dispatch, value)
     onClose(value);
   }
 
@@ -28,7 +27,7 @@ function SubjectList(props) {
     <Dialog onClose={handleClose} aria-labelledby="select-subject" open={open}>
       <DialogTitle id="select-subject">Select a subject</DialogTitle>
       <List>
-        <ListItem button onClick={() => handleListItemClick(null)}>
+        <ListItem button onClick={() => handleListItemClick(undefined)}>
         <ListItemText primary="All" />
         </ListItem>
         {subjects.map(({subname, subid}) => (
@@ -43,7 +42,7 @@ function SubjectList(props) {
 
 
 
-export default function SubjectFilter() {
+export default function SubjectFilter({getTests}) {
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState('');
 
@@ -63,7 +62,7 @@ export default function SubjectFilter() {
           <FilterListIcon />
         </IconButton>
       </Tooltip>
-      <SubjectList selectedValue={selectedValue} open={open} onClose={handleClose} />
+      <SubjectList selectedValue={selectedValue} open={open} onClose={handleClose} getTests={getTests}/>
     </div>
   );
 }

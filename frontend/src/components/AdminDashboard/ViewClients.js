@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Button, Typography } from '@material-ui/core';
-import {  useAuthState } from '../../context';
+import {  getTests4Admin, updateTest4Admin, useAuthState } from '../../context';
 import Skeleton from '@material-ui/lab/Skeleton';
 import FolderSharedIcon from '@material-ui/icons/FolderShared';
 import UpdateUser from "./UpdateUser"
@@ -90,7 +90,7 @@ export default function ViewClients({clients}) {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>): <ViewTests toggle={toggle} /> }
+    </TableContainer>): <ViewTests toggle={toggle} updateTest={updateTest4Admin} getTests={getTests4Admin}/> }
     </>
   );
 }
