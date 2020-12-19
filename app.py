@@ -434,16 +434,10 @@ def update_link():
                     mimetype='application/json')
 if __name__ == '__main__':
     data={}
-<<<<<<< HEAD
     app.run(use_reloader=False, debug=True, port=5001, host='127.0.0.1')
     #from gevent.pywsgi import WSGIServer
     #app.debug = True 
     #http_server = WSGIServer(('', 5001), app)
     #http_server.serve_forever()
-=======
     # app.run(use_reloader=False, debug=True, port=5001, host='127.0.0.1')
-    from gevent.pywsgi import WSGIServer
-    app.debug = True 
-    http_server = WSGIServer(('', 5001), app)
-    http_server.serve_forever()
->>>>>>> 9fb425c22845e70ae2396dd29d2975cf5b91a876
+    
