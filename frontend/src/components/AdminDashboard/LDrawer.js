@@ -67,7 +67,7 @@ function LDrawer({admins, subAdmins, clients}) {
 
   const handleDrawerOpen = () => {
     setOpen(true)};
-  const [{ loading, user}, dispatch] = useAuthState()
+  const [{ loading }] = useAuthState()
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -97,7 +97,6 @@ function LDrawer({admins, subAdmins, clients}) {
         </Toolbar>
         {loading ? <NavLoading /> : <></>}
       </AppBar>
-      
 
       <Drawer
         className={classes.drawer}

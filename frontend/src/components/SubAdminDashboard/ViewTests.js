@@ -46,7 +46,6 @@ export default function ViewTests(props) {
         <Skeleton variant="rect" height={165} />
       </>
     );
-  console.log(tests);
   return (
     <>
 

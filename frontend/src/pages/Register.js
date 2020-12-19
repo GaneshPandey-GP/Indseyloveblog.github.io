@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
-import { makeStyles } from "@material-ui/core/styles"
+import React, { useEffect, useState } from "react"
 import { Signup, useAuthState } from "../context"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { useForm } from "react-hook-form"
@@ -14,31 +13,10 @@ import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline"
 import { Link, Redirect } from "react-router-dom"
 import { Loading } from "../components/Loading"
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
-
-  container: {
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    position: "absolute",
-    maxWidth: "51ch",
-    marginTop: 15,
-  },
-  heading: {
-    paddingTop: "23px",
-  },
-}))
 
 export default function Register() {
-  const isMounted = useRef(null);
   const [formError, setFormError] = useState("")
   const { register, handleSubmit, errors } = useForm()
-  const [message, setMessage] = useState()
 
   useEffect(() => {
     try{
@@ -58,9 +36,6 @@ export default function Register() {
   }
 
   const [{ isRegistered, loading }, dispatch] = useAuthState()
-  const classes = useStyles()
-  console.log(isRegistered)
-  
   if (isRegistered) return <Redirect to="/login" />
   
   return (

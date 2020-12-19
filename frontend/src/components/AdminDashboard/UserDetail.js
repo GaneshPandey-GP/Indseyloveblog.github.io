@@ -38,12 +38,12 @@ export default function UserDetail({fname, lname, contact, email, testsGiven, ui
 
         <div>
        
-        <ul className="list-group">
+        <ul className="list-group" key={uid}>
             <li className="list-group-item"><strong>First Name:</strong> {fname}</li>
             <li className="list-group-item"><strong>Last Name:</strong> {lname}</li>
             <li className="list-group-item"><strong>Contact:</strong> {contact}</li>
             <li className="list-group-item"><strong>Email:</strong> {email}</li>
-            {testsGiven != "" ?
+            {testsGiven !== "" ?
             <li className="list-group-item"><strong>Tests Given:</strong> {testsGiven}</li> : <></>}
             
         </ul>

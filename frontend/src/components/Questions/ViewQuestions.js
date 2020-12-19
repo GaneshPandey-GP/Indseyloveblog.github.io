@@ -30,12 +30,12 @@ export default function ViewQuestions() {
 
   const [{ questions, loading, isAuthenticated }, dispatch] = useAuthState();
   const testid = localStorage.getItem("testid")
+  console.log(level)
   useEffect(() => {
-    level === 1 ?
+    level === "1" ?
     viewQuestions(dispatch, testid) : viewQuestions4Admin(dispatch, testid)
   }, [testid]);
   const classes = useStyles();
-  console.log(isAuthenticated)
   return (
     <div className={classes.root}>
 
@@ -170,7 +170,7 @@ export default function ViewQuestions() {
           )}
         </Grid>
       )}
-      {level === 1 ?
+      {level === "1" ?
       <AddQns setLoad={setLoad}/> : <></>
       }
     </div>

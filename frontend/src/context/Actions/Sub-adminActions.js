@@ -135,7 +135,7 @@ export const updateSubject = async (dispatch, subid, subname) => {
 };
 
 export const getTests = async (dispatch, subid) => {
-  if(subid!=undefined){
+  if(subid!==undefined){
     subid = String(subid)
   }
   const tests = []
@@ -260,7 +260,8 @@ export const addQuestion = async (
   optionC,
   optionD,
   correctAns,
-  marks
+  marks,
+  section
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -278,13 +279,14 @@ export const addQuestion = async (
       isActive: 1,
       testid: parseInt(testid),
       question,
-      marks : parseInt(marks),
       type: 1,
       optionA,
       optionB,
       optionC,
       optionD,
       correctAns,
+      marks : parseInt(marks),
+      section
     },
   };
   try {
@@ -300,7 +302,7 @@ export const addQuestion = async (
   }
 };
 
-export const addQuestion2 = async (dispatch, testid, question, marks) => {
+export const addQuestion2 = async (dispatch, testid, question, marks, section) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -316,6 +318,7 @@ export const addQuestion2 = async (dispatch, testid, question, marks) => {
       testid,
       question,
       marks,
+      section,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
       type: 2,
@@ -449,7 +452,7 @@ export const updateQuestion2 = async (
   };
 
   try {
-    const res = await axios.post(`${baseURL}/updateQuestion`, body, config);
+    await axios.post(`${baseURL}/updateQuestion`, body, config);
     viewQuestions(dispatch, testid);
     dispatch({
       type: "ACTION_SUCCESS",
@@ -759,7 +762,7 @@ export const updateUserName = async (dispatch, fname, lname) => {
       lname,
   }}
   try {
-    const res = await axios.post(`${baseURL}/updateUser`, body, config)
+    await axios.post(`${baseURL}/updateUser`, body, config)
     readUser4Client(dispatch);
     dispatch({
       type: "ACTION_SUCCESS",
