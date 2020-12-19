@@ -95,7 +95,7 @@ function Login(props) {
           <div className="links">
             <Link to="/"> {"Forgot Password?"}</Link>
             <br />
-            <Link to="/register">{"Already have an account? Sign In"}</Link>
+            <Link to="/register">{"Don't have an account? Sign Up"}</Link>
           </div>
         </form>
       </div>
