@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SelectCategory from "../components/StudentDashboard/SelectCategory";
-import { getLinks4Client, readUser, useAuthState } from "../context";
+import { getLinks4Client, readUser4Client, useAuthState } from "../context";
 import { getCategories4Client } from "../context";
 
 export default function StudentDashboard() {
@@ -19,7 +19,7 @@ export default function StudentDashboard() {
     }
     getCategories4Client(dispatch);
     getLinks4Client(dispatch)
-    readUser(dispatch)
+    readUser4Client(dispatch)
   }, []);
   return (
     <>

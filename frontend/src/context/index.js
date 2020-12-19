@@ -14,7 +14,8 @@ import {
   createCategory,
   updateCategory,
   getCategories,
-  viewSubmissions,
+  viewSubmission,
+  viewResults,
   createLink,
   getLinks,
   updateLink,
@@ -27,7 +28,11 @@ import {
   createSubAdmin,
   getTests4Admin,
   readUser4Admin,
-  getSubjects4Admin
+  getSubjects4Admin,
+  updateAdminSiteUser,
+  viewQuestions4Admin,
+  updateQuestion4Admin,
+  updateTest4Admin,
 } from "./Actions/AdminActions";
 
 import {
@@ -38,9 +43,9 @@ import {
   getTests4Client,
   getSubjects4Client,
   createSubmission,
-  viewResults,
-  viewSubmission,
-  readUser,
+  viewResults4Client,
+  viewSubmission4Client,
+  readUser4Client,
   getLinks4Client,
 } from "./Actions/ClientActions";
 
@@ -72,10 +77,11 @@ export {
   getTests4Client,
   getSubjects4Client,
   createSubmission,
-  viewResults,
+  viewResults4Client,
+  viewSubmission4Client,
+  readUser4Client,
   viewSubmission,
-  readUser,
-  viewSubmissions,
+  viewResults,
   createLink,
   getLinks,
   updateLink,
@@ -85,5 +91,9 @@ export {
   createSubAdmin,
   getTests4Admin,
   readUser4Admin,
-  getSubjects4Admin
+  getSubjects4Admin,
+  updateAdminSiteUser,
+  viewQuestions4Admin,
+  updateQuestion4Admin,
+  updateTest4Admin
 };
