@@ -30,7 +30,7 @@ const BaseRouter = () => (
                 <Route exact path="/view-submission" component={ViewSubmission} />
                 <AdminPrivateRoute exact path="/admin-dashboard" component={AdminDashboard} />
                 <SubAdminPrivateRoute exact path="/sub-admin-dashboard" component={SubAdminDashboard} />
-                <StudPrivateRoute exact path="/stud-dashboard" component={StudentDashboard} />
+                <Route exact path="/stud-dashboard" component={StudentDashboard} />
                 <StudPrivateRoute exact path="/test" component={TestView} /> 
                 <StudPrivateRoute exact path="/subject-test-view" component={StudentView} />
                 <StudPrivateRoute exact path="/submission" component={Submission} />

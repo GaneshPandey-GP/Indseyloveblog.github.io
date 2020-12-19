@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import SelectCategory from "../components/StudentDashboard/SelectCategory";
 import { getLinks4Client, readUser4Client, useAuthState } from "../context";
 import { getCategories4Client } from "../context";
 
 export default function StudentDashboard() {
-  const [{ }, dispatch] = useAuthState();
+  const [{ isAuthenticated }, dispatch] = useAuthState();
   useEffect(() => {
     try {
       localStorage.removeItem("testid");
@@ -20,6 +21,7 @@ export default function StudentDashboard() {
     getCategories4Client(dispatch);
     getLinks4Client(dispatch)
     readUser4Client(dispatch)
+    if (!isAuthenticated) return <Redirect to="/login" />
   }, []);
   return (
     <>

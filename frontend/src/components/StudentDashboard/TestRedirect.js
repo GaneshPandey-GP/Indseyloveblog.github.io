@@ -54,7 +54,7 @@ export default function TestRedirect({ handleSubmit }) {
               <DialogContentText>
                 Your response has been recorded.
               </DialogContentText>
-              <Link to="submission">
+              <Link to="/your-results">
                 <Button
                   autoFocus
                   onClick={handleClose}

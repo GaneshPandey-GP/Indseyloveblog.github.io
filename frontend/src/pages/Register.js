@@ -57,10 +57,12 @@ export default function Register() {
       : setFormError("Passwords didn't match!")
   }
 
-  const [{ isAuthenticated, loading, user }, dispatch] = useAuthState()
+  const [{ isRegistered, loading }, dispatch] = useAuthState()
   const classes = useStyles()
-  if (isAuthenticated && loading === false && user === []) return <Redirect to="/login" />
-
+  console.log(isRegistered)
+  
+  if (isRegistered) return <Redirect to="/login" />
+  
   return (
     <div className="background">
     <div className="Wrapper container d-flex align-items-center justify-content-center">
