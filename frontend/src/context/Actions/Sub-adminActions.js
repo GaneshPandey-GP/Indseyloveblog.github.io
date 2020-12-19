@@ -135,7 +135,10 @@ export const updateSubject = async (dispatch, subid, subname) => {
 };
 
 export const getTests = async (dispatch, subid) => {
-  const tests = [];
+  if(subid!=undefined){
+    subid = String(subid)
+  }
+  const tests = []
   dispatch({
     type: "START_LOADING",
   });
@@ -151,7 +154,8 @@ export const getTests = async (dispatch, subid) => {
       createdBy: parseInt(localStorage.getItem("user.uid")),
       subid,
     },
-  };
+  }
+  console.log(body)
   try {
     const res = await axios.post(`${baseURL}/getTests`, body, config);
     res.data.map((test) => {

@@ -1,5 +1,6 @@
 export const initialState = {
   isAuthenticated: false,
+  isRegistered: false,
   user: [{}],
   users: [{}],
   loading: false,
@@ -42,9 +43,9 @@ export const reducer = (initialState, action) => {
       case 'SIGNUP_SUCCESS':
         return {
           ...initialState,
-          isAuthenticated: true,
           user: action.payload,
-          loading: false
+          loading: false,
+          isRegistered: true,
         }
       case 'SIGNUP_FAIL':
       case 'LOGIN_FAIL':
@@ -57,8 +58,6 @@ export const reducer = (initialState, action) => {
           errorMessage: "Your creds didn't match! Try Again.."
         }
       case 'LOGOUT':
-        // localStorage.removeItem('user.level', action.payload[0].level);
-        // localStorage.removeItem('user.uid', action.payload[0].uid);
         return {
           ...initialState,
           Document_ID: null,

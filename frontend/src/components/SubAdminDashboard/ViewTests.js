@@ -54,15 +54,8 @@ export default function ViewTests(props) {
       <Typography variant="h4" id="tableTitle" component="div">
       {props.toggle === 1 ? "": "Tests"}
       </Typography>
-      <SubjectFilter />
+      <SubjectFilter getTests={props.getTests}/>
     </div>
-   
-   
-   
-     
-     
-
-     
 
       <TableContainer>
         <Table className={classes.table} aria-label="simple table">

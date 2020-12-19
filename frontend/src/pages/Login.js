@@ -23,7 +23,7 @@ function Login(props) {
     console.log(data);
   };
 
-  if (isAuthenticated) return <Redirect to="/stud-dashboard" />;
+  if (isAuthenticated) return <Redirect to="/stud-dashboard" />
 
   return (
     <>
