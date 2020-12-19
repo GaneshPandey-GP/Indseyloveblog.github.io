@@ -18,10 +18,11 @@ from pymongo import MongoClient
 ### collection:"name",
 ### username:"username",
 ### password:"password"
-
+#mongodb+srv://allplayertest:qwerty1234@ayushparida.sqwfq.mongodb.net/ExaminationSystem?retryWrites=true&w=majority
+#mongodb://root:impossibleme@ec2-13-235-51-163.ap-south-1.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false
 class MongoAPI:
     def __init__(self, data):
-        self.client = MongoClient("mongodb+srv://allplayertest:qwerty1234@ayushparida.sqwfq.mongodb.net/ExaminationSystem?retryWrites=true&w=majority")
+        self.client = MongoClient("mongodb://root:impossibleme@ec2-13-235-51-163.ap-south-1.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
         database = data['database']
         collection = data['collection']
         cursor = self.client.get_database(database)
@@ -433,8 +434,8 @@ def update_link():
                     mimetype='application/json')
 if __name__ == '__main__':
     data={}
-    #app.run(use_reloader=False, debug=True, port=5001, host='127.0.0.1')
-    from gevent.pywsgi import WSGIServer
-    app.debug = True 
-    http_server = WSGIServer(('', 5001), app)
-    http_server.serve_forever()
+    app.run(use_reloader=False, debug=True, port=5001, host='127.0.0.1')
+    #from gevent.pywsgi import WSGIServer
+    #app.debug = True 
+    #http_server = WSGIServer(('', 5001), app)
+    #http_server.serve_forever()
