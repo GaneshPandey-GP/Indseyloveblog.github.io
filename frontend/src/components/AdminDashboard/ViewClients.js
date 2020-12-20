@@ -27,23 +27,20 @@ const useStyles = makeStyles({
   },
   btns:{
     className: "side_nav_item",
-    // background:"#3f51b5",
     "&:hover": {
       backgroundColor: "#7facea",
+    },
+    "&:active": {
+      backgroundColor: "#777cea",
     },
   }
 });
 
 
 export default function ViewClients({clients}) {
-  const [{tests, loading}, dispatch] = useAuthState()
+  const [{loading}] = useAuthState()
   const classes = useStyles();
   const [toggle, setToggle] = useState(1)
-  const [style, setStyle] = useState("")
-  const clickHandler = (testid, testname) => {
-    localStorage.setItem("testid", testid)
-    localStorage.setItem("testname", testname)
-  }
   
   if (loading) return (<><Skeleton variant="rect" height={30}/><br/><Skeleton variant="rect" height={165} /></>)
 
@@ -70,7 +67,7 @@ export default function ViewClients({clients}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {clients.map(({fname, lname, contact, email, testsGiven,uid}) => (
+          {clients.map(({fname, lname, contact, email, testsGiven, uid}) => (
             <TableRow key={uid}>
               <TableCell component="th" scope="row">
                 {fname}

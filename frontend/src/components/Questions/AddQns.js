@@ -7,25 +7,33 @@ import Slide from "@material-ui/core/Slide";
 import {
   Button,
   FormControl,
+  Input,
   InputLabel,
   MenuItem,
   Select,
   TextField,
 } from "@material-ui/core";
 import { addQuestion, addQuestion2, useAuthState } from "../../context";
-import AddCircleIcon from "@material-ui/icons/AddCircle"
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function AddQns(props) {
-  const testid = localStorage.getItem('testid');
+  const testid = localStorage.getItem("testid");
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [correctAns, setCorrectAns] = useState("");
   const [valueError, setValueError] = React.useState("");
-  const [{ loading }, dispatch] = useAuthState();
+  const [sectionid, setSectionId] = useState("");
+  const [sectionid2, setSectionId2] = useState("");
+  const [section, setSection] = useState("");
+  const [section2, setSection2] = useState("");
+
+
+
+  const [{ loading, sections }, dispatch] = useAuthState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -54,7 +62,14 @@ export default function AddQns(props) {
     marks2: "",
   });
 
-  const { question, marks, optionA, optionB, optionC, optionD } = qnData;
+  const {
+    question,
+    marks,
+    optionA,
+    optionB,
+    optionC,
+    optionD,
+  } = qnData;
 
   const { question2, marks2 } = qnData2;
 
@@ -62,9 +77,15 @@ export default function AddQns(props) {
     setQnData({ ...qnData, [e.target.name]: e.target.value });
   const handleInputChange2 = (e) =>
     setQnData2({ ...qnData2, [e.target.name]: e.target.value });
-  const handleChange = (event) => {
+  const handleCorrectAns = (event) => {
     setCorrectAns(event.target.value);
-  };
+  }
+  const handleSectionChange = (event) => {
+    setSection(event.target.value);
+  }
+  const handleSectionChange2 = (event) => {
+    setSection2(event.target.value);
+  }
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -74,8 +95,7 @@ export default function AddQns(props) {
       optionB === "" ||
       optionC === "" ||
       optionD === "" ||
-      marks === "" || 
-      marks <= 0
+      marks === "" 
     )
       setValueError("Enter valid values!");
     else {
@@ -89,217 +109,256 @@ export default function AddQns(props) {
         optionC,
         optionD,
         correctAns,
-        marks
-      )
-      props.setLoad(false)
-      formReset()
+        marks,
+        section,
+        sectionid
+      );
+      props.setLoad(false);
+      formReset();
       handleClose();
     }
   };
-  console.log(props)
   const handleFormSubmit2 = (e) => {
     e.preventDefault();
-    if (question2 === "" || marks2 <= 0 || marks2 === "") setValueError("Enter valid values!");
+    if (question2 === "" || marks2 <= 0  )
+      setValueError("Enter valid values!");
     else {
       setValueError("");
-      addQuestion2(dispatch, testid, question2, marks2);
-      props.setLoad(false)
-      formReset2()
+      addQuestion2(dispatch, testid, question2, marks2, section2);
+      props.setLoad(false);
+      formReset2();
       handleClose2();
     }
   };
-const formReset = () => {
-  setQnData("")
-  setCorrectAns("")
-}
+  const formReset = () => {
+    setQnData("");
+    setCorrectAns("");
+  };
 
-const formReset2 = () => {
-  setQnData2("")
-}
+  const formReset2 = () => {
+    setQnData2("");
+  };
 
   return (
-    
- <>
-   {loading ? <div></div> : (
-    <div className="d-flex justify-content-around mt-5 mb-5" style={{backgroundColor:"#fff"}}>
-  
-      <Button
-        onClick={handleClickOpen}
-        variant="contained"
-        color="primary"
-        startIcon={<AddCircleIcon />}
-      >
-        Add MCQ Question
-      </Button>
-      <Button
-        onClick={handleClickOpen2}
-        variant="contained"
-        color="primary"
-        startIcon={<AddCircleIcon />}
-      >
-        Add Descriptive Question
-      </Button>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Add new Question"}</DialogTitle>
-        <DialogContent>
-          <form autoComplete="off" id="addQuestion" onSubmit={handleFormSubmit}>
-            {/* <input type="file" onChange={fileChangedHandler} /> */}
-            <TextField
-              required
-              id="question"
-              label="Question"
-              name="question"
-              fullWidth
-              type="text"
-              variant="outlined"
-              className="mt-3 "
-              value={question}
-              onChange={(e) => handleInputChange(e)}
-            />
-            <div className="ml-5 mr-5">
-              <TextField
-                required
-                id="marks"
-                label="Marks"
-                name="marks"
-                fullWidth
-                type="number"
-                variant="outlined"
-                className="mt-3 "
-                value={marks}
-                onChange={(e) => handleInputChange(e)}
-              />
-              <TextField
-                id="answer_optionA"
-                label="optionA"
-                name="optionA"
-                fullWidth
-                type="text"
-                className="mt-2 mb-2"
-                value={optionA}
-                onChange={(e) => handleInputChange(e)}
-              />
-              <TextField
-                id="answer_optionB"
-                label="optionB"
-                name="optionB"
-                fullWidth
-                type="text"
-                className="mt-2 mb-2"
-                value={optionB}
-                onChange={(e) => handleInputChange(e)}
-              />
-              <TextField
-                id="answer_optionC"
-                label="optionC"
-                name="optionC"
-                fullWidth
-                type="text"
-                className="mt-2 mb-2"
-                value={optionC}
-                onChange={(e) => handleInputChange(e)}
-              />
-              <TextField
-                id="answer_optionD"
-                label="optionD"
-                name="optionD"
-                fullWidth
-                type="text"
-                className="mt-2 mb-2"
-                value={optionD}
-                onChange={(e) => handleInputChange(e)}
-              />
-              <FormControl className="container mt-4 mb-4">
-                <InputLabel>CorrectAns</InputLabel>
-                <Select
-                  id="select-option"
-                  value={correctAns}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="a">a</MenuItem>
-                  <MenuItem value="b">b</MenuItem>
-                  <MenuItem value="c">c</MenuItem>
-                  <MenuItem value="d">d</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-          </form>
-        </DialogContent>
-        {valueError ? (
-          <p className="text-small text-danger ml-4">{valueError}</p>
-        ) : (
-          <p></p>
-        )}
-        <DialogActions>
-          <Button onClick={handleFormSubmit} color="primary" form="addQuestion">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={open2}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose2}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Add new Question"}</DialogTitle>
-        <DialogContent>
-          <form
-            autoComplete="off"
-            id="addQuestion2"
-            onSubmit={handleFormSubmit2}
-          >
-            <TextField
-              required
-              id="question2"
-              label="Question2"
-              name="question2"
-              fullWidth
-              type="text"
-              variant="outlined"
-              className="mt-3 "
-              value={question2}
-              onChange={(e) => handleInputChange2(e)}
-            />
-            <TextField
-              required
-              id="marks2"
-              label="Marks2"
-              name="marks2"
-              type="number"
-              variant="outlined"
-              className="mt-3 "
-              value={marks2}
-              onChange={(e) => handleInputChange2(e)}
-            />
-          </form>
-        </DialogContent>
-        {valueError ? (
-          <p className="text-small text-danger ml-4">{valueError}</p>
-        ) : (
-          <p></p>
-        )}
-        <DialogActions>
+    <>
+      {loading ? (
+        <div></div>
+      ) : (
+        <div
+          className="d-flex justify-content-around mt-5 mb-5"
+          style={{ backgroundColor: "#fff" }}
+        >
           <Button
-            onClick={handleFormSubmit2}
+            onClick={handleClickOpen}
+            variant="contained"
             color="primary"
-            form="addQuestion2"
+            startIcon={<AddCircleIcon />}
           >
-            Save
+            Add MCQ Question
           </Button>
-        </DialogActions>
-      </Dialog>
-    </div> )}
+          <Button
+            onClick={handleClickOpen2}
+            variant="contained"
+            color="primary"
+            startIcon={<AddCircleIcon />}
+          >
+            Add Descriptive Question
+          </Button>
+          <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>{"Add new Question"}</DialogTitle>
+            <DialogContent>
+              <form
+                autoComplete="off"
+                id="addQuestion"
+                onSubmit={handleFormSubmit}
+              >
+                <TextField
+                  required
+                  id="question"
+                  label="Question"
+                  name="question"
+                  fullWidth
+                  type="text"
+                  variant="outlined"
+                  className="mt-3 "
+                  value={question}
+                  onChange={(e) => handleInputChange(e)}
+                />
+                <div className="ml-5 mr-5">
+                  <TextField
+                    required
+                    id="marks"
+                    label="Marks"
+                    name="marks"
+                    fullWidth
+                    type="number"
+                    variant="outlined"
+                    className="mt-3 "
+                    value={marks}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <FormControl className="container mt-2 ">
+                    <InputLabel>Select a section</InputLabel>
+                    <Select
+                      id="select-section"
+                      value={section}
+                      onChange={(e) => handleSectionChange(e)}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {sections.map(({sectionid, section}) =>
+                        <MenuItem key={sectionid} value={section} onClick={ ()=> setSectionId(sectionid)}>{section}</MenuItem>
+                      )}
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    id="answer_optionA"
+                    label="optionA"
+                    name="optionA"
+                    fullWidth
+                    type="text"
+                    className="mt-2 mb-2"
+                    value={optionA}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <TextField
+                    id="answer_optionB"
+                    label="optionB"
+                    name="optionB"
+                    fullWidth
+                    type="text"
+                    className="mt-2 mb-2"
+                    value={optionB}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <TextField
+                    id="answer_optionC"
+                    label="optionC"
+                    name="optionC"
+                    fullWidth
+                    type="text"
+                    className="mt-2 mb-2"
+                    value={optionC}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <TextField
+                    id="answer_optionD"
+                    label="optionD"
+                    name="optionD"
+                    fullWidth
+                    type="text"
+                    className="mt-2 mb-2"
+                    value={optionD}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <FormControl className="container mt-4 mb-4">
+                    <InputLabel>CorrectAns</InputLabel>
+                    <Select
+                      id="select-option"
+                      value={correctAns}
+                      onChange={handleCorrectAns}
+                    >
+                      <MenuItem value="a">a</MenuItem>
+                      <MenuItem value="b">b</MenuItem>
+                      <MenuItem value="c">c</MenuItem>
+                      <MenuItem value="d">d</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </form>
+            </DialogContent>
+            {valueError ? (
+              <p className="text-small text-danger ml-4">{valueError}</p>
+            ) : (
+              <p></p>
+            )}
+            <DialogActions>
+              <Button
+                onClick={handleFormSubmit}
+                color="primary"
+                form="addQuestion"
+              >
+                Save
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+            open={open2}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose2}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>{"Add new Question"}</DialogTitle>
+            <DialogContent>
+              <form
+                autoComplete="off"
+                id="addQuestion2"
+                onSubmit={handleFormSubmit2}
+              >
+                <TextField
+                  required
+                  id="question2"
+                  label="Question2"
+                  name="question2"
+                  fullWidth
+                  type="text"
+                  variant="outlined"
+                  className="mt-3 "
+                  value={question2}
+                  onChange={(e) => handleInputChange2(e)}
+                />
+                <TextField
+                  required
+                  id="marks2"
+                  label="Marks2"
+                  name="marks2"
+                  type="number"
+                  variant="outlined"
+                  className="mt-3 "
+                  value={marks2}
+                  onChange={(e) => handleInputChange2(e)}
+                />
+                <TextField
+                  required
+                  id="section2"
+                  label="section2"
+                  name="section2"
+                  fullWidth
+                  type="number"
+                  variant="outlined"
+                  className="mt-3 "
+                  value={section2}
+                  onChange={(e) => handleSectionChange2(e)}
+                />
+              </form>
+            </DialogContent>
+            {valueError ? (
+              <p className="text-small text-danger ml-4">{valueError}</p>
+            ) : (
+              <p></p>
+            )}
+            <DialogActions>
+              <Button
+                onClick={handleFormSubmit2}
+                color="primary"
+                form="addQuestion2"
+              >
+                Save
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      )}
     </>
   );
-  
 }

@@ -3,7 +3,7 @@ import { adminLogin, useAuthState } from "../context";
 import { useForm } from "react-hook-form";
 import "./Login.css";
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Loading } from "../components/Loading";
 
 
@@ -23,7 +23,6 @@ export default function AdminLogin() {
     adminLogin(dispatch, data)
     console.log(data);
   };
-
 
   if (isAuthenticated) return <Redirect to="/admin-dashboard" />
 

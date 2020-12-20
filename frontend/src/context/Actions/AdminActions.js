@@ -378,3 +378,80 @@ export const updateTest4Admin = async (
     });
   }
 };
+
+export const updateSection4Admin = async (dispatch, testid, sectionid, section, createdBy) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "sections",
+    Filter: {
+      testid: parseInt(testid),
+      sectionid: parseInt(sectionid)
+    },
+    DataToBeUpdated: {
+      testid: parseInt(testid),
+      sectionid: parseInt(sectionid),
+      section,
+      createdBy: parseInt(createdBy),
+      isActive: 1,
+    }
+  }
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/updateSection`, body, config);
+    getSections4Admin(dispatch, testid);
+    res.data.status === 1
+      ? dispatch({
+          type: "ACTION_SUCCESS",
+        })
+      : dispatch({
+          type: "ACTION_FAIL",
+        });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};
+
+export const getSections4Admin = async (dispatch, testid, createdBy) => {
+  const sections = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    }
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "sections",
+    Filter: {
+      createdBy: parseInt(createdBy),
+      testid: parseInt(testid)
+    },
+  }
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/getSections`, body, config);
+    res.data.map((section) => {
+      return sections.push(section);
+    });
+    dispatch({
+      type: "GET_SECTIONS",
+      sections: sections,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};

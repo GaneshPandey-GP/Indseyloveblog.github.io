@@ -19,6 +19,9 @@ import {
   createLink,
   getLinks,
   updateLink,
+  createSection,
+  getSections,
+  updateSection,
   updateUserName,
 } from "./Actions/Sub-adminActions";
 
@@ -33,6 +36,8 @@ import {
   viewQuestions4Admin,
   updateQuestion4Admin,
   updateTest4Admin,
+  getSections4Admin,
+  updateSection4Admin,
 } from "./Actions/AdminActions";
 
 import {
@@ -95,5 +100,10 @@ export {
   updateAdminSiteUser,
   viewQuestions4Admin,
   updateQuestion4Admin,
-  updateTest4Admin
+  updateTest4Admin,
+  createSection,
+  getSections,
+  updateSection,
+  getSections4Admin,
+  updateSection4Admin,
 };

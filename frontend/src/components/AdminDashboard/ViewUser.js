@@ -7,14 +7,11 @@ import {
   ListItemText,
   ListItemIcon,
   makeStyles,
-  Typography,
 } from "@material-ui/core";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { useAuthState } from "../../context";
-import Skeleton from "@material-ui/lab/Skeleton";
 import { Loading } from "../Loading";
 import UserDetail from "./UserDetail";
-import UpdateUser from "./UpdateUser";
 
 const useStyles = makeStyles({
   list: {
@@ -29,7 +26,7 @@ const useStyles = makeStyles({
 });
 
 export default function ViewUser({ user, text }) {
-  const [{ users, loading }, dispatch] = useAuthState();
+  const [{ loading }] = useAuthState();
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false,
@@ -52,13 +49,13 @@ export default function ViewUser({ user, text }) {
           user.map(({ fname, uid, lname, contact, email, testsGiven }) => (
             <>
               <UserDetail
+                key={uid}
                 fname={fname}
                 lname={lname}
                 uid={uid}
                 contact={contact}
                 email={email}
                 testsGiven={testsGiven}
-                key={uid}
               />
             </>
           ))

@@ -72,7 +72,7 @@ function LDrawer() {
 
   const handleDrawerOpen = () => {
     setOpen(true)};
-  const [{ loading, user}, dispatch] = useAuthState()
+  const [{ loading, user}] = useAuthState()
 
   const handleDrawerClose = () => {
     setOpen(false);

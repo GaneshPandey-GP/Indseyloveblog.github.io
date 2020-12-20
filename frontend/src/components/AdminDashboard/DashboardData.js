@@ -3,11 +3,10 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Grid } from "@material-ui/core";
 import LDrawer from "./LDrawer";
-import ViewTests from '../SubAdminDashboard/ViewTests'
 
 import ViewClients from './ViewClients'
 
-import { getSubjects4Admin, getTests4Admin, readUser4Admin, viewQuestions4Admin, updateQuestion4Admin, updateTest4Admin, useAuthState } from "../../context";
+import { getSubjects4Admin, getTests4Admin, readUser4Admin, useAuthState } from "../../context";
 
 
 const drawerWidth = 240;
@@ -51,14 +50,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DashboardData() {
-    const [{tests, users}, dispatch] = useAuthState()
+    const [{users}, dispatch] = useAuthState()
     useEffect(() => {
         getTests4Admin(dispatch)
         readUser4Admin(dispatch)
         getSubjects4Admin(dispatch)
     },[])
   const classes = useStyles();
-    console.log(users)
 
     const admins = []
     const subAdmins = []
@@ -88,17 +86,7 @@ export default function DashboardData() {
           <Paper className={classes.paper}> 
               <ViewClients clients={clients}/>
             </Paper> 
-        </Grid>
-            
-            
-
-          {/* <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <ViewTests updateTest={updateTest4Admin} />
-            </Paper>
-
-          </Grid> */}
-        
+        </Grid>        
         </Grid>
       </main>
     </div>

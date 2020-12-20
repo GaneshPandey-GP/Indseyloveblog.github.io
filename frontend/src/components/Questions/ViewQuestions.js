@@ -2,13 +2,24 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { updateQuestion, updateQuestion4Admin, useAuthState, viewQuestions, viewQuestions4Admin } from "../../context";
+import {
+  getSections,
+  getSections4Admin,
+  updateQuestion,
+  updateQuestion4Admin,
+  useAuthState,
+  viewQuestions,
+  viewQuestions4Admin,
+} from "../../context";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { Card, CardActions, CardContent, Divider } from "@material-ui/core";
 import UpdateQn, { UpdateQn2 } from "./UpdateQn";
 import SimpleNav from "../SimpleNav";
 import History from "../History";
 import AddQns from "./AddQns";
+import AddSection from "./AddSection";
+import { Redirect } from "react-router-dom";
+import UpdateSection from "./UpdateSection";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,31 +28,49 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     boxShadow: "3px 8px 8px #a3b1c4",
-    margin: "3px 0 4px 4px"
+    margin: "3px 0 4px 4px",
   },
 }));
 
 export default function ViewQuestions() {
-  const initial = localStorage.getItem("testname")
-  const level = localStorage.getItem("user.level")
+  const initial = localStorage.getItem("testname");
+  const level = localStorage.getItem("user.level");
 
   const [testname, setTestname] = useState(initial);
   const [load, setLoad] = useState(true);
 
-  const [{ questions, loading, isAuthenticated }, dispatch] = useAuthState();
-  const testid = localStorage.getItem("testid")
+  const [
+    { questions, loading, sections },
+    dispatch,
+  ] = useAuthState();
+  const testid = localStorage.getItem("testid");
+  const createdBy = localStorage.getItem("createdBy");
+
   useEffect(() => {
-    level === 1 ?
-    viewQuestions(dispatch, testid) : viewQuestions4Admin(dispatch, testid)
+    level === "1"
+      ? subAdminCall()
+      : adminCall();
+    
   }, [testid]);
+
+  const subAdminCall = () => {
+    viewQuestions(dispatch, testid) 
+    getSections(dispatch, testid)
+  }
+
+  const adminCall = () => {
+    viewQuestions4Admin(dispatch, testid) 
+    getSections4Admin(dispatch, testid, createdBy)
+  }
+
   const classes = useStyles();
-  console.log(isAuthenticated)
+  console.log(sections);
+  if (testid === undefined) return <Redirect to="/sub-admin-dashboard" />;
   return (
     <div className={classes.root}>
-
-          <SimpleNav heading={`Questions of ${testname}`} />
-        {loading & load? (
-        <>  
+      <SimpleNav heading={`Questions of ${testname}`} />
+      {loading & load ? (
+        <>
           <div className="container mt-5">
             <div className="mt-2">
               <Skeleton variant="rect" height={65} />
@@ -68,7 +97,23 @@ export default function ViewQuestions() {
           <div className="ml-5 mt-5">
             <History history={testname} />
           </div>
-
+          <div className="mt-2 mb-2 d-flex mt-5">
+            <div className="ml-4">
+              <UpdateSection />
+            </div>
+            {level === "1" ? (
+              <div className="ml-5">
+                <AddSection
+                  text={"Add Section"}
+                  section={""}
+                  title={"Create a new section"}
+                  sectionid={""}
+                />
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
           {questions.length === 0 ? (
             <h2 className="col-sm-12 text-center text-secondary border border-info p-3 ">
               No Questions!
@@ -131,9 +176,12 @@ export default function ViewQuestions() {
                                 icorrectAns={correctAns}
                                 qid={qid}
                                 imarks={marks}
-                                setLoad = {setLoad}
-                              updateQuestion = {level === 1 ? updateQuestion : updateQuestion4Admin}
-
+                                setLoad={setLoad}
+                                updateQuestion={
+                                  level === 1
+                                    ? updateQuestion
+                                    : updateQuestion4Admin
+                                }
                               />
                             </CardActions>
                           </CardContent>
@@ -157,7 +205,7 @@ export default function ViewQuestions() {
                               iquestion={question}
                               qid={qid}
                               imarks={marks}
-                              setLoad = {setLoad}
+                              setLoad={setLoad}
                             />
                           </CardActions>
                         </>
@@ -170,9 +218,7 @@ export default function ViewQuestions() {
           )}
         </Grid>
       )}
-      {level === 1 ?
-      <AddQns setLoad={setLoad}/> : <></>
-      }
+      {level === "1" ? <AddQns setLoad={setLoad} /> : <></>}
     </div>
   );
 }
