@@ -40,13 +40,13 @@ class MongoAPI:
         return output
     def readWithFilter(self):
         filt = self.data['Filter']
-        filt["isActive"]=1
+        #filt["isActive"]=1
         documents = self.collection.find(filt)
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
         return output
     def readWithFilter2(self):
         filt = self.data['Filter']
-        filt["isActive"]=1
+        #filt["isActive"]=1
         documents = self.collection.find(filt,{'answers':0})
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
         return output
