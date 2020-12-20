@@ -7,6 +7,8 @@ import {
   getSections4Admin,
   updateQuestion,
   updateQuestion4Admin,
+  updateSection,
+  updateSection4Admin,
   useAuthState,
   viewQuestions,
   viewQuestions4Admin,
@@ -99,7 +101,7 @@ export default function ViewQuestions() {
           </div>
           <div className="mt-2 mb-2 d-flex mt-5">
             <div className="ml-4">
-              <UpdateSection />
+              <UpdateSection createdBy={createdBy}/>
             </div>
             {level === "1" ? (
               <div className="ml-5">

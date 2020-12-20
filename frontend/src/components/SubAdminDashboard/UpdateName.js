@@ -51,15 +51,18 @@ export default function UpdateName({ifname, ilname}) {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
-        <div className="container d-flex justify-content-center ml-2">
+        <div className="container d-flex justify-content-around ml-4">
             <Typography className={classes.heading}>{user[0].fname}</Typography>
             <Typography className={classes.heading}>{user[0].lname}</Typography>
         </div>
           
         </AccordionSummary>
         <AccordionDetails>
-        <TextField label="First Name" value={fname} onChange={(e) => setFname(e.target.value)}/>
-        <TextField label="Last Name" value={lname} onChange={(e) => setLname(e.target.value)}/>
+        <div className="ml-2">
+          <TextField label="First Name" value={fname} onChange={(e) => setFname(e.target.value)}/>
+          <TextField label="Last Name" value={lname} onChange={(e) => setLname(e.target.value)}/>
+        </div>
+        
         </AccordionDetails>
         <AccordionActions>
           {valueError ? <p className="text-small text-danger ml-4">{valueError}</p>: <p></p>}

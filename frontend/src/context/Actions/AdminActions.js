@@ -117,7 +117,7 @@ export const createSubAdmin = async (
 
 export const getTests4Admin = async (dispatch, subid) => {
   const tests = [];
-  if(subid!=undefined){
+  if(subid!==undefined){
     subid = String(subid)
   }
   dispatch({
@@ -234,7 +234,7 @@ export const updateAdminSiteUser = async (dispatch, fname, lname,  contact, emai
       email
   }}
   try {
-    const res = await axios.post(`${baseURL}/updateUser`, body, config)
+    await axios.post(`${baseURL}/updateUser`, body, config)
     readUser4Admin(dispatch);
     dispatch({
       type: "ACTION_SUCCESS",
@@ -403,7 +403,6 @@ export const updateSection4Admin = async (dispatch, testid, sectionid, section, 
       isActive: 1,
     }
   }
-  console.log(body)
   try {
     const res = await axios.post(`${baseURL}/updateSection`, body, config);
     getSections4Admin(dispatch, testid);
