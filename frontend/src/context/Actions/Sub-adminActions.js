@@ -1,6 +1,6 @@
 import axios from "axios";
 import { readUser4Client } from "./ClientActions";
-const baseURL = "http://127.0.0.1:5001";
+const baseURL = "http://13.235.51.163/app/";
 
 export const subAdminLogin = async (dispatch, { username, password }) => {
   dispatch({
@@ -172,7 +172,7 @@ export const getTests = async (dispatch, subid) => {
   }
 };
 
-export const createTest = async (dispatch, testname, subid, testtime) => {
+export const createTest = async (dispatch, testname, subid, testtime,startTestTime, endTestTime) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -190,6 +190,8 @@ export const createTest = async (dispatch, testname, subid, testtime) => {
       testtime,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
+      startTestTime, 
+      endTestTime,
     },
   };
 
@@ -212,7 +214,10 @@ export const updateTest = async (
   testid,
   testtime,
   subid,
-  subname
+  subname,
+  createdBy,
+  startTestTime,
+  endTestTime
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -236,8 +241,11 @@ export const updateTest = async (
       subname,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
+      startTestTime,
+      endTestTime
     },
   }
+  console.log(body)
   try {
     await axios.post(`${baseURL}/updateTest`, body, config);
     getTests(dispatch);

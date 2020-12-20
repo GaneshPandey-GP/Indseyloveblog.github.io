@@ -64,6 +64,8 @@ export default function ViewTests(props) {
               <TableCell className={classes.header}>Name of the test</TableCell>
               <TableCell className={classes.header}>Subject</TableCell>
               <TableCell className={classes.header}>Duration(mins)</TableCell>
+              <TableCell className={classes.header}>Start Date&Time</TableCell>
+              <TableCell className={classes.header}>End Date&Time</TableCell>
               <TableCell className={classes.header}>View Questions</TableCell>
               <TableCell className={classes.header}>View submission</TableCell>
               <TableCell className={classes.header}>Edit Test</TableCell>
@@ -71,7 +73,7 @@ export default function ViewTests(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tests.map(({ testname, testid, subname, subid, testtime, createdBy }) => (
+            {tests.map(({ testname, testid, subname, subid, testtime, createdBy, startTestTime, endTestTime }) => (
               <TableRow key={testid}>
                 <TableCell component="th" scope="row">
                   {testname}
@@ -81,6 +83,12 @@ export default function ViewTests(props) {
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {testtime}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {startTestTime}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {endTestTime}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   <Link to={{ pathname: "/add-questions" }}>
