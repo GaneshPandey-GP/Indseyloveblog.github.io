@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://127.0.0.1:5001";
+const baseURL = "http://13.235.51.163/app/";
 
 export const adminLogin = async (dispatch, { username, password }) => {
   dispatch({
@@ -371,6 +371,83 @@ export const updateTest4Admin = async (
     getTests4Admin(dispatch);
     dispatch({
       type: "ACTION_SUCCESS",
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};
+
+export const updateSection4Admin = async (dispatch, testid, sectionid, section, createdBy) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "sections",
+    Filter: {
+      testid: parseInt(testid),
+      sectionid: parseInt(sectionid)
+    },
+    DataToBeUpdated: {
+      testid: parseInt(testid),
+      sectionid: parseInt(sectionid),
+      section,
+      createdBy: parseInt(createdBy),
+      isActive: 1,
+    }
+  }
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/updateSection`, body, config);
+    getSections4Admin(dispatch, testid);
+    res.data.status === 1
+      ? dispatch({
+          type: "ACTION_SUCCESS",
+        })
+      : dispatch({
+          type: "ACTION_FAIL",
+        });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};
+
+export const getSections4Admin = async (dispatch, testid, createdBy) => {
+  const sections = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    }
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "sections",
+    Filter: {
+      createdBy: parseInt(createdBy),
+      testid: parseInt(testid)
+    },
+  }
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/getSections`, body, config);
+    res.data.map((section) => {
+      return sections.push(section);
+    });
+    dispatch({
+      type: "GET_SECTIONS",
+      sections: sections,
     });
   } catch (err) {
     dispatch({

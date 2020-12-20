@@ -7,6 +7,7 @@ import Slide from "@material-ui/core/Slide";
 import {
   Button,
   FormControl,
+  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -25,7 +26,14 @@ export default function AddQns(props) {
   const [open2, setOpen2] = React.useState(false);
   const [correctAns, setCorrectAns] = useState("");
   const [valueError, setValueError] = React.useState("");
-  const [{ loading }, dispatch] = useAuthState();
+  const [sectionid, setSectionId] = useState("");
+  const [sectionid2, setSectionId2] = useState("");
+  const [section, setSection] = useState("");
+  const [section2, setSection2] = useState("");
+
+
+
+  const [{ loading, sections }, dispatch] = useAuthState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,11 +56,9 @@ export default function AddQns(props) {
     optionB: "",
     optionC: "",
     optionD: "",
-    section: 1,
   });
   const [qnData2, setQnData2] = useState({
     question2: "",
-    section2: 1,
     marks2: "",
   });
 
@@ -63,18 +69,23 @@ export default function AddQns(props) {
     optionB,
     optionC,
     optionD,
-    section,
   } = qnData;
 
-  const { question2, marks2, section2 } = qnData2;
+  const { question2, marks2 } = qnData2;
 
   const handleInputChange = (e) =>
     setQnData({ ...qnData, [e.target.name]: e.target.value });
   const handleInputChange2 = (e) =>
     setQnData2({ ...qnData2, [e.target.name]: e.target.value });
-  const handleChange = (event) => {
+  const handleCorrectAns = (event) => {
     setCorrectAns(event.target.value);
-  };
+  }
+  const handleSectionChange = (event) => {
+    setSection(event.target.value);
+  }
+  const handleSectionChange2 = (event) => {
+    setSection2(event.target.value);
+  }
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -84,9 +95,7 @@ export default function AddQns(props) {
       optionB === "" ||
       optionC === "" ||
       optionD === "" ||
-      marks === "" ||
-      section <=0 ||
-      marks <= 0
+      marks === "" 
     )
       setValueError("Enter valid values!");
     else {
@@ -101,17 +110,17 @@ export default function AddQns(props) {
         optionD,
         correctAns,
         marks,
-        section
+        section,
+        sectionid
       );
       props.setLoad(false);
       formReset();
       handleClose();
     }
   };
-  console.log(props);
   const handleFormSubmit2 = (e) => {
     e.preventDefault();
-    if (question2 === "" || marks2 <= 0 || marks2 === "" || section2 <=0)
+    if (question2 === "" || marks2 <= 0  )
       setValueError("Enter valid values!");
     else {
       setValueError("");
@@ -170,7 +179,6 @@ export default function AddQns(props) {
                 id="addQuestion"
                 onSubmit={handleFormSubmit}
               >
-                {/* <input type="file" onChange={fileChangedHandler} /> */}
                 <TextField
                   required
                   id="question"
@@ -196,18 +204,21 @@ export default function AddQns(props) {
                     value={marks}
                     onChange={(e) => handleInputChange(e)}
                   />
-                  <TextField
-                    required
-                    id="section"
-                    label="section"
-                    name="section"
-                    fullWidth
-                    type="number"
-                    variant="outlined"
-                    className="mt-3 "
-                    value={section}
-                    onChange={(e) => handleInputChange(e)}
-                  />
+                  <FormControl className="container mt-2 ">
+                    <InputLabel>Select a section</InputLabel>
+                    <Select
+                      id="select-section"
+                      value={section}
+                      onChange={(e) => handleSectionChange(e)}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {sections.map(({sectionid, section}) =>
+                        <MenuItem key={sectionid} value={section} onClick={ ()=> setSectionId(sectionid)}>{section}</MenuItem>
+                      )}
+                    </Select>
+                  </FormControl>
                   <TextField
                     id="answer_optionA"
                     label="optionA"
@@ -253,7 +264,7 @@ export default function AddQns(props) {
                     <Select
                       id="select-option"
                       value={correctAns}
-                      onChange={handleChange}
+                      onChange={handleCorrectAns}
                     >
                       <MenuItem value="a">a</MenuItem>
                       <MenuItem value="b">b</MenuItem>
@@ -327,7 +338,7 @@ export default function AddQns(props) {
                   variant="outlined"
                   className="mt-3 "
                   value={section2}
-                  onChange={(e) => handleInputChange2(e)}
+                  onChange={(e) => handleSectionChange2(e)}
                 />
               </form>
             </DialogContent>

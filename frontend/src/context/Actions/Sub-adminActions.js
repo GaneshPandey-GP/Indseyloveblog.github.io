@@ -1,6 +1,6 @@
 import axios from "axios";
 import { readUser4Client } from "./ClientActions";
-const baseURL = "http://127.0.0.1:5001";
+const baseURL = "http://13.235.51.163/app/";
 
 export const subAdminLogin = async (dispatch, { username, password }) => {
   dispatch({
@@ -191,7 +191,7 @@ export const createTest = async (dispatch, testname, subid, testtime) => {
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
     },
-  };
+  }
 
   try {
     await axios.post(`${baseURL}/createTest`, body, config);
@@ -261,7 +261,8 @@ export const addQuestion = async (
   optionD,
   correctAns,
   marks,
-  section
+  section,
+  sectionid
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -286,9 +287,10 @@ export const addQuestion = async (
       optionD,
       correctAns,
       marks : parseInt(marks),
-      section
+      section,
+      sectionid
     },
-  };
+  }
   try {
     await axios.post(`${baseURL}/createQuestion`, body, config);
     viewQuestions(dispatch, testid);
@@ -773,3 +775,109 @@ export const updateUserName = async (dispatch, fname, lname) => {
     });
   }
 }
+
+export const createSection = async (dispatch, section, testid) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "sections",
+    document: {
+        createdBy: parseInt(localStorage.getItem("user.uid")),
+        isActive: 1,
+        section,
+        testid: parseInt(testid)
+    }
+}
+  try {
+    await axios.post(`${baseURL}/createSection`, body, config);
+    getSections(dispatch, testid);
+    dispatch({
+      type: "ACTION_SUCCESS",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateSection = async (dispatch, testid, sectionid, section) => {
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "sections",
+    Filter: {
+      testid: parseInt(testid),
+      sectionid: parseInt(sectionid)
+    },
+    DataToBeUpdated: {
+      testid: parseInt(testid),
+      sectionid: parseInt(sectionid),
+      section,
+      createdBy: parseInt(localStorage.getItem("user.uid")),
+      isActive: 1,
+    }
+  }
+  console.log(body)
+  try {
+    const res = await axios.post(`${baseURL}/updateSection`, body, config);
+    getSections(dispatch, testid);
+    res.data.status === 1
+      ? dispatch({
+          type: "ACTION_SUCCESS",
+        })
+      : dispatch({
+          type: "ACTION_FAIL",
+        });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};
+
+export const getSections = async (dispatch, testid) => {
+  const sections = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    }
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "sections",
+    Filter: {
+      createdBy: parseInt(localStorage.getItem("user.uid")),
+      testid: parseInt(testid)
+    },
+  };
+  try {
+    const res = await axios.post(`${baseURL}/getSections`, body, config);
+    res.data.map((section) => {
+      return sections.push(section);
+    });
+    dispatch({
+      type: "GET_SECTIONS",
+      sections: sections,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+};

@@ -33,9 +33,10 @@ export default function ViewTests(props) {
 
   const classes = useStyles();
 
-  const clickHandler = (testid, testname) => {
+  const clickHandler = (testid, testname, createdBy) => {
     localStorage.setItem("testid", testid);
     localStorage.setItem("testname", testname);
+    localStorage.setItem("createdBy", createdBy);
   };
 
   if (loading)
@@ -86,7 +87,7 @@ export default function ViewTests(props) {
                     <button
                       type="button"
                       className="btn btn-info"
-                      onClick={() => clickHandler(testid, testname)}
+                      onClick={() => clickHandler(testid, testname, createdBy)}
                     >
                       Questions
                     </button>
@@ -97,7 +98,7 @@ export default function ViewTests(props) {
                     <button
                       type="button"
                       className="btn btn-primary"
-                      onClick={() => clickHandler(testid, testname)}
+                      onClick={() => clickHandler(testid, testname, createdBy)}
                     >
                       Submissions
                     </button>
