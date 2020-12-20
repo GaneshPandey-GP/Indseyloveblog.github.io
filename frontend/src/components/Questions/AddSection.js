@@ -10,7 +10,7 @@ import {
   Button,
   TextField,
 } from "@material-ui/core";
-import { createSection, updateSection, useAuthState } from "../../context";
+import { createSection, useAuthState } from "../../context";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -44,7 +44,7 @@ export default function AddSection(props) {
       setValueError("Enter valid values!");
     else {
       setValueError("")
-      props.title === "Update section" ? updateSection(dispatch, testid, sectionid, section) : createSection(dispatch, section, testid);
+      props.title === "Update section" ? props.updateSection(dispatch, testid, sectionid, section, props.createdBy) : createSection(dispatch, section, testid);
       formReset();
       handleClose();
     }

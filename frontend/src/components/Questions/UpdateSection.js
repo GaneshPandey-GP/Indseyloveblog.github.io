@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import CollectionsIcon from "@material-ui/icons/Collections";
-import { useAuthState } from "../../context";
+import { updateSection, updateSection4Admin, useAuthState } from "../../context";
 import AddSection from "./AddSection";
 
 const StyledMenu = withStyles({
@@ -27,11 +27,12 @@ const StyledMenu = withStyles({
 ));
 
 
-export default function UpdateSection() {
+export default function UpdateSection({createdBy}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const level = localStorage.getItem("user.level");
   const [{ sections }] = useAuthState();
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    if (sections.length !== 0) setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -59,7 +60,7 @@ export default function UpdateSection() {
       >
         {sections.map(({ section, sectionid }) => (
             <div key={sectionid}>
-                <AddSection text={section} section={section} title={"Update section"} sectionid={sectionid}/>
+                <AddSection text={section} section={section} title={"Update section"} sectionid={sectionid} updateSection={level === 1 ? updateSection : updateSection4Admin} createdBy={createdBy}/>
             </div>
           
         ))}

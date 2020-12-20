@@ -215,9 +215,9 @@ export const updateTest = async (
   testtime,
   subid,
   subname,
-  createdBy,
   startTestTime,
-  endTestTime
+  endTestTime,
+  createdBy,
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -237,7 +237,7 @@ export const updateTest = async (
       testid: parseInt(testid),
       testname,
       testtime: parseInt(testtime),
-      subid: parseInt(subid),
+      subid: subid,
       subname,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
