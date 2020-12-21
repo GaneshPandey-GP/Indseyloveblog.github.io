@@ -240,10 +240,9 @@ export const createSubmission = async (dispatch, testid, result, answers, startT
       lname: localStorage.getItem("lname"),
       email: localStorage.getItem("email"),
       contact: localStorage.getItem("contact"),
-      
     }
   }
-
+console.log(body)
   try {
     await axios.post(`${baseURL}/createSubmission`, body, config);
     dispatch({
@@ -291,7 +290,7 @@ export const viewResults4Client = async (dispatch) => {
   }
 }
 
-export const viewSubmission4Client = async (dispatch, testid) => {
+export const viewSubmission4Client = async (dispatch, testid, submissionID) => {
   const submission = []
   dispatch({
     type: "START_LOADING",
@@ -307,6 +306,7 @@ export const viewSubmission4Client = async (dispatch, testid) => {
     Filter:{
       userid: parseInt(localStorage.getItem("user.uid")),
       testid,
+      submissionID: parseInt(submissionID)
     }
   }
   console.log(body)

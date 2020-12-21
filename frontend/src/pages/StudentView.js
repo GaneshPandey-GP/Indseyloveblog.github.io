@@ -6,17 +6,14 @@ import { useAuthState } from "../context";
 import { getSubjects4Client } from "../context";
 
 export default function StudentDashboard() {
-  const [{ user, isAuthenticated }, dispatch] = useAuthState()
+  const [{ user }, dispatch] = useAuthState()
+  const category = localStorage.getItem("category");
+  const categoryid = localStorage.getItem("categoryid");
+
   useEffect(() => {
     getSubjects4Client(dispatch, localStorage.getItem("categoryid"))
   }, [])
-  localStorage.setItem("testsGiven", JSON.stringify(user[0].testsGiven))
-  localStorage.setItem("contact", user[0].contact)
-  localStorage.setItem("email", user[0].email)
-  localStorage.setItem("lname", user[0].lname)
-  localStorage.setItem("fname", user[0].fname)
-  // if (!isAuthenticated) return <Redirect to="/login" />
-
+  if (categoryid === null || categoryid === 'undefined' || user === "undefined" || user === null) return <Redirect to="/stud-dashboard" />;
   return (
     <>
       <SelectSubject />

@@ -4,7 +4,7 @@ import DashboardData from '../components/SubAdminDashboard/DashboardData'
 import { getSubjects, getTests, getCategories, getLinks, useAuthState, readUser4Client } from "../context";
 
 function SubAdminDashboard() {
-  const [{subjects, isAuthenticated}, dispatch] = useAuthState()
+  const [{user}, dispatch] = useAuthState()
   useEffect(() => {
     getSubjects(dispatch)
     getTests(dispatch)
@@ -12,7 +12,7 @@ function SubAdminDashboard() {
     getLinks(dispatch)
     readUser4Client(dispatch)
   }, [])
-  if (!isAuthenticated) return <Redirect to="/sub-admin-login" />
+  if (!user) return <Redirect to="/sub-admin-login" />
 
   return (
     <>

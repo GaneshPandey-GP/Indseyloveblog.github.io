@@ -35,7 +35,7 @@ export default function UpdateTest({
   updateTest,
   createdBy,
   initialStartTime,
-initialEndTime
+  initialEndTime
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -48,7 +48,6 @@ initialEndTime
   const [valueError, setValueError] = React.useState();
   const [startTestTime, setStartTestTime] = React.useState(initialStartTime);
   const [endTestTime, setEndTestTime] = React.useState(initialEndTime);
-
   const handleInputChange = (e) => {
     setSubid(String(e.target.value) || "");
   };
@@ -71,9 +70,8 @@ initialEndTime
     // setEndTestTime(e.target.value);
   };
   const handleFormSubmit = (e) => {
-    console.log(testname, subid, subname, testtime);
     e.preventDefault();
-    if (testname === "" || subid === "" || subname === "" || testtime === 0)
+    if (testname === "" || subname === "" || testtime <= 0)
       setValueError("Enter all the values!");
     else {
       setValueError("");
