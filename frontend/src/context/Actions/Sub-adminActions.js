@@ -172,7 +172,7 @@ export const getTests = async (dispatch, subid) => {
   }
 };
 
-export const createTest = async (dispatch, testname, subid, testtime,startTestTime, endTestTime) => {
+export const createTest = async (dispatch, testname, subid, testtime, startTestTime, endTestTime) => {
   dispatch({
     type: "START_LOADING",
   });
@@ -214,10 +214,11 @@ export const updateTest = async (
   testid,
   testtime,
   subid,
-  subname,
+  subname, 
+  createdBy,
   startTestTime,
   endTestTime,
-  createdBy,
+ 
 ) => {
   dispatch({
     type: "START_LOADING",

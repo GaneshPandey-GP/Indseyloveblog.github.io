@@ -37,9 +37,6 @@ function TestView() {
   const total = localStorage.getItem("totalMarks");
   const timer = localStorage.getItem("timer");
   const testname = localStorage.getItem("testname");
-
-  // const min = parseInt(localStorage.getItem("min"));
-  // const sec =  parseInt(localStorage.getItem("sec"));
   const [minutes, setMinutes] = useState(parseInt(localStorage.getItem("min")));
   const [seconds, setSeconds] = useState(parseInt(localStorage.getItem("sec")));
   useEffect(() => {
@@ -212,6 +209,7 @@ function TestView() {
           )}
         </>
       )}
+      
     </div>
   );
 }

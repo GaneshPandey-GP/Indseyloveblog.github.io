@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { useAuthState, viewQuestions4Client } from "../../context";
+import { useAuthState, viewQuestions4Client, getTests } from "../../context";
 import { Link } from "react-router-dom";
 import { CardActions, Drawer } from "@material-ui/core";
 import { Loading } from "../Loading";
@@ -50,7 +50,7 @@ export const TestCard = () => {
     handleTestClick(testtime, testid, testname, totalMarks)
   }, [tests]);
 
-  const handleTestClick = (testtime, testid, testname, totalMarks) => {
+  const handleTestClick = (testtime, testid, testname, totalMarks ) => {
     localStorage.setItem("timer", testtime)
     localStorage.setItem("testid", testid)
     localStorage.setItem("testname", testname)
@@ -61,6 +61,13 @@ export const TestCard = () => {
     localStorage.setItem("testid", testid)
   }
   const classes = useStyles();
+  const today = new Date()
+  const current = today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+ 
+  console.log(current)
+  console.log(Date.parse(current))
+  const [test,setTest]= useState(true)
+  const [test2,setTest2]= useState(false)
   return (
     <>
       <div className={classes.main}>
@@ -78,7 +85,7 @@ export const TestCard = () => {
               </h2>
             )}
             {tests.map(
-              ({ testname, testid, subname, testtime, totalMarks }) => (
+              ({ testname, testid, subname, testtime, totalMarks,  startTestTime, endTestTime }) => (
                 <div className="col-sm-4 mb-4 mt-4 p-2" key={testid}>
                   <Card
                     className={classes.root}
@@ -92,7 +99,15 @@ export const TestCard = () => {
                           Subject : {subname}
                         </Typography>
                         <Typography color="textSecondary">
-                          Duration : {testtime} min
+                          Duration : {testtime} min 
+                         
+                        </Typography>
+                        
+                        <Typography color="textSecondary">
+                          Start Time : {startTestTime}
+                        </Typography>
+                        <Typography color="textSecondary">
+                          End Time : {endTestTime}
                         </Typography>
                       </div>
                     </CardContent>
@@ -111,21 +126,33 @@ export const TestCard = () => {
                           View Submission
                         </button>
                       </Link>) :
-                      (<Link to="/test" className="btn btn-outline-info btn-lg btn-block">
+
+                      (
+                        <>
+                            { ((new Date(current) <= new Date(startTestTime))   || (new Date(current) >= new Date(endTestTime)))  ? 
+                             <Link to="/subject-test-view" className="btn btn-outline-info btn-lg btn-block">
+                            
+                             {(new Date(current) <= new Date(startTestTime))?  <button className="btn ">Upcoming</button>: <button className="btn ">Expired</button> } 
+                           
+                             </Link>  : 
+                        <Link to="/test" className="btn btn-outline-info btn-lg btn-block">
                         <button
                           onClick={() =>
                             handleTestClick(
                               testtime,
                               testid,
                               testname,
-                              totalMarks
+                              totalMarks,
                             )
                           }
                           className="btn "
                         >
                           Start
                         </button>
-                      </Link>)
+                        
+                      </Link>
+                            }
+                      </>)
                       }
                     </CardActions>
                   </Card>
