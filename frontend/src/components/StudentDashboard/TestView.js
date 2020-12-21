@@ -58,7 +58,9 @@ function TestView() {
   useEffect(() => {
     try {
       var testsGiven = JSON.parse(localStorage.getItem("testsGiven"));
-      testsGiven.push(parseInt(testid));
+      if (testid !== NaN || testid === null) testsGiven.push(parseInt(testid))
+      let testSet = new Set(testsGiven)
+      testsGiven = Array.from(testSet)
       localStorage.setItem("testsGiven", JSON.stringify(testsGiven));
     } catch (err) {
       console.log(err);
@@ -103,13 +105,15 @@ function TestView() {
     setHelperText(" ");
   };
 
+
+  const handleSubmit = (e) => {
     const result = getMarks();
     const answers = Object.values(selected);
-    
-  const handleSubmit = (e) => {
-
+    console.log(result)
+    console.log(questions)
+    console.log(answers)
     e.preventDefault();
-    // if (!error) createSubmission(dispatch, testid, result, answers, startTestTime, endTestTime );
+    if (!error) createSubmission(dispatch, testid, result, answers, startTestTime, endTestTime );
   };
 
 

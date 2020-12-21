@@ -46,9 +46,9 @@ const YourResults = () => {
         <div className="container ">
           <History history={""} />
           <div className="card mt-5 text-center">
-            <div className="row">
-              <h3 className="col-sm-10 text-left">Result</h3>
-              <Button className="col-sm-2">
+            <div className="d-flex justify-content-between m-2 pl-2">
+              <h3 className="mr-5">Result</h3>
+              <Button className="ml-5">
                 <CSVLink
                   className=" text-left text-decoration-none "
                   data={submission.map(({ result, testname, total }) => ({
@@ -88,23 +88,13 @@ const YourResults = () => {
                       <td>{total}</td>
                       <td>{result}</td>
                       <td>
-                        <Link to="/submission">
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            onClick={() => handleClick(testid, submissionID)}
-                          >
-                            View
-                          </Button>
-                        </Link>
                         {new Date(current) >= new Date(endTestTime) ? (
                           <Link to="/submission">
                             <Button
                               variant="contained"
                               color="primary"
                               fullWidth
-                              onClick={() => handleClick(testid)}
+                              onClick={() => handleClick(testid, submissionID)}
                             >
                               View
                             </Button>

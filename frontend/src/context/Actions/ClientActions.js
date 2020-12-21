@@ -240,10 +240,9 @@ export const createSubmission = async (dispatch, testid, result, answers, startT
       lname: localStorage.getItem("lname"),
       email: localStorage.getItem("email"),
       contact: localStorage.getItem("contact"),
-      
     }
   }
-
+console.log(body)
   try {
     await axios.post(`${baseURL}/createSubmission`, body, config);
     dispatch({

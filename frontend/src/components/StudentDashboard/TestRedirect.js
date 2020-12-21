@@ -56,8 +56,6 @@ export default function TestRedirect({ handleSubmit, endTestTime }) {
               <DialogContentText>
                 Your response has been recorded.
               </DialogContentText>
-              <>
-                {new Date(current) >= new Date(endTestTime) ? (
                   <Link to="/your-results">
                     <Button
                       autoFocus
@@ -68,19 +66,6 @@ export default function TestRedirect({ handleSubmit, endTestTime }) {
                       View Submission
                     </Button>
                   </Link>
-                ) : (
-                  <Link to="/subject-test-view">
-                    <Button
-                      autoFocus
-                      onClick={handleClose}
-                      color="primary"
-                      variant="contained"
-                    >
-                      OnGoing
-                    </Button>
-                  </Link>
-                )}
-              </>
 
               <p className="mt-2 mb-2 ">
                 <Link to="/stud-dashboard">Back to home</Link>
