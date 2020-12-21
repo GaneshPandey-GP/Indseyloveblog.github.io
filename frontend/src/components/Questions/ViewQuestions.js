@@ -134,6 +134,7 @@ export default function ViewQuestions() {
                     optionD,
                     correctAns,
                     marks,
+                    section,
                   },
                   index
                 ) => (
@@ -179,6 +180,7 @@ export default function ViewQuestions() {
                                 qid={qid}
                                 imarks={marks}
                                 setLoad={setLoad}
+                                isection={section}
                                 updateQuestion={
                                   level === 1
                                     ? updateQuestion

@@ -237,7 +237,7 @@ export const updateTest = async (
       testid: parseInt(testid),
       testname,
       testtime: parseInt(testtime),
-      subid: subid,
+      subid,
       subname,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
@@ -392,7 +392,9 @@ export const updateQuestion = async (
   correctAns,
   marks,
   testid,
-  oldmarks
+  oldmarks,
+  section,
+  sectionId
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -418,9 +420,11 @@ export const updateQuestion = async (
       optionD,
       correctAns,
       marks,
+      section,
+      sectionId
     },
   };
-
+console.log(body)
   try {
     await axios.post(`${baseURL}/updateQuestion`, body, config);
     viewQuestions(dispatch, testid);

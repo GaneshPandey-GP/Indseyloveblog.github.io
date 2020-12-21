@@ -359,7 +359,7 @@ export const updateTest4Admin = async (
       testid: parseInt(testid),
       testname,
       testtime: parseInt(testtime),
-      subid: parseInt(subid),
+      subid,
       subname,
       createdBy,
       isActive: 1,
