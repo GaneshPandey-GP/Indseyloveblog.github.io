@@ -16,7 +16,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Settime(props) {
   const classes = useStyles();
- 
+  const today = new Date()
+  const current = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() 
+
   return (
     <form className={classes.container} noValidate>
    
@@ -24,7 +27,7 @@ export default function Settime(props) {
         id="datetime-local"
         label={props.label}
         type="datetime-local"
-        defaultValue="2017-05-24T10:30"
+        defaultValue={`${current}T${time}`}
         className={classes.textField}
         onChange = {props.onChange}
         InputLabelProps={{

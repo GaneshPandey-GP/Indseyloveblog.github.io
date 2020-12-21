@@ -9,7 +9,9 @@ import Skeleton from "@material-ui/lab/Skeleton";
 
 const YourResults = () => {
   const [{ results, submission, loading, user }, dispatch] = useAuthState();
-  console.log(results)
+  const today = new Date();
+  const current = today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+
   useEffect((testid) => {
     try {
       localStorage.removeItem("testid");
@@ -28,6 +30,7 @@ const YourResults = () => {
     localStorage.setItem("testid", testid);
     localStorage.setItem("submitID", submitID);
   };
+
   if (user === "undefined" || user === null || user.length === 0) return <Redirect to="/stud-dashboard" />;
 
   return (
@@ -52,6 +55,8 @@ const YourResults = () => {
                     Test_Name: testname,
                     Total_Marks: total,
                     Marks_Achieved: result,
+                    // Start_Time: startTestTime,
+                    // End_Time: endTestTime
                   }))}
                 >
                   Download Result
@@ -69,7 +74,15 @@ const YourResults = () => {
               </thead>
               <tbody>
                 {results.map(
-                  ({ result, submissionID, testname, total, testid }) => (
+                  ({
+                    result,
+                    submissionID,
+                    testname,
+                    total,
+                    testid,
+                    startTestTime,
+                    endTestTime,
+                  }) => (
                     <tr key={submissionID}>
                       <th scope="row">{testname}</th>
                       <td>{total}</td>
@@ -85,6 +98,29 @@ const YourResults = () => {
                             View
                           </Button>
                         </Link>
+                        {new Date(current) >= new Date(endTestTime) ? (
+                          <Link to="/submission">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              fullWidth
+                              onClick={() => handleClick(testid)}
+                            >
+                              View
+                            </Button>
+                          </Link>
+                        ) : (
+                          <Link to="/your-results">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              fullWidth
+                              
+                            >
+                              OnGoing
+                            </Button>
+                          </Link>
+                        )}
                       </td>
                     </tr>
                   )
@@ -97,6 +133,4 @@ const YourResults = () => {
     </>
   );
 };
-export default YourResults
-;
-
+export default YourResults;

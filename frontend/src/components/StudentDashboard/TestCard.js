@@ -50,11 +50,13 @@ export const TestCard = () => {
     handleTestClick(testtime, testid, testname, totalMarks)
   }, [tests]);
 
-  const handleTestClick = (testtime, testid, testname, totalMarks ) => {
+  const handleTestClick = (testtime, testid, testname, totalMarks, startTestTime, endTestTime ) => {
     localStorage.setItem("timer", testtime)
     localStorage.setItem("testid", testid)
     localStorage.setItem("testname", testname)
     localStorage.setItem("totalMarks", totalMarks)
+    localStorage.setItem("startTestTime", startTestTime)
+    localStorage.setItem("endTestTime", endTestTime)
   }
   
   const handleSubmissionClick = (testid) => {
@@ -64,10 +66,8 @@ export const TestCard = () => {
   const today = new Date()
   const current = today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
  
-  console.log(current)
-  console.log(Date.parse(current))
-  const [test,setTest]= useState(true)
-  const [test2,setTest2]= useState(false)
+ 
+  
   return (
     <>
       <div className={classes.main}>
@@ -114,7 +114,10 @@ export const TestCard = () => {
                     <CardActions>
                     {testsGiven && testsGiven.find((value) => value === testid) ? 
 
-                      (<Link to="/submission" className="btn btn-outline-info btn-lg btn-block">
+                      (
+                        <>
+                        {new Date(current) >= new Date(endTestTime) ? (
+                          <Link to="/submission" className="btn btn-outline-info btn-lg btn-block">
                         <button
                           onClick={() =>
                             handleSubmissionClick(
@@ -125,8 +128,18 @@ export const TestCard = () => {
                         >
                           View Submission
                         </button>
-                      </Link>) :
-
+                      </Link>
+                        ) : (
+                          <Link to="/subject-test-view" className="btn btn-outline-info btn-lg btn-block">
+                        <button
+                          className="btn "
+                        >
+                         OnGoing
+                        </button>
+                      </Link>
+                        )}
+                        </>
+                      ) :
                       (
                         <>
                             { ((new Date(current) <= new Date(startTestTime))   || (new Date(current) >= new Date(endTestTime)))  ? 
@@ -143,6 +156,8 @@ export const TestCard = () => {
                               testid,
                               testname,
                               totalMarks,
+                              startTestTime,
+                              endTestTime
                             )
                           }
                           className="btn "

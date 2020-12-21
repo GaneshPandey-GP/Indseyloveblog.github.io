@@ -37,6 +37,8 @@ function TestView() {
   const total = localStorage.getItem("totalMarks");
   const timer = localStorage.getItem("timer");
   const testname = localStorage.getItem("testname");
+  const startTestTime = localStorage.getItem("startTestTime");
+  const endTestTime = localStorage.getItem("endTestTime");
   const [minutes, setMinutes] = useState(parseInt(localStorage.getItem("min")));
   const [seconds, setSeconds] = useState(parseInt(localStorage.getItem("sec")));
   useEffect(() => {
@@ -107,7 +109,7 @@ function TestView() {
   const handleSubmit = (e) => {
 
     e.preventDefault();
-    // if (!error) createSubmission(dispatch, testid, result, answers);
+    // if (!error) createSubmission(dispatch, testid, result, answers, startTestTime, endTestTime );
   };
 
 
@@ -158,7 +160,7 @@ function TestView() {
                 <div className="card mt-3 rounded-lg shadow-lg" key={qid}>
                   <div className="card-header">
                     <h4>
-                      {" "}
+                     
                       QNo.{index + 1} {question}
                     </h4>
                   </div>
@@ -202,7 +204,7 @@ function TestView() {
               )
             )}
             <div className="d-flex justify-content-center mt-5 mb-3">
-              <TestRedirect handleSubmit={handleSubmit} />
+              <TestRedirect handleSubmit={handleSubmit} endTestTime ={endTestTime} />
             </div>
           </form>
           </>
