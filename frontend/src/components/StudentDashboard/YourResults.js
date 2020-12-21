@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Nav from "./Nav";
 import { useAuthState, viewResults4Client } from "../../context";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import History from "../History";
 import Skeleton from "@material-ui/lab/Skeleton";
 
 const YourResults = () => {
-  const [{ results, submission, loading }, dispatch] = useAuthState();
-
+  const [{ results, submission, loading, user }, dispatch] = useAuthState();
+  console.log(results)
   useEffect((testid) => {
     try {
       localStorage.removeItem("testid");
@@ -24,10 +24,11 @@ const YourResults = () => {
     handleClick(testid);
   }, []);
 
-  const handleClick = (testid) => {
+  const handleClick = (testid, submitID) => {
     localStorage.setItem("testid", testid);
+    localStorage.setItem("submitID", submitID);
   };
-  console.log(results);
+  if (user === "undefined" || user === null || user.length === 0) return <Redirect to="/stud-dashboard" />;
 
   return (
     <>
@@ -79,7 +80,7 @@ const YourResults = () => {
                             variant="contained"
                             color="primary"
                             fullWidth
-                            onClick={() => handleClick(testid)}
+                            onClick={() => handleClick(testid, submissionID)}
                           >
                             View
                           </Button>

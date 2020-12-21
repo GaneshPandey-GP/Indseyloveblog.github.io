@@ -288,7 +288,7 @@ export const viewResults4Client = async (dispatch) => {
   }
 }
 
-export const viewSubmission4Client = async (dispatch, testid) => {
+export const viewSubmission4Client = async (dispatch, testid, submissionID) => {
   const submission = []
   dispatch({
     type: "START_LOADING",
@@ -304,6 +304,7 @@ export const viewSubmission4Client = async (dispatch, testid) => {
     Filter:{
       userid: parseInt(localStorage.getItem("user.uid")),
       testid,
+      submissionID: parseInt(submissionID)
     }
   }
   console.log(body)

@@ -9,6 +9,7 @@ import {
   DialogContent,
   TextField,
   Button,
+  DialogTitle,
 } from "@material-ui/core";
 import QueueIcon from "@material-ui/icons/Queue";
 
@@ -57,6 +58,7 @@ export default function CreateLink() {
         aria-labelledby="form-dialog-title"
       >
         <form onSubmit={handleSubmit} style={{ minWidth: 300 }}>
+        <DialogTitle>Create a new link</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
@@ -65,6 +67,7 @@ export default function CreateLink() {
               value={linktitle || ""}
               label="Input link title"
               type="text"
+              variant="outlined"
               fullWidth
               onChange={(e) => setLinkTitle(e.target.value)}
             />

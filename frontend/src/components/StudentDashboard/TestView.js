@@ -107,7 +107,7 @@ function TestView() {
   const handleSubmit = (e) => {
 
     e.preventDefault();
-    if (!error) createSubmission(dispatch, testid, result, answers);
+    // if (!error) createSubmission(dispatch, testid, result, answers);
   };
 
 

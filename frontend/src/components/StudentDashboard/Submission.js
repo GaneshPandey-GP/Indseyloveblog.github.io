@@ -28,11 +28,13 @@ function Submission() {
   const classes = useStyles();
   const [{ submission, questions, loading }, dispatch] = useAuthState();
   const testid = localStorage.getItem("testid");
+  const submitID = localStorage.getItem("submitID");
+
   let yourSoln = [];
   let result = [];
 
   useEffect(() => {
-    viewSubmission4Client(dispatch, testid);
+    viewSubmission4Client(dispatch, testid, submitID);
     viewQuestions4Client(dispatch, testid);
   }, [testid, dispatch]);
 
@@ -51,8 +53,9 @@ function Submission() {
   } catch (err) {
     console.log(err);
   }
+  console.log(submission);
 
-  if (testid === null || testid === 'undefined') return <Redirect to="/your-results" />;
+  if (testid === null || testid === 'undefined' || submitID === null || submitID === 'undefined') return <Redirect to="/your-results" />;
   return (
     <div>
       {loading ? (
