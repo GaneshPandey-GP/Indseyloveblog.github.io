@@ -121,6 +121,8 @@ export default function ViewTests(props) {
                     initialSubName={subname}
                     updateTest={props.updateTest}
                     createdBy={createdBy}
+                    initialStartTime={startTestTime}
+                    initialEndTime={endTestTime}
                   />
                 </TableCell>
               </TableRow>

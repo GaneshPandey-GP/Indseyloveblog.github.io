@@ -15,7 +15,7 @@ export default function StudentDashboard() {
   localStorage.setItem("email", user[0].email)
   localStorage.setItem("lname", user[0].lname)
   localStorage.setItem("fname", user[0].fname)
-  if (!isAuthenticated) return <Redirect to="/login" />
+  // if (!isAuthenticated) return <Redirect to="/login" />
 
   return (
     <>

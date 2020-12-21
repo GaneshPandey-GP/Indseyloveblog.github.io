@@ -34,6 +34,8 @@ export default function UpdateTest({
   testid,
   updateTest,
   createdBy,
+  initialStartTime,
+initialEndTime
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -44,8 +46,8 @@ export default function UpdateTest({
 
   const [testtime, setTesttime] = React.useState(initialTestTime);
   const [valueError, setValueError] = React.useState();
-  const [startTestTime, setStartTestTime] = React.useState(0);
-  const [endTestTime, setEndTestTime] = React.useState(0);
+  const [startTestTime, setStartTestTime] = React.useState(initialStartTime);
+  const [endTestTime, setEndTestTime] = React.useState(initialEndTime);
 
   const handleInputChange = (e) => {
     setSubid(String(e.target.value) || "");
