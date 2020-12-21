@@ -14,17 +14,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns, imarks, setLoad, updateQuestion}) {
+export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, ioptionD, icorrectAns, imarks, isection, isectionid, setLoad, updateQuestion}) {
   const testid = localStorage.getItem('testid')
   const [open, setOpen] = React.useState(false);
   const [correctAns, setCorrectAns] = useState(icorrectAns)
+  const [section, setSection] = useState(isection)
+  const [sectionId, setSectionId] = useState(isectionid)
+
   
   const [valueError, setValueError] = React.useState('')
-  const [{loading}, dispatch] = useAuthState()
+  const [{loading, sections}, dispatch] = useAuthState()
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const handleSectionChange = (event) => {
+    setSection(event.target.value);
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -57,7 +64,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
       setValueError("Enter all the values!")
       else {
         setValueError("")
-        updateQuestion(dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, marks, testid, imarks)
+        updateQuestion(dispatch, qid, question, optionA, optionB, optionC, optionD, correctAns, marks, testid, imarks, section, sectionId)
         handleClose()
         setLoad(false)
       }
@@ -108,6 +115,21 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
                 value={marks}
                 onChange={(e) => handleInputChange(e)}
               />
+              <FormControl className="container mt-2 ">
+                <InputLabel>Select a section</InputLabel>
+                <Select
+                  id="select-section"
+                  value={section}
+                  onChange={(e) => handleSectionChange(e)}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {sections.map(({sectionid, section}) =>
+                    <MenuItem key={sectionid} value={section} onClick={ ()=> setSectionId(sectionid)}>{section}</MenuItem>
+                  )}
+                </Select>
+              </FormControl>
               <TextField
                 id="answer_optionA"
                 label="optionA"
