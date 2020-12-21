@@ -11,14 +11,16 @@ import { useAuthState } from "../../context";
 import { SimpleBackdrop } from "../Loading";
 import { Link } from "react-router-dom";
 
-export default function TestRedirect({ handleSubmit }) {
+export default function TestRedirect({ handleSubmit, endTestTime }) {
   const [open, setOpen] = React.useState(false);
   const [{ load }] = useAuthState();
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"))
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const today = new Date();
+  const current = today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
 
   const handleClickOpen = (e) => {
-    setOpen(true)
+    setOpen(true);
     handleSubmit(e);
   };
 
@@ -54,16 +56,31 @@ export default function TestRedirect({ handleSubmit }) {
               <DialogContentText>
                 Your response has been recorded.
               </DialogContentText>
-              <Link to="/your-results">
-                <Button
-                  autoFocus
-                  onClick={handleClose}
-                  color="primary"
-                  variant="contained"
-                >
-                  View Submission
-                </Button>
-              </Link>
+              <>
+                {new Date(current) >= new Date(endTestTime) ? (
+                  <Link to="/your-results">
+                    <Button
+                      autoFocus
+                      onClick={handleClose}
+                      color="primary"
+                      variant="contained"
+                    >
+                      View Submission
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link to="/subject-test-view">
+                    <Button
+                      autoFocus
+                      onClick={handleClose}
+                      color="primary"
+                      variant="contained"
+                    >
+                      OnGoing
+                    </Button>
+                  </Link>
+                )}
+              </>
 
               <p className="mt-2 mb-2 ">
                 <Link to="/stud-dashboard">Back to home</Link>

@@ -40,8 +40,8 @@ export default function CreateTest() {
   const [testName, setTestName] = useState("");
   const [testTime, setTestTime] = React.useState(0);
   const [valueError, setValueError] = React.useState("");
-  const [startTestTime, setStartTestTime] = React.useState(0);
-  const [endTestTime, setEndTestTime] = React.useState(0);
+  const [startTestTime, setStartTestTime] = React.useState();
+  const [endTestTime, setEndTestTime] = React.useState();
   const handleInputChange = (e) => {
     setSubid(String(e.target.value) || "");
   };

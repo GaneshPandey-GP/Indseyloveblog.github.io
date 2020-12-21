@@ -215,7 +215,7 @@ export const getCategories4Client = async (dispatch, categoryid) => {
   }
 }
 
-export const createSubmission = async (dispatch, testid, result, answers) => {
+export const createSubmission = async (dispatch, testid, result, answers, startTestTime, endTestTime ) => {
   dispatch({
     type: "START_LOAD",
   });
@@ -231,6 +231,8 @@ export const createSubmission = async (dispatch, testid, result, answers) => {
       testid,
       result,
       answers,
+      startTestTime, 
+      endTestTime, 
       userid: parseInt(localStorage.getItem("user.uid")),
       total: parseInt(localStorage.getItem("totalMarks")),
       testname: localStorage.getItem("testname"),
@@ -238,6 +240,7 @@ export const createSubmission = async (dispatch, testid, result, answers) => {
       lname: localStorage.getItem("lname"),
       email: localStorage.getItem("email"),
       contact: localStorage.getItem("contact"),
+      
     }
   }
 

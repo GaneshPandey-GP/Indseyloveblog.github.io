@@ -9,6 +9,8 @@ import Skeleton from "@material-ui/lab/Skeleton";
 
 const YourResults = () => {
   const [{ results, submission, loading }, dispatch] = useAuthState();
+  const today = new Date();
+  const current = today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
 
   useEffect((testid) => {
     try {
@@ -27,7 +29,7 @@ const YourResults = () => {
   const handleClick = (testid) => {
     localStorage.setItem("testid", testid);
   };
-  console.log(results);
+  // console.log(results);
 
   return (
     <>
@@ -51,6 +53,8 @@ const YourResults = () => {
                     Test_Name: testname,
                     Total_Marks: total,
                     Marks_Achieved: result,
+                    // Start_Time: startTestTime,
+                    // End_Time: endTestTime
                   }))}
                 >
                   Download Result
@@ -68,22 +72,44 @@ const YourResults = () => {
               </thead>
               <tbody>
                 {results.map(
-                  ({ result, submissionID, testname, total, testid }) => (
+                  ({
+                    result,
+                    submissionID,
+                    testname,
+                    total,
+                    testid,
+                    startTestTime,
+                    endTestTime,
+                  }) => (
                     <tr key={submissionID}>
                       <th scope="row">{testname}</th>
                       <td>{total}</td>
                       <td>{result}</td>
                       <td>
-                        <Link to="/submission">
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            onClick={() => handleClick(testid)}
-                          >
-                            View
-                          </Button>
-                        </Link>
+                        {new Date(current) >= new Date(endTestTime) ? (
+                          <Link to="/submission">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              fullWidth
+                              onClick={() => handleClick(testid)}
+                            >
+                              View
+                            </Button>
+                          </Link>
+                        ) : (
+                          <Link to="/your-results">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              fullWidth
+                              
+                            >
+                              OnGoing
+                            </Button>
+                          </Link>
+                        )}
+                      
                       </td>
                     </tr>
                   )
@@ -96,6 +122,4 @@ const YourResults = () => {
     </>
   );
 };
-export default YourResults
-;
-
+export default YourResults;
