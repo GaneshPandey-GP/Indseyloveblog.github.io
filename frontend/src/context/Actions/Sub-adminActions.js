@@ -424,7 +424,6 @@ export const updateQuestion = async (
       sectionId
     },
   };
-console.log(body)
   try {
     await axios.post(`${baseURL}/updateQuestion`, body, config);
     viewQuestions(dispatch, testid);

@@ -214,8 +214,11 @@ export default function AddQns(props) {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {sections.map(({sectionid, section}) =>
+                      {sections.map(({sectionid, section, isActive}) =>
+                        isActive === 1 ?
                         <MenuItem key={sectionid} value={section} onClick={ ()=> setSectionId(sectionid)}>{section}</MenuItem>
+                        : 
+                        <span key={sectionid}></span>
                       )}
                     </Select>
                   </FormControl>
