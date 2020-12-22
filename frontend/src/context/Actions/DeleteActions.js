@@ -169,14 +169,15 @@ export const deleteCategory = async (dispatch, categoryid) => {
     const body = {
       database: "ExaminationSystem",
       testid: parseInt(testid),
-      oldmarks: parseInt(marks),
+      oldMarks: parseInt(marks),
       collection: "questions",
       Filter: {
         qid: parseInt(qid),
         createdBy: parseInt(localStorage.getItem("user.uid"))
       },
       DataToBeUpdated: {
-        isActive: 0
+        isActive: 0,
+        marks: 0
       },
     };
   console.log(body)
