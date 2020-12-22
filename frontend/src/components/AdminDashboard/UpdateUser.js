@@ -69,13 +69,17 @@ export default function UpdateTest({ifname, ilname, icontact, iemail, itestsGive
       <EditOutlinedIcon onClick={handleClickOpen} style={{cursor: 'pointer'}}/>
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
         <form className={classes.container} id="update-user-form"  noValidate autoComplete="off">
-        <DialogTitle>Update Details of {fname} {lname}</DialogTitle>
+        <div className="container">
+          <DialogTitle>Update User</DialogTitle>
+        </div>
+
         <Divider />
           <DialogContent>
           <form
           onSubmit={handleFormSubmit}
           autoComplete="off"
           className="col mt-3 p-2"
+          key={iuid}
         >
           <div className="form-group">
           <Typography color="textSecondary" variant="body2">First Name</Typography>

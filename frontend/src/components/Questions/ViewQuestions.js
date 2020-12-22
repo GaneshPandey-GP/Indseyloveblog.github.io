@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {
+  deleteQuestion,
   getSections,
   getSections4Admin,
   updateQuestion,
@@ -22,6 +23,7 @@ import AddQns from "./AddQns";
 import AddSection from "./AddSection";
 import { Redirect } from "react-router-dom";
 import UpdateSection from "./UpdateSection";
+import DeleteItem from "../SubAdminDashboard/DeleteItem";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +44,7 @@ export default function ViewQuestions() {
   const [load, setLoad] = useState(true);
 
   const [
-    { questions, loading, sections },
+    { questions, loading },
     dispatch,
   ] = useAuthState();
   const testid = localStorage.getItem("testid");
@@ -59,14 +61,13 @@ export default function ViewQuestions() {
     viewQuestions(dispatch, testid) 
     getSections(dispatch, testid)
   }
-
+  console.log(questions)
   const adminCall = () => {
     viewQuestions4Admin(dispatch, testid) 
     getSections4Admin(dispatch, testid, createdBy)
   }
 
   const classes = useStyles();
-  console.log(sections);
   if (testid === undefined) return <Redirect to="/sub-admin-dashboard" />;
   return (
     <div className={classes.root}>
@@ -135,12 +136,14 @@ export default function ViewQuestions() {
                     correctAns,
                     marks,
                     section,
+                    isActive
                   },
                   index
                 ) => (
                   <Grid item xs={12} key={qid}>
                     <Card className={classes.card}>
-                      {type === 1 ? (
+                      {isActive === 1 ?
+                        type === 1 ? (
                         <>
                           <CardContent>
                             <Typography
@@ -150,9 +153,16 @@ export default function ViewQuestions() {
                             >
                               {index + 1}. {question}
                             </Typography>
-                            <Typography variant="h6" className="ml-4">
+                            <div className="d-flex justify-content-between mt-1 mb-1">
+                              <Typography variant="body1" className="ml-4">
                               Marks: {marks}
-                            </Typography>
+                              </Typography>
+                              {section !== "" ?
+                              <Typography variant="body1" className="mr-4">
+                              ({section})
+                              </Typography>: <></>}
+                            </div>
+                            
                             <Divider />
                             <div className="container mt-3">
                               <Typography component="p">
@@ -182,11 +192,13 @@ export default function ViewQuestions() {
                                 setLoad={setLoad}
                                 isection={section}
                                 updateQuestion={
-                                  level === 1
+                                  level === "1"
                                     ? updateQuestion
                                     : updateQuestion4Admin
                                 }
                               />
+                          <DeleteItem deleteFun={() => deleteQuestion(dispatch, qid, testid, marks)} item={question}/>
+
                             </CardActions>
                           </CardContent>
                         </>
@@ -211,9 +223,10 @@ export default function ViewQuestions() {
                               imarks={marks}
                               setLoad={setLoad}
                             />
+                          <DeleteItem deleteFun={() => deleteQuestion(dispatch, qid, testid, marks)} item={question}/>
                           </CardActions>
                         </>
-                      )}
+                      ) : <span key={qid}></span>}
                     </Card>
                   </Grid>
                 )

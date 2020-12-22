@@ -233,6 +233,7 @@ export const updateTest = async (
     collection: "tests",
     Filter: {
       testid: parseInt(testid),
+      createdBy: parseInt(localStorage.getItem("user.uid")),
     },
     DataToBeUpdated: {
       testid: parseInt(testid),
@@ -240,7 +241,6 @@ export const updateTest = async (
       testtime: parseInt(testtime),
       subid: String(subid),
       subname,
-      createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
       startTestTime,
       endTestTime
@@ -419,7 +419,7 @@ export const updateQuestion = async (
       optionC,
       optionD,
       correctAns,
-      marks,
+      marks: parseInt(marks),
       section,
       sectionId
     },

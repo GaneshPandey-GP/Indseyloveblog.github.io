@@ -64,7 +64,8 @@ function SelectCategory() {
         
             <h4>Select a Category</h4>
             <div className={classes.bodyCard}>
-              {categories.map(({ categoryName, categoryid }, index) => (
+              {categories.map(({ categoryName, categoryid, isActive }) => (
+                isActive === 1 ?
                 <Grid container spacing={4} key={categoryid}>
                   <Grid item xs={12}>
                     <Link to={{ pathname: "/subject-test-view" }}>
@@ -78,6 +79,8 @@ function SelectCategory() {
                     </Link>
                   </Grid>
                 </Grid>
+                :
+                <span key={categoryid}></span>
               ))}
             </div>
             <div className="mt-5">

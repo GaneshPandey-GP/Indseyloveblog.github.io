@@ -43,9 +43,22 @@ export default function ViewLink() {
       role="presentation"
     >
       <List>
-        { loading ? (<Loading />) : (links.map(({ link, linkid, linktitle }) =>
-            <UpdateLink key={linkid} ilink={link} ilinktitle={linktitle} ilinkid={linkid}/>
-        ))}
+        {loading ? (
+          <Loading />
+        ) : (
+          links.map(({ link, linkid, linktitle, isActive }) =>
+            isActive === 1 ? (
+              <UpdateLink
+                key={linkid}
+                ilink={link}
+                ilinktitle={linktitle}
+                linkid={linkid}
+              />
+            ) : (
+              <span key={linkid}></span>
+            )
+          )
+        )}
       </List>
     </div>
   );
@@ -70,4 +83,3 @@ export default function ViewLink() {
     </div>
   );
 }
-

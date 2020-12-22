@@ -142,7 +142,7 @@ function LDrawer() {
           <ListItem button>
           <ListItemLink href="/sub-admin-login">
             <ListItemIcon>
-              <ExitToAppIcon />
+              <ExitToAppIcon className="text-primary"/>
             </ListItemIcon>
             
             <ListItemText primary={"Logout"} />

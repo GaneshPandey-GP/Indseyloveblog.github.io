@@ -7,11 +7,12 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Typography } from "@material-ui/core";
-import { useAuthState } from "../../context";
+import { deleteTest, useAuthState } from "../../context";
 import SubjectFilter from "./SubjectFilter";
 import UpdateTest from "./UpdateTest";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { Link } from "react-router-dom";
+import DeleteItem from "./DeleteItem";
 
 const useStyles = makeStyles({
   table: {
@@ -69,11 +70,12 @@ export default function ViewTests(props) {
               <TableCell className={classes.header}>View Questions</TableCell>
               <TableCell className={classes.header}>View submission</TableCell>
               <TableCell className={classes.header}>Edit Test</TableCell>
-
+              <TableCell className={classes.header}>Delete Test</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {tests.map(({ testname, testid, subname, subid, testtime, createdBy, startTestTime, endTestTime }) => (
+            {tests.map(({ testname, testid, subname, subid, testtime, createdBy, startTestTime, endTestTime, isActive }) => (
+              isActive === 1 ? 
               <TableRow key={testid}>
                 <TableCell component="th" scope="row">
                   {testname}
@@ -125,8 +127,14 @@ export default function ViewTests(props) {
                     initialEndTime={endTestTime}
                   />
                 </TableCell>
-              </TableRow>
-            ))}
+                <TableCell component="th" scope="row">
+                <div className="mr-4">
+                <DeleteItem deleteFun={() => deleteTest(dispatch, testid)} item={testname}/>
+                </div>
+                </TableCell>
+
+              </TableRow> : <span key={testid}></span>
+            )) }
           </TableBody>
         </Table>
       </TableContainer>
