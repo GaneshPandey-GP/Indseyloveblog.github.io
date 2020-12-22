@@ -17,10 +17,12 @@ import ViewSubmission from "./components/SubAdminDashboard/ViewSubmission"
 
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
+import Home from "./pages/Home";
 
 const BaseRouter = () => (
     <Router>
             <Switch>
+                <Route exact path="/" component={Home} /> 
                 <Route exact path="/login" component={Login} /> 
                 <Route exact path="/admin" component={AdminLogin} />
                 <Route exact path="/sub-admin-login" component={SubAdminLogin} />
