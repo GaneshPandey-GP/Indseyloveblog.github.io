@@ -12,7 +12,6 @@ import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { useAuthState } from "../../context";
 import UpdateSub from "./UpdateSub";
 import { Loading } from "../Loading";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   list: {
@@ -27,7 +26,6 @@ const useStyles = makeStyles({
 });
 
 export default function ViewSubjects() {
-  let history = useHistory();
   const [{ subjects, loading }, dispatch] = useAuthState();
   const classes = useStyles();
   const [state, setState] = React.useState({

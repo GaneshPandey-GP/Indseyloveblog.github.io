@@ -95,9 +95,7 @@ export default function CreateTest() {
     setTestName("");
     setTestTime("");
   };
-  console.log("start" + startTestTime + "End" + endTestTime);
   const today = new Date(startTestTime);
-  console.log(today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
   return (
     <div>
       <ListItem button onClick={handleClickOpen}>

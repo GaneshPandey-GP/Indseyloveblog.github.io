@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyCard: {
     display: "flex",
-    marginTop: 3,
+    marginTop: 10,
     flexWrap: "wrap",
     "& > *": {
       margin: theme.spacing(0),

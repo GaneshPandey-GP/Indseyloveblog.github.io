@@ -6,6 +6,9 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { useHistory  } from 'react-router-dom';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 const useStyles = makeStyles((theme) => ({
+  container: {
+    height: "2.6rem",
+  },
   link: {
     display: 'flex',
   },
@@ -18,7 +21,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1.5),
     width: 35,
     height: 35,
-    cursor: 'pointer'
+    cursor: 'pointer',
+
+    "&:hover": {
+      width: 43,
+      height: 43,
+    }
   }
 }));
 
@@ -31,7 +39,7 @@ export default function History({history}) {
     back.goBack()
   }
   return (
-    <>
+    <div className={classes.container}>
      {history !== "" ?
       <>
     <Breadcrumbs aria-label="Subject">
@@ -46,6 +54,6 @@ export default function History({history}) {
     : 
     <KeyboardBackspaceIcon className={classes.back} onClick={handleClick}/>
       }
-    </>
+    </div>
   );
 }

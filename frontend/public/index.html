@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <script>
+    // disable right click
+    document.addEventListener('contextmenu', event => event.preventDefault());
 
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Web site created using create-react-app" />
+    document.onkeydown = function (e) {
 
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        // disable F12 key
+        if(e.keyCode == 123) {
+            return false;
+        }
 
-  <title>React App</title>
-  <script>
-    $(document).on("contextmenu", function (e) {
-      e.preventDefault();
-    });
-    $(document).keydown(function (event) {
-      if (event.keyCode == 123) {
-        return false;
-      }
-      else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
-        return false;
-      }
-    });
-  </script>
-</head>
+        // disable I key
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 73){
+            return false;
+        }
 
-<body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  
-</body>
+        // disable J key
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+            return false;
+        }
 
+        // disable U key
+        if(e.ctrlKey && e.keyCode == 85) {
+            return false;
+        }
+    }
+
+</script>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+  </body>
 </html>
+

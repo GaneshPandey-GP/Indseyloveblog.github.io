@@ -37,7 +37,7 @@ function ViewSubmission() {
     viewSubmission(dispatch, testid, submitID);
     viewQuestions4Client(dispatch, testid);
   }, []);
-
+  console.log(submission)
   submission.map((ques) => yourSoln.push(ques.answers));
   try {
     result = questions.map((item) => {
@@ -54,7 +54,7 @@ function ViewSubmission() {
     console.log(err);
   }
 
-  if ((testid === null || testid === 'undefined') && (submitID === null || submitID === 'undefined')) return <Redirect to="/your-results" />;
+  if (testid === null || testid === 'undefined' || submitID === null || submitID === 'undefined') return <Redirect to="/results" />;
   return (
     <div>
       {loading ? (

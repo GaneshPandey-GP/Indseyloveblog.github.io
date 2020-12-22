@@ -187,7 +187,7 @@ export const createTest = async (dispatch, testname, subid, testtime, startTestT
     document: {
       testname,
       subid: String(subid),
-      testtime,
+      testtime: parseInt(testtime),
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
       startTestTime, 
@@ -238,7 +238,7 @@ export const updateTest = async (
       testid: parseInt(testid),
       testname,
       testtime: parseInt(testtime),
-      subid,
+      subid: String(subid),
       subname,
       createdBy: parseInt(localStorage.getItem("user.uid")),
       isActive: 1,
@@ -246,7 +246,6 @@ export const updateTest = async (
       endTestTime
     },
   }
-  console.log(body)
   try {
     await axios.post(`${baseURL}/updateTest`, body, config);
     getTests(dispatch);

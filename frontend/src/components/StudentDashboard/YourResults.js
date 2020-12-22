@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Nav from "./Nav";
 import { useAuthState, viewResults4Client } from "../../context";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import History from "../History";
 import Skeleton from "@material-ui/lab/Skeleton";
 
 const YourResults = () => {
-  const [{ results, submission, loading }, dispatch] = useAuthState();
+  const [{ results, submission, loading, user }, dispatch] = useAuthState();
   const today = new Date();
   const current = today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
 
@@ -26,10 +26,12 @@ const YourResults = () => {
     handleClick(testid);
   }, []);
 
-  const handleClick = (testid) => {
+  const handleClick = (testid, submitID) => {
     localStorage.setItem("testid", testid);
+    localStorage.setItem("submitID", submitID);
   };
-  // console.log(results);
+
+  if (user === "undefined" || user === null || user.length === 0) return <Redirect to="/stud-dashboard" />;
 
   return (
     <>
@@ -44,9 +46,9 @@ const YourResults = () => {
         <div className="container ">
           <History history={""} />
           <div className="card mt-5 text-center">
-            <div className="row">
-              <h3 className="col-sm-10 text-left">Result</h3>
-              <Button className="col-sm-2">
+            <div className="d-flex justify-content-between m-2 pl-2">
+              <h3 className="mr-5">Result</h3>
+              <Button className="ml-5">
                 <CSVLink
                   className=" text-left text-decoration-none "
                   data={submission.map(({ result, testname, total }) => ({
@@ -92,7 +94,7 @@ const YourResults = () => {
                               variant="contained"
                               color="primary"
                               fullWidth
-                              onClick={() => handleClick(testid)}
+                              onClick={() => handleClick(testid, submissionID)}
                             >
                               View
                             </Button>
@@ -109,7 +111,6 @@ const YourResults = () => {
                             </Button>
                           </Link>
                         )}
-                      
                       </td>
                     </tr>
                   )
