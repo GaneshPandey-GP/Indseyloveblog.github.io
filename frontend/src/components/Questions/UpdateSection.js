@@ -3,8 +3,9 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import CollectionsIcon from "@material-ui/icons/Collections";
-import { updateSection, updateSection4Admin, useAuthState } from "../../context";
+import { deleteSection, updateSection, updateSection4Admin, useAuthState } from "../../context";
 import AddSection from "./AddSection";
+import DeleteItem from "../SubAdminDashboard/DeleteItem";
 
 const StyledMenu = withStyles({
   paper: {
@@ -30,7 +31,7 @@ const StyledMenu = withStyles({
 export default function UpdateSection({createdBy}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const level = localStorage.getItem("user.level");
-  const [{ sections }] = useAuthState();
+  const [{ sections }, dispatch] = useAuthState();
   const handleClick = (event) => {
     if (sections.length !== 0) setAnchorEl(event.currentTarget);
   };
@@ -58,11 +59,13 @@ export default function UpdateSection({createdBy}) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {sections.map(({ section, sectionid }) => (
-            <div key={sectionid}>
+        {sections.map(({ section, sectionid, testid, isActive }) => (
+          isActive === 1 ? 
+            <div key={sectionid} className="d-flex justify-content-between">
                 <AddSection text={section} section={section} title={"Update section"} sectionid={sectionid} updateSection={level === 1 ? updateSection : updateSection4Admin} createdBy={createdBy}/>
+                <DeleteItem deleteFun={() => deleteSection(dispatch, testid, sectionid)} item={section}/>
             </div>
-          
+          : <span key={sectionid}></span>
         ))}
       </StyledMenu>
     </div>

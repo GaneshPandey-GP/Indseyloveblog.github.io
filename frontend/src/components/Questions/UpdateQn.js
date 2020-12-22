@@ -21,7 +21,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
   const [section, setSection] = useState(isection)
   const [sectionId, setSectionId] = useState(isectionid)
 
-  
+  console.log(isection)
   const [valueError, setValueError] = React.useState('')
   const [{loading, sections}, dispatch] = useAuthState()
 
@@ -171,7 +171,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
                 onChange={(e) => handleInputChange(e)}
               />
               <FormControl className="container mt-4 mb-4">
-                <InputLabel>CorrectAns</InputLabel>
+                <InputLabel>Correct Answer</InputLabel>
                 <Select
                   id="select-option"
                   value={correctAns}

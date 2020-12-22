@@ -44,8 +44,9 @@ export default function ViewCategory() {
       role="presentation"
     >
       <List>
-        { loading ? (<Loading />) : (categories.map(({ categoryName, categoryid }, index) =>
-            <UpdateCategory key={index} categoryName={categoryName} categoryid={categoryid} />
+        { loading ? (<Loading />) : (categories.map(({ categoryName, categoryid, isActive }, index) =>
+          isActive === 1 ?
+            <UpdateCategory key={index} categoryName={categoryName} categoryid={categoryid} /> : <span key={categoryid}></span>
         ))}
       </List>
     </div>

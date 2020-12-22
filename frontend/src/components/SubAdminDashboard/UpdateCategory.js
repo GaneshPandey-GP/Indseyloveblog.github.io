@@ -6,7 +6,9 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { AccordionActions, Button, Divider, TextField } from '@material-ui/core';
-import { useAuthState, updateCategory } from '../../context';
+import { useAuthState, updateCategory, deleteCategory } from '../../context';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteItem from './DeleteItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +18,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  delete: {
+    color: 'red',
+    fontSize: "2rem",
+    marginRight: "1rem",
+    cursor: 'pointer',
+    float: 'right',
+  }
 }));
 
 export default function UpdateCategory({categoryid, categoryName}) {
@@ -33,6 +42,10 @@ export default function UpdateCategory({categoryid, categoryName}) {
       setForm(category)}
   }
 
+  const handleDelete = () => {
+    deleteCategory(dispatch, categoryid)
+  }
+
   const setForm = (category) => {
     setCategory(category)
   }
@@ -41,18 +54,19 @@ export default function UpdateCategory({categoryid, categoryName}) {
     <form className={classes.root} onSubmit={handleSubmit} noValidate autoComplete="off">
       <Accordion square >
         <AccordionSummary
-          expandIcon={<EditOutlinedIcon />}
+          expandIcon={<EditOutlinedIcon className="text-success"/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
           <Typography className={classes.heading}>{categoryName}</Typography>
         </AccordionSummary>
+        <DeleteItem deleteFun={() => deleteCategory(dispatch, categoryid)} item={categoryName}/>
+
         <AccordionDetails>
         <TextField id={categoryName} label="Update Category" value={category} onChange={(e) => setCategory(e.target.value)}/>
         </AccordionDetails>
         <AccordionActions>
           {valueError ? <p className="text-small text-danger ml-4">{valueError}</p> : <p></p>}
-
           <Button size="small" color="primary" type="submit" onClick={handleSubmit}>
             Save
           </Button>

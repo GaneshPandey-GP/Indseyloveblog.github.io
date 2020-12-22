@@ -54,6 +54,8 @@ import {
   getLinks4Client,
 } from "./Actions/ClientActions";
 
+import {deleteSubject, deleteCategory, deleteLink, deleteTest, deleteQuestion, deleteSection} from './Actions/DeleteActions'
+
 import { AuthProvider, useAuthState } from "./context";
 
 export {
@@ -106,4 +108,10 @@ export {
   updateSection,
   getSections4Admin,
   updateSection4Admin,
+  deleteSubject,
+  deleteCategory,
+  deleteLink,
+  deleteTest,
+  deleteQuestion,
+  deleteSection,
 };
