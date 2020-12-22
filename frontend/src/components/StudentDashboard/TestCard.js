@@ -103,100 +103,112 @@ export const TestCard = () => {
                   totalMarks,
                   startTestTime,
                   endTestTime,
-                }) => (
-                  <div className="col-sm-4 mb-4 mt-4 p-2" key={testid}>
-                    <Card
-                      className={classes.root}
-                      variant="outlined"
-                      key={testid}
-                    >
-                      <CardContent>
-                        <h1 className={classes.title}>{testname}</h1>
-                        <div className={classes.data}>
-                          <div className="mb-3 mt-2">
-                            <Typography color="textSecondary" variant="body1">
-                              <strong>Subject:</strong> {subname}
+                  isActive,
+                }) =>
+                  isActive === 1 ? (
+                    <div className="col-sm-4 mb-4 mt-4 p-2" key={testid}>
+                      <Card
+                        className={classes.root}
+                        variant="outlined"
+                        key={testid}
+                      >
+                        <CardContent>
+                          <h1 className={classes.title}>{testname}</h1>
+                          <div className={classes.data}>
+                            <div className="mb-3 mt-2">
+                              <Typography color="textSecondary" variant="body1">
+                                <strong>Subject:</strong> {subname}
+                              </Typography>
+                              <Typography color="textSecondary" variant="body1">
+                                <strong>Dur:</strong> {testtime} (mins)
+                              </Typography>
+                            </div>
+                            <Typography
+                              color="textSecondary"
+                              variant="subtitle1"
+                            >
+                              <strong>Starts At:</strong> {startTestTime}
                             </Typography>
-                            <Typography color="textSecondary" variant="body1">
-                              <strong>Dur:</strong> {testtime} (mins)
+                            <Typography
+                              color="textSecondary"
+                              variant="subtitle1"
+                            >
+                              <strong>Ends At:</strong> {endTestTime}
                             </Typography>
                           </div>
-                          <Typography color="textSecondary" variant="subtitle1">
-                            <strong>Starts At:</strong> {startTestTime}
-                          </Typography>
-                          <Typography color="textSecondary" variant="subtitle1">
-                            <strong>Ends At:</strong> {endTestTime}
-                          </Typography>
-                        </div>
-                      </CardContent>
-                      <CardActions>
-                        {testsGiven &&
-                        testsGiven.find((value) => value === testid) ? (
-                          <>
-                            {new Date(current) >= new Date(endTestTime) ? (
-                              <Link
-                                to="/submission"
-                                className="btn btn-outline-info btn-lg btn-block"
-                              >
-                                <button
-                                  onClick={() => handleSubmissionClick(testid)}
-                                  className="btn "
+                        </CardContent>
+                        <CardActions>
+                          {testsGiven &&
+                          testsGiven.find((value) => value === testid) ? (
+                            <>
+                              {new Date(current) >= new Date(endTestTime) ? (
+                                <Link
+                                  to="/submission"
+                                  className="btn btn-outline-info btn-lg btn-block"
                                 >
-                                  View Submission
-                                </button>
-                              </Link>
-                            ) : (
-                              <Link
-                                to="/subject-test-view"
-                                className="btn btn-outline-info btn-lg btn-block"
-                              >
-                                <button className="btn ">OnGoing</button>
-                              </Link>
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {new Date(current) <= new Date(startTestTime) ||
-                            new Date(current) >= new Date(endTestTime) ? (
-                              <Link
-                                to="/subject-test-view"
-                                className="btn btn-outline-info btn-lg btn-block"
-                              >
-                                {new Date(current) <=
-                                new Date(startTestTime) ? (
-                                  <button className="btn ">Upcoming</button>
-                                ) : (
-                                  <button className="btn ">Expired</button>
-                                )}
-                              </Link>
-                            ) : (
-                              <Link
-                                to="/test"
-                                className="btn btn-outline-info btn-lg btn-block"
-                              >
-                                <button
-                                  onClick={() =>
-                                    handleTestClick(
-                                      testtime,
-                                      testid,
-                                      testname,
-                                      totalMarks,
-                                      startTestTime,
-                                      endTestTime
-                                    )
-                                  }
-                                  className="btn "
+                                  <button
+                                    onClick={() =>
+                                      handleSubmissionClick(testid)
+                                    }
+                                    className="btn "
+                                  >
+                                    View Submission
+                                  </button>
+                                </Link>
+                              ) : (
+                                <Link
+                                  to="/subject-test-view"
+                                  className="btn btn-outline-info btn-lg btn-block"
                                 >
-                                  Start
-                                </button>
-                              </Link>
-                            )}
-                          </>
-                        )}
-                      </CardActions>
-                    </Card>
-                  </div>
-                )
+                                  <button className="btn ">OnGoing</button>
+                                </Link>
+                              )}
+                            </>
+                          ) : (
+                            <>
+                              {new Date(current) <= new Date(startTestTime) ||
+                              new Date(current) >= new Date(endTestTime) ? (
+                                <Link
+                                  to="/subject-test-view"
+                                  className="btn btn-outline-info btn-lg btn-block"
+                                >
+                                  {new Date(current) <=
+                                  new Date(startTestTime) ? (
+                                    <button className="btn ">Upcoming</button>
+                                  ) : (
+                                    <button className="btn ">Expired</button>
+                                  )}
+                                </Link>
+                              ) : (
+                                <Link
+                                  to="/test"
+                                  className="btn btn-outline-info btn-lg btn-block"
+                                >
+                                  <button
+                                    onClick={() =>
+                                      handleTestClick(
+                                        testtime,
+                                        testid,
+                                        testname,
+                                        totalMarks,
+                                        startTestTime,
+                                        endTestTime
+                                      )
+                                    }
+                                    className="btn "
+                                  >
+                                    Start
+                                  </button>
+                                </Link>
+                              )}
+                            </>
+                          )}
+                        </CardActions>
+                      </Card>
+                    </div>
+                  ) : (
+                    <span key={testid}></span>
+                  )
               )}
             </div>
           </div>

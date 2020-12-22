@@ -98,7 +98,8 @@ function SelectSubject() {
                     </h3>
                   ) : (
                     <>
-                      {subjects.map(({ subname, subid }) => (
+                      {subjects.map(({ subname, subid, isActive }) => (
+                        isActive === 1 ?
                         <Grid container spacing={3} key={subid}>
                           <Grid item xs={12}>
                             <Paper
@@ -109,6 +110,8 @@ function SelectSubject() {
                             </Paper>
                           </Grid>
                         </Grid>
+                        : 
+                        <span key={subid}></span>
                       ))}
                     </>
                   )}

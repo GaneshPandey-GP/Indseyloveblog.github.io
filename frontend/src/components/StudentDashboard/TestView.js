@@ -158,9 +158,9 @@ function TestView() {
           <form className="container " id="form" onSubmit={handleSubmit}>  
             {questions.map(
               (
-                { question, optionA, optionB, optionC, optionD, qid, marks },
-                index
+                { question, optionA, optionB, optionC, optionD, qid, marks, isActive }, index
               ) => (
+                isActive ===1 ?
                 <div className="card mt-3 rounded-lg shadow-lg" key={qid}>
                   <div className="card-header">
                     <h4>
@@ -205,6 +205,8 @@ function TestView() {
                     </FormControl>
                   </div>
                 </div>
+                :
+                <span key={qid}></span>
               )
             )}
             <div className="d-flex justify-content-center mt-5 mb-3">

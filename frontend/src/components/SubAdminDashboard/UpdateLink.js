@@ -5,9 +5,10 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { updateLink, useAuthState } from '../../context';
+import { deleteLink, updateLink, useAuthState } from '../../context';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { AccordionActions, Button, Divider, TextField } from '@material-ui/core';
+import DeleteItem from './DeleteItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,18 +46,18 @@ export default function UpdateLink({ilink, linkid, ilinktitle}) {
     else
       updateLink(dispatch, linkid, link, linktitle);
   }
-
   return (
     <div className={classes.root}>
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary
-          expandIcon={<EditOutlinedIcon />}
+          expandIcon={<EditOutlinedIcon className="text-success"/>}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
           <Typography className={classes.heading}>{ilinktitle}</Typography>
           <Typography className={classes.secondaryHeading}>{ilink}</Typography>
         </AccordionSummary>
+        <DeleteItem deleteFun={() => deleteLink(dispatch, linkid)} item={ilink}/>
         <AccordionDetails>
         <TextField label="link title" value={linktitle} onChange={(e) => setLinkTitle(e.target.value)}/>
         <AccordionDetails>

@@ -78,7 +78,9 @@ export default function ViewClients({clients}) {
               {email}
               </TableCell>
               <TableCell component="th" scope="row">
-               { testsGiven}
+               [{ testsGiven.map((id, index) => (
+                 id === testsGiven[(testsGiven.length)-1] ? <span key={index}>{id}</span> : <span key={index}>{id}, </span>
+               )) }]
               </TableCell>
               <TableCell component="th" scope="row">
               <UpdateUser  ifname={fname} ilname={lname} iuid={uid} icontact={contact} iemail={email} itestsGiven={testsGiven} key={uid}/>

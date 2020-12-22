@@ -290,7 +290,9 @@ export const updateQuestion4Admin = async (
   correctAns,
   marks,
   testid,
-  oldmarks
+  oldmarks,
+  section,
+  sectionId
 ) => {
   dispatch({
     type: "START_LOADING",
@@ -316,9 +318,12 @@ export const updateQuestion4Admin = async (
       optionD,
       correctAns,
       marks,
+      section,
+      sectionId
     },
   };
 
+  console.log(body)
   try {
     await axios.post(`${baseURL}/updateQuestion`, body, config);
     viewQuestions4Admin(dispatch, testid);

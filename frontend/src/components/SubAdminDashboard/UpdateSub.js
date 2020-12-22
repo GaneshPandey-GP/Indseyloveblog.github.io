@@ -6,7 +6,8 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { AccordionActions, Button, Divider, TextField } from '@material-ui/core';
-import { useAuthState, updateSubject } from '../../context';
+import { useAuthState, updateSubject, deleteSubject } from '../../context';
+import DeleteItem from './DeleteItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,9 +17,16 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  delete: {
+    color: 'red',
+    fontSize: "2rem",
+    marginRight: "1rem",
+    cursor: 'pointer',
+    float: 'right',
+  }
 }));
 
-export default function UpdateSub({subname, subid}) {
+export default function UpdateSub({subname, subid, categoryid}) {
   const [sub, setSub] = useState("");
   const [{}, dispatch] = useAuthState()
   const [valueError, setValueError] = React.useState('')
@@ -31,17 +39,22 @@ export default function UpdateSub({subname, subid}) {
       updateSubject(dispatch, subid, subname=sub);
   }
 
+  const handleDelete = () => {
+    deleteSubject(dispatch, subid, categoryid)
+  }
+
   const classes = useStyles();
   return (
     <form className={classes.root} onSubmit={handleSubmit} noValidate autoComplete="off">
       <Accordion square >
         <AccordionSummary
-          expandIcon={<EditOutlinedIcon />}
+          expandIcon={<EditOutlinedIcon className="text-success"/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
           <Typography className={classes.heading}>{subname}</Typography>
         </AccordionSummary>
+        <DeleteItem deleteFun={() => deleteSubject(dispatch, subid, categoryid)} item={subname}/>
         <AccordionDetails>
         <TextField id={subname} label={subname} onChange={(e) => setSub(e.target.value)}/>
         </AccordionDetails>

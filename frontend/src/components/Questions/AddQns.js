@@ -260,7 +260,7 @@ export default function AddQns(props) {
                     onChange={(e) => handleInputChange(e)}
                   />
                   <FormControl className="container mt-4 mb-4">
-                    <InputLabel>CorrectAns</InputLabel>
+                    <InputLabel>Correct Answer</InputLabel>
                     <Select
                       id="select-option"
                       value={correctAns}

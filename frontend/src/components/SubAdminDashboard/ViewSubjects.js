@@ -15,7 +15,7 @@ import { Loading } from "../Loading";
 
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    width: 280,
   },
   fullList: {
     width: "auto",
@@ -43,8 +43,10 @@ export default function ViewSubjects() {
       role="presentation"
     >
       <List>
-        { loading ? (<Loading />) : (subjects.map(({ subname, subid }, index) =>
-            <UpdateSub key={subid} subname={subname} subid={subid} />
+        { 
+          loading ? (<Loading />) : (subjects.map(({ subname, subid, categoryid, isActive }) =>
+          isActive === 1 ?
+          <UpdateSub key={subid} subname={subname} subid={subid} categoryid={categoryid}/> : <span key={subid}></span>
         ))}
       </List>
     </div>
