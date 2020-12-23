@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { useAuthState, viewQuestions4Client, getTests } from "../../context";
+import { useAuthState } from "../../context";
 import { Link } from "react-router-dom";
-import { CardActions, Drawer } from "@material-ui/core";
+import { CardActions } from "@material-ui/core";
 import { Loading } from "../Loading";
 
 const useStyles = makeStyles((theme) => ({

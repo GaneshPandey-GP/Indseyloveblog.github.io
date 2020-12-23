@@ -23,7 +23,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
 
   console.log(isection)
   const [valueError, setValueError] = React.useState('')
-  const [{loading, sections}, dispatch] = useAuthState()
+  const [{sections}, dispatch] = useAuthState()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -205,7 +205,7 @@ export const UpdateQn2 = ({iquestion, qid, imarks}) => {
     const testid = data.testid
     const [open, setOpen] = React.useState(false);
     const [valueError, setValueError] = React.useState('')
-    const [{loading}, dispatch] = useAuthState()
+    const [{}, dispatch] = useAuthState()
   
     const handleClickOpen = () => {
       setOpen(true);

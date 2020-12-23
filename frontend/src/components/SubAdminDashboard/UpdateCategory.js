@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { AccordionActions, Button, Divider, TextField } from '@material-ui/core';
 import { useAuthState, updateCategory, deleteCategory } from '../../context';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DeleteItem from './DeleteItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,10 +39,6 @@ export default function UpdateCategory({categoryid, categoryName}) {
       {setValueError("")
       updateCategory(dispatch, categoryid, categoryName=category);
       setForm(category)}
-  }
-
-  const handleDelete = () => {
-    deleteCategory(dispatch, categoryid)
   }
 
   const setForm = (category) => {
