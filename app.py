@@ -69,6 +69,9 @@ class MongoAPI:
         output = [{item: data[item] for item in data if item != '_id'} for data in documents]
         return output
 app = Flask(__name__)
+@app.route('/',methods=['GET'])
+def index():
+    return("TAP Api")
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json

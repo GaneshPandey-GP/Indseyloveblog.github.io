@@ -41,6 +41,7 @@ function TestView() {
   const endTestTime = localStorage.getItem("endTestTime");
   const [minutes, setMinutes] = useState(parseInt(localStorage.getItem("min")));
   const [seconds, setSeconds] = useState(parseInt(localStorage.getItem("sec")));
+  const sectionDetails = []
   useEffect(() => {
     if (
       testid === "undefined" ||
@@ -89,7 +90,7 @@ function TestView() {
       {},
       ...questions.map((x) => ({ [x.qid]: x.marks }))
     )
-
+  
     let totalmarks = 0;
     for (let i in selected) {
       if (selected[i].ans === answers[i]) {
@@ -99,6 +100,49 @@ function TestView() {
     return totalmarks;
   };
 
+  const getSectionTotalMarks = ({section}) => {
+    const arr = []
+    let answers = Object.assign(
+      {},
+      ...questions.map((x) => ({ [x.section]: x.correctAns }))
+    );
+    let sections = Object.assign(
+      {},
+      ...questions.map((x) => (arr.push({"section":x.section}) ))
+    );
+    let marks = Object.assign(
+      {},
+      ...questions.map((x) => ({ [x.section]: x.marks }))
+    );
+    console.log(answers)
+  
+    let totalmarks = 0;
+    for (let i in arr) {
+      if (section[i] === section) {
+        totalmarks = totalmarks + marks[i];
+      }
+    }
+    return totalmarks;
+  };
+  const getSectionAchivedMarks = () => {
+    let answers = Object.assign(
+      {},
+      ...questions.map((x) => ({ [x.section]: x.correctAns }))
+    );
+    let marks = Object.assign(
+      {},
+      ...questions.map((x) => ({ [x.section]: x.marks }))
+    );
+    console.log(answers)
+  
+    let totalmarks = 0;
+    for (let i in selected) {
+      if (selected[i].ans === answers[i]) {
+        totalmarks = totalmarks + marks[i];
+      }
+    }
+    return totalmarks;
+  };
   const handleRadioChange = (e, qid) => {
     const data = e.target.value;
     selector(qid, data);
@@ -108,12 +152,13 @@ function TestView() {
 
   const handleSubmit = (e) => {
     const result = getMarks();
+    const sectionAns = sectionDetails;
     const answers = Object.values(selected);
-    console.log(result)
-    console.log(questions)
-    console.log(answers)
+    // console.log(result)
+    // console.log(questions)
+    //  console.log(answers)
     e.preventDefault();
-    if (!error) createSubmission(dispatch, testid, result, answers, startTestTime, endTestTime );
+    if (!error) createSubmission(dispatch, testid, result, answers, startTestTime, endTestTime, sectionAns );
   };
 
 
@@ -158,14 +203,16 @@ function TestView() {
           <form className="container " id="form" onSubmit={handleSubmit}>  
             {questions.map(
               (
-                { question, optionA, optionB, optionC, optionD, qid, marks, isActive }, index
+                { question, optionA, optionB, optionC, optionD, qid, marks, isActive, section }, index
               ) => (
+                
                 isActive ===1 ?
                 <div className="card mt-3 rounded-lg shadow-lg" key={qid}>
                   <div className="card-header">
                     <h4>
                      
-                      QNo.{index + 1} {question}
+                      QNo.{index + 1} {question} 
+                 
                     </h4>
                   </div>
                   <div className="card-body">
@@ -203,10 +250,12 @@ function TestView() {
                       </RadioGroup>
                       <FormHelperText>{helperText}</FormHelperText>
                     </FormControl>
+                    <div style={{visibility: "hidden"}}>{sectionDetails.push({"sectionName":section ,"total":getSectionTotalMarks({section}), "achived":getSectionAchivedMarks()})}</div>
                   </div>
                 </div>
                 :
-                <span key={qid}></span>
+                       
+                <span key={qid}> </span>
               )
             )}
             <div className="d-flex justify-content-center mt-5 mb-3">
