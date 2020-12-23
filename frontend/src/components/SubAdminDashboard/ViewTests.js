@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 export default function ViewTests(props) {
   const [{tests, loading}, dispatch] = useAuthState()
-
+ console.log(tests)
   const classes = useStyles();
 
   const clickHandler = (testid, testname, createdBy) => {

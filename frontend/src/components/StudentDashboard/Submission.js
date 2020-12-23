@@ -98,13 +98,14 @@ function Submission() {
                   optionC,
                   optionD,
                   correctAns,
+                  section
                 },
                 index
               ) => (
                 <div className="card mt-3 rounded-lg shadow-lg mb-2" key={qid}>
                   <div className="card-header">
                     <h4>
-                      {index + 1}. {question}
+                      {index + 1}. {question} {section}
                     </h4>
                   </div>
                   <div className="card-body">
