@@ -13,6 +13,7 @@ import FolderSharedIcon from '@material-ui/icons/FolderShared';
 import UpdateUser from "./UpdateUser"
 import ViewTests from '../SubAdminDashboard/ViewTests'
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import { CSVLink } from "react-csv";
 
 const useStyles = makeStyles({
   table: {
@@ -55,6 +56,17 @@ export default function ViewClients({clients}) {
       <Typography variant="h4" id="tableTitle" component="div">{toggle === 2 ? "Clients": "Tests"} </Typography>
     </div>
     {toggle  === 2 ? (<TableContainer>
+      <CSVLink
+                  className=" text-left text-decoration-none "
+                  data={clients.map(({fname, lname, contact, email, password, testsGiven,  uid}) => ({
+                   First_Name: fname,
+                    Last_Name: lname,
+                    Contact: contact,
+                    Email:email,
+                  }))}
+                >
+                  Download User List
+                </CSVLink>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -62,12 +74,12 @@ export default function ViewClients({clients}) {
             <TableCell className={classes.header}>Last Name</TableCell>
             <TableCell className={classes.header}>Contact</TableCell>
             <TableCell className={classes.header}>Email</TableCell>
-            <TableCell className={classes.header}>Test Given</TableCell>
+            <TableCell className={classes.header}>Password</TableCell>
             <TableCell className={classes.header}>Update</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {clients.map(({fname, lname, contact, email, testsGiven, uid}) => (
+          {clients.map(({fname, lname, contact, email, password, testsGiven,  uid}) => (
             <TableRow key={uid}>
               <TableCell component="th" scope="row">
                 {fname}
@@ -78,10 +90,9 @@ export default function ViewClients({clients}) {
               {email}
               </TableCell>
               <TableCell component="th" scope="row">
-               [{ testsGiven.map((id, index) => (
-                 id === testsGiven[(testsGiven.length)-1] ? <span key={index}>{id}</span> : <span key={index}>{id}, </span>
-               )) }]
+            {password}
               </TableCell>
+              
               <TableCell component="th" scope="row">
               <UpdateUser  ifname={fname} ilname={lname} iuid={uid} icontact={contact} iemail={email} itestsGiven={testsGiven} key={uid}/>
               </TableCell>
