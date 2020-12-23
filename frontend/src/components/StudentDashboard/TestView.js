@@ -158,14 +158,14 @@ function TestView() {
           <form className="container " id="form" onSubmit={handleSubmit}>  
             {questions.map(
               (
-                { question, optionA, optionB, optionC, optionD, qid, marks, isActive }, index
+                { question, optionA, optionB, optionC, optionD, qid, marks, isActive, section }, index
               ) => (
                 isActive ===1 ?
                 <div className="card mt-3 rounded-lg shadow-lg" key={qid}>
                   <div className="card-header">
                     <h4>
                      
-                      QNo.{index + 1} {question}
+                      QNo.{index + 1} {question}  ({section})
                     </h4>
                   </div>
                   <div className="card-body">
