@@ -11,7 +11,7 @@ const YourResults = () => {
   const [{ results, submission, loading, user }, dispatch] = useAuthState();
   const today = new Date();
   const current = today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
-
+console.log(results)
   useEffect((testid) => {
     try {
       localStorage.removeItem("testid");
