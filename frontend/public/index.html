@@ -2,27 +2,17 @@
 <html lang="en">
   <head>
     <script>
-    // disable right click
     document.addEventListener('contextmenu', event => event.preventDefault());
-
     document.onkeydown = function (e) {
-
-        // disable F12 key
         if(e.keyCode == 123) {
             return false;
         }
-
-        // disable I key
         if(e.ctrlKey && e.shiftKey && e.keyCode == 73){
             return false;
         }
-
-        // disable J key
         if(e.ctrlKey && e.shiftKey && e.keyCode == 74) {
             return false;
         }
-
-        // disable U key
         if(e.ctrlKey && e.keyCode == 85) {
             return false;
         }
@@ -35,12 +25,12 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Talent Assessment Portal By Shivalik CERT"
     />
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <title>React App</title>
+    <title>Talent Assessment Portal</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
