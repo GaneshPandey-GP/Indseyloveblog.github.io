@@ -46,7 +46,7 @@ export default function ViewSubjects() {
         { 
           loading ? (<Loading />) : (subjects.map(({ subname, subid, categoryid, isActive }) =>
           isActive === 1 ?
-          <UpdateSub key={subid} subname={subname} subid={subid} categoryid={categoryid}/> : <span key={subid}></span>
+          <UpdateSub key={subid} subname={subname} subid={subid} categoryid={categoryid}/> : null
         ))}
       </List>
     </div>

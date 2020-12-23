@@ -7,7 +7,6 @@ import Slide from "@material-ui/core/Slide";
 import {
   Button,
   FormControl,
-  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -27,11 +26,8 @@ export default function AddQns(props) {
   const [correctAns, setCorrectAns] = useState("");
   const [valueError, setValueError] = React.useState("");
   const [sectionid, setSectionId] = useState("");
-  const [sectionid2, setSectionId2] = useState("");
   const [section, setSection] = useState("");
   const [section2, setSection2] = useState("");
-
-
 
   const [{ loading, sections }, dispatch] = useAuthState();
 
@@ -114,7 +110,7 @@ export default function AddQns(props) {
         sectionid
       );
       props.setLoad(false);
-      formReset();
+      // formReset();
       handleClose();
     }
   };
@@ -132,6 +128,8 @@ export default function AddQns(props) {
   };
   const formReset = () => {
     setQnData("");
+    setSection("")
+    setSectionId("")
     setCorrectAns("");
   };
 
@@ -218,7 +216,7 @@ export default function AddQns(props) {
                         isActive === 1 ?
                         <MenuItem key={sectionid} value={section} onClick={ ()=> setSectionId(sectionid)}>{section}</MenuItem>
                         : 
-                        <span key={sectionid}></span>
+                        null
                       )}
                     </Select>
                   </FormControl>

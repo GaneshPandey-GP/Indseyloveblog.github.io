@@ -8,8 +8,10 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   createSubmission,
+  getSections,
   useAuthState,
   viewQuestions4Client,
+  getSections4Client
 } from "../../context";
 import Timer from "./Timer";
 import TestRedirect from "./TestRedirect";
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 function TestView() {
   const classes = useStyles();
-  const [{ questions, loading }, dispatch] = useAuthState();
+  const [{ questions, loading, sections }, dispatch] = useAuthState();
   const [selected, setSelected] = React.useState([]);
   const [helperText, setHelperText] = React.useState("Choose wisely");
   const [error, setError] = useState(false);
@@ -41,7 +43,6 @@ function TestView() {
   const endTestTime = localStorage.getItem("endTestTime");
   const [minutes, setMinutes] = useState(parseInt(localStorage.getItem("min")));
   const [seconds, setSeconds] = useState(parseInt(localStorage.getItem("sec")));
-  const sectionDetails = []
   useEffect(() => {
     if (
       testid === "undefined" ||
@@ -51,7 +52,7 @@ function TestView() {
     )
       setError(true);
     viewQuestions4Client(dispatch, testid);
-   
+    getSections4Client(dispatch, testid)
    
   
   }, [testid, testname]);
@@ -59,107 +60,91 @@ function TestView() {
   useEffect(() => {
     try {
       var testsGiven = JSON.parse(localStorage.getItem("testsGiven"));
-      if (testid !== NaN || testid === null) testsGiven.push(parseInt(testid))
+      if (testid !== NaN || testid !== null) testsGiven.push(parseInt(testid))
       let testSet = new Set(testsGiven)
       testsGiven = Array.from(testSet)
       localStorage.setItem("testsGiven", JSON.stringify(testsGiven));
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [testid]);
 
   const selector = React.useCallback(
-    (key, ans) =>
+    (key, ans, section) =>
       setSelected((selected) => ({
         ...selected,
         [key]: {
           ...selected[key],
           qid: key,
           ans,
+          section
         },
       })),
     []
   );
 
+  const answers = Object.assign(
+    {},
+    ...questions.map((x) => ({ [x.qid]: x.correctAns }))
+  )
+
+  const marks = Object.assign(
+    {},
+    ...questions.map((x) => ({ [x.qid]: x.marks }))
+  )
+
   const getMarks = () => {
-    let answers = Object.assign(
-      {},
-      ...questions.map((x) => ({ [x.qid]: x.correctAns }))
-    );
-    let marks = Object.assign(
-      {},
-      ...questions.map((x) => ({ [x.qid]: x.marks }))
-    )
-  
     let totalmarks = 0;
     for (let i in selected) {
       if (selected[i].ans === answers[i]) {
-        totalmarks = totalmarks + marks[i];
+        totalmarks = totalmarks + marks[i]
       }
     }
     return totalmarks;
-  };
+  }
 
-  const getSectionTotalMarks = ({section}) => {
-    const arr = []
-    let answers = Object.assign(
-      {},
-      ...questions.map((x) => ({ [x.section]: x.correctAns }))
-    );
-    let sections = Object.assign(
-      {},
-      ...questions.map((x) => (arr.push({"section":x.section}) ))
-    );
-    let marks = Object.assign(
-      {},
-      ...questions.map((x) => ({ [x.section]: x.marks }))
-    );
-    console.log(answers)
-  
-    let totalmarks = 0;
-    for (let i in arr) {
-      if (section[i] === section) {
-        totalmarks = totalmarks + marks[i];
-      }
-    }
-    return totalmarks;
-  };
-  const getSectionAchivedMarks = () => {
-    let answers = Object.assign(
-      {},
-      ...questions.map((x) => ({ [x.section]: x.correctAns }))
-    );
-    let marks = Object.assign(
-      {},
-      ...questions.map((x) => ({ [x.section]: x.marks }))
-    );
-    console.log(answers)
-  
-    let totalmarks = 0;
+  const sectionMarks = (sec) => {
+    let sectionMarks = 0
     for (let i in selected) {
-      if (selected[i].ans === answers[i]) {
-        totalmarks = totalmarks + marks[i];
+      if (selected[i].section === sec) {
+        if (selected[i].ans === answers[i]) {
+          sectionMarks = sectionMarks + marks[i];
+        }
       }
     }
-    return totalmarks;
-  };
-  const handleRadioChange = (e, qid) => {
+    return (sectionMarks)
+  }
+  
+
+
+const getTotalSecMark = (section) => {
+  const quesBySec = questions.filter(sec => sec.section === section)
+  var totalSecMarks = 0
+  for (let i in quesBySec) {
+    totalSecMarks += quesBySec[i].marks
+  }
+  return(totalSecMarks)
+}
+
+  const handleRadioChange = (e, qid, section) => {
     const data = e.target.value;
-    selector(qid, data);
+    selector(qid, data, section);
     setHelperText(" ");
-  };
+  }
 
-
-  const handleSubmit = (e) => {
-    const result = getMarks();
-    const sectionAns = sectionDetails;
-    const answers = Object.values(selected);
-    // console.log(result)
-    // console.log(questions)
-    //  console.log(answers)
-    e.preventDefault();
-    if (!error) createSubmission(dispatch, testid, result, answers, startTestTime, endTestTime, sectionAns );
-  };
+const handleSubmit = (e) => {
+  const sectionWise = []
+  const result = getMarks();
+  const answers = Object.values(selected);
+  const secs = sections.filter(sec => sec.isActive === 1)
+  for ( let i in secs) {
+    const sectionTotal = getTotalSecMark(secs[i].section)
+    const achieved = sectionMarks(secs[i].section)
+    sectionWise.push({"section": secs[i].section, "sectionTotal": sectionTotal, "marksAchieved": achieved})
+  }
+  e.preventDefault();
+  if (!error) createSubmission(dispatch, testid, result, answers, startTestTime, endTestTime, sectionWise );
+}
 
 
   useEffect(() => {
@@ -216,7 +201,10 @@ function TestView() {
                     </h4>
                   </div>
                   <div className="card-body">
-                    <p className="float-right">{marks} marks</p>
+                    <div className="d-flex justify-content-between">
+                      <p>{marks} marks</p>
+                      <p>{section})</p>
+                    </div>
                     <FormControl
                       component="fieldset"
                       className={classes.formControl}
@@ -225,7 +213,7 @@ function TestView() {
                         aria-label="quiz"
                         name="quiz"
                         value={selected[index]}
-                        onChange={(e) => handleRadioChange(e, qid)}
+                        onChange={(e) => handleRadioChange(e, qid, section)}
                       >
                         <FormControlLabel
                           value="a"
@@ -250,12 +238,11 @@ function TestView() {
                       </RadioGroup>
                       <FormHelperText>{helperText}</FormHelperText>
                     </FormControl>
-                    <div style={{visibility: "hidden"}}>{sectionDetails.push({"sectionName":section ,"total":getSectionTotalMarks({section}), "achived":getSectionAchivedMarks()})}</div>
+                    {/* <div style={{visibility: "hidden"}}>{sectionDetails.push({"sectionName":section ,"total":getSectionTotalMarks({section}), "achived":getSectionAchivedMarks()})}</div> */}
                   </div>
                 </div>
                 :
-                       
-                <span key={qid}> </span>
+                null
               )
             )}
             <div className="d-flex justify-content-center mt-5 mb-3">

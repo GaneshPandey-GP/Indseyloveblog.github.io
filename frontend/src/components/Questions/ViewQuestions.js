@@ -226,7 +226,7 @@ export default function ViewQuestions() {
                           <DeleteItem deleteFun={() => deleteQuestion(dispatch, qid, testid, marks)} item={question}/>
                           </CardActions>
                         </>
-                      ) : <span key={qid}></span>}
+                      ) : null}
                     </Card>
                   </Grid>
                 )

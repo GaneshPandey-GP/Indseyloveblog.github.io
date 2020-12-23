@@ -1,38 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import FormControl from "@material-ui/core/FormControl";
 import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  TextField,
 } from "@material-ui/core";
-import { useAuthState, createTest } from "../../context";
+import { useAuthState } from "../../context";
 import EditIcon from "@material-ui/icons/Edit";
 import { useForm } from "react-hook-form";
-// import { Signup, useAuthState } from "../context"
-import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
-import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
-import HttpsOutlinedIcon from "@material-ui/icons/HttpsOutlined";
-import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
 import Alert from "@material-ui/lab/Alert";
-import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline";
 import { Loading } from "../Loading";
 
 export default function CreateUser({ heading, registerUser }) {
   const [open, setOpen] = React.useState(false);
-  const isMounted = useRef(null);
   const [formError, setFormError] = useState("");
   const { register, handleSubmit, errors } = useForm();
-  const [message, setMessage] = useState();
-  const [{ isAuthenticated, loading }, dispatch] = useAuthState();
+  const [{ loading }, dispatch] = useAuthState();
 
   const onSubmit = (data, e) => {
     console.log(data);

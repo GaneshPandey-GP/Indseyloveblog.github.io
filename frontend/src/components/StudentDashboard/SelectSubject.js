@@ -111,7 +111,7 @@ function SelectSubject() {
                           </Grid>
                         </Grid>
                         : 
-                        <span key={subid}></span>
+                        null
                       ))}
                     </>
                   )}

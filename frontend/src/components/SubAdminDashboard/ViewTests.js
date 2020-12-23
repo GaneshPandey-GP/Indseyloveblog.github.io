@@ -133,7 +133,7 @@ export default function ViewTests(props) {
                 </div>
                 </TableCell>
 
-              </TableRow> : <span key={testid}></span>
+              </TableRow>: null
             )) }
           </TableBody>
         </Table>

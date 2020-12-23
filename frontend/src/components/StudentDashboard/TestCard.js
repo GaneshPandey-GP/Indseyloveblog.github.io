@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { useAuthState, viewQuestions4Client, getTests } from "../../context";
-import { Link } from "react-router-dom";
-import { CardActions, Drawer } from "@material-ui/core";
+import { useAuthState } from "../../context";
+import { Link, Redirect } from "react-router-dom";
+import { CardActions } from "@material-ui/core";
 import { Loading } from "../Loading";
 
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +76,7 @@ export const TestCard = () => {
   const today = new Date();
   const current = today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
 
+  if (testsGiven === undefined || testsGiven === null) return <Redirect to="/stud-dashboard" />
   return (
     <>
       <div className={classes.main}>
@@ -207,7 +208,7 @@ export const TestCard = () => {
                       </Card>
                     </div>
                   ) : (
-                    <span key={testid}></span>
+                    null
                   )
               )}
             </div>

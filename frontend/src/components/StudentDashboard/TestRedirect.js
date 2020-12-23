@@ -16,8 +16,6 @@ export default function TestRedirect({ handleSubmit, endTestTime }) {
   const [{ load }] = useAuthState();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const today = new Date();
-  const current = today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
 
   const handleClickOpen = (e) => {
     setOpen(true);
