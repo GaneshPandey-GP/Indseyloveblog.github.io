@@ -100,7 +100,31 @@ function TestView() {
     return totalmarks;
   };
 
-  const getSectionMarks = () => {
+  const getSectionTotalMarks = ({section}) => {
+    const arr = []
+    let answers = Object.assign(
+      {},
+      ...questions.map((x) => ({ [x.section]: x.correctAns }))
+    );
+    let sections = Object.assign(
+      {},
+      ...questions.map((x) => (arr.push({"section":x.section}) ))
+    );
+    let marks = Object.assign(
+      {},
+      ...questions.map((x) => ({ [x.section]: x.marks }))
+    );
+    console.log(answers)
+  
+    let totalmarks = 0;
+    for (let i in arr) {
+      if (section[i] === section) {
+        totalmarks = totalmarks + marks[i];
+      }
+    }
+    return totalmarks;
+  };
+  const getSectionAchivedMarks = () => {
     let answers = Object.assign(
       {},
       ...questions.map((x) => ({ [x.section]: x.correctAns }))
@@ -108,7 +132,8 @@ function TestView() {
     let marks = Object.assign(
       {},
       ...questions.map((x) => ({ [x.section]: x.marks }))
-    )
+    );
+    console.log(answers)
   
     let totalmarks = 0;
     for (let i in selected) {
@@ -118,7 +143,6 @@ function TestView() {
     }
     return totalmarks;
   };
-console.log(getSectionMarks)
   const handleRadioChange = (e, qid) => {
     const data = e.target.value;
     selector(qid, data);
@@ -130,9 +154,9 @@ console.log(getSectionMarks)
     const result = getMarks();
     const sectionAns = sectionDetails;
     const answers = Object.values(selected);
-    console.log(result)
-    console.log(questions)
-     console.log(answers)
+    // console.log(result)
+    // console.log(questions)
+    //  console.log(answers)
     e.preventDefault();
     if (!error) createSubmission(dispatch, testid, result, answers, startTestTime, endTestTime, sectionAns );
   };
@@ -226,7 +250,7 @@ console.log(getSectionMarks)
                       </RadioGroup>
                       <FormHelperText>{helperText}</FormHelperText>
                     </FormControl>
-                    {sectionDetails.push({"sectionName":section ,"total":getSectionMarks()})}
+                    <div style={{visibility: "hidden"}}>{sectionDetails.push({"sectionName":section ,"total":getSectionTotalMarks({section}), "achived":getSectionAchivedMarks()})}</div>
                   </div>
                 </div>
                 :
