@@ -24,7 +24,7 @@ function Home() {
         </div>
       </nav>
 
-    <div className="container text-center">
+    <div className="containers text-center">
         <Typography variant="h2">Talent Assessment Portal</Typography>
         <div className="mt-5">
             <NavLink className="nav__btn__link btn3" to="/login" role="button">Get Started</NavLink>

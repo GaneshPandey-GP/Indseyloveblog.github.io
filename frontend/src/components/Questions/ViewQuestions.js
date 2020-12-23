@@ -49,7 +49,7 @@ export default function ViewQuestions() {
   ] = useAuthState();
   const testid = localStorage.getItem("testid");
   const createdBy = localStorage.getItem("createdBy");
-
+ 
   useEffect(() => {
     level === "1"
       ? subAdminCall()
@@ -61,7 +61,7 @@ export default function ViewQuestions() {
     viewQuestions(dispatch, testid) 
     getSections(dispatch, testid)
   }
-  console.log(questions)
+  // console.log(questions)
   const adminCall = () => {
     viewQuestions4Admin(dispatch, testid) 
     getSections4Admin(dispatch, testid, createdBy)
