@@ -54,9 +54,7 @@ export default function ViewLink() {
                 ilinktitle={linktitle}
                 linkid={linkid}
               />
-            ) : (
-              <span key={linkid}></span>
-            )
+            ) : null
           )
         )}
       </List>

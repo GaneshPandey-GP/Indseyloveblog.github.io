@@ -39,9 +39,6 @@ export default function UpdateSub({subname, subid, categoryid}) {
       updateSubject(dispatch, subid, subname=sub);
   }
 
-  const handleDelete = () => {
-    deleteSubject(dispatch, subid, categoryid)
-  }
 
   const classes = useStyles();
   return (

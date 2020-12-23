@@ -144,10 +144,12 @@ export default function CreateTest() {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {subjects.map(({ subname, subid }) => (
+                {subjects.map(({ subname, subid, isActive }) => (
+                  isActive === 1 ? 
                   <MenuItem key={subid} value={subid}>
                     {subname}
-                  </MenuItem>
+                  </MenuItem> :
+                  null
                 ))}
               </Select>
             </FormControl>

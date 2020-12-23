@@ -11,7 +11,6 @@ import {
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { useAuthState } from "../../context";
 import UpdateCategory from './UpdateCategory'
-import Skeleton from "@material-ui/lab/Skeleton";
 import { Loading } from "../Loading";
 
 const useStyles = makeStyles({
@@ -46,11 +45,11 @@ export default function ViewCategory() {
       <List>
         { loading ? (<Loading />) : (categories.map(({ categoryName, categoryid, isActive }, index) =>
           isActive === 1 ?
-            <UpdateCategory key={index} categoryName={categoryName} categoryid={categoryid} /> : <span key={categoryid}></span>
+            <UpdateCategory key={index} categoryName={categoryName} categoryid={categoryid} /> : null
         ))}
       </List>
     </div>
-  );
+  )
 
   return (
     <div>

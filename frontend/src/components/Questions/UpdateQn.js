@@ -129,7 +129,7 @@ export default function UpdateQn({iquestion, qid, ioptionA, ioptionB, ioptionC, 
                     isActive === 1 ?
                     <MenuItem key={sectionid} value={section} onClick={ ()=> setSectionId(sectionid)}>{section}</MenuItem>
                     : 
-                    <span key={sectionid}></span>
+                    null
                   )}
                 </Select>
               </FormControl>

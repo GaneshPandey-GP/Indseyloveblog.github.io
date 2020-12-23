@@ -215,7 +215,7 @@ export const getCategories4Client = async (dispatch, categoryid) => {
   }
 }
 
-export const createSubmission = async (dispatch, testid, result, answers, startTestTime, endTestTime, sectionAns ) => {
+export const createSubmission = async (dispatch, testid, result, answers, startTestTime, endTestTime, sectionWise ) => {
   dispatch({
     type: "START_LOAD",
   });
@@ -233,7 +233,7 @@ export const createSubmission = async (dispatch, testid, result, answers, startT
       answers,
       startTestTime, 
       endTestTime,
-      sectionAns,
+      sectionWise,
       userid: parseInt(localStorage.getItem("user.uid")),
       total: parseInt(localStorage.getItem("totalMarks")),
       testname: localStorage.getItem("testname"),
@@ -243,7 +243,6 @@ export const createSubmission = async (dispatch, testid, result, answers, startT
       contact: localStorage.getItem("contact"),
     }
   }
-console.log(body)
   try {
     await axios.post(`${baseURL}/createSubmission`, body, config);
     dispatch({
@@ -420,6 +419,39 @@ export const getLinks4Client = async (dispatch) => {
     dispatch({
       type: "GET_LINKS",
       links: links,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}
+
+export const getSections4Client = async (dispatch, testid) => {
+  const sections = [];
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    }
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "sections",
+    Filter: {
+      testid: parseInt(testid)
+    },
+  };
+  try {
+    const res = await axios.post(`${baseURL}/getSections`, body, config);
+    res.data.map((section) => {
+      return sections.push(section);
+    });
+    dispatch({
+      type: "GET_SECTIONS",
+      sections: sections,
     });
   } catch (err) {
     dispatch({

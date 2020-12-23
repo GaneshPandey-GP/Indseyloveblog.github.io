@@ -52,6 +52,7 @@ import {
   viewSubmission4Client,
   readUser4Client,
   getLinks4Client,
+  getSections4Client
 } from "./Actions/ClientActions";
 
 import {deleteSubject, deleteCategory, deleteLink, deleteTest, deleteQuestion, deleteSection} from './Actions/DeleteActions'
@@ -114,4 +115,5 @@ export {
   deleteTest,
   deleteQuestion,
   deleteSection,
+  getSections4Client
 };

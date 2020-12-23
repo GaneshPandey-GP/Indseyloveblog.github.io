@@ -65,7 +65,7 @@ export default function UpdateSection({createdBy}) {
                 <AddSection text={section} section={section} title={"Update section"} sectionid={sectionid} updateSection={level === 1 ? updateSection : updateSection4Admin} createdBy={createdBy}/>
                 <DeleteItem deleteFun={() => deleteSection(dispatch, testid, sectionid)} item={section}/>
             </div>
-          : <span key={sectionid}></span>
+            : null
         ))}
       </StyledMenu>
     </div>

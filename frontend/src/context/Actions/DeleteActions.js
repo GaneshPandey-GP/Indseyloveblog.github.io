@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCategories, getLinks, getSections, getSubjects, getTests, viewQuestions } from "..";
-const baseURL = "http://13.235.51.163/app/";
+const baseURL = "http://13.235.51.163:5001/";
 
 export const deleteCategory = async (dispatch, categoryid) => {
     dispatch({
@@ -139,6 +139,7 @@ export const deleteCategory = async (dispatch, categoryid) => {
         isActive: 0,
       },
     }
+    console.log(body)
     try {
       await axios.post(`${baseURL}/updateTest`, body, config);
       getTests(dispatch);

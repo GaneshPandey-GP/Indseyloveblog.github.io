@@ -52,7 +52,7 @@ export default function UpdateTest({ifname, ilname, icontact, iemail, itestsGive
 
 
   const [formError, setFormError] = useState("");
-  const { register, handleSubmit, errors } = useForm();
+  const { register, errors } = useForm();
  
   const [{loading }, dispatch] = useAuthState();
 
