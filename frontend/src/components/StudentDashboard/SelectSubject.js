@@ -93,14 +93,13 @@ function SelectSubject() {
                 <Loader />
               ) : (
                 <div className={classes.bodyCard}>
-                  {subjects.length === 0 ? (
+                  {subjects.filter((subject) => subject.isActive === 1).length === 0 ? (
                     <h3 className="mt-4 p-3 text-secondary border border-info">
                       No subjects available!
                     </h3>
                   ) : (
                     <>
-                      {subjects.map(({ subname, subid, isActive }) => (
-                        isActive === 1 ?
+                      {subjects.filter((subject) => subject.isActive === 1).map(({ subname, subid }) => (
                         <Grid container spacing={3} key={subid}>
                           <Grid item xs={12}>
                             <Paper
@@ -111,8 +110,6 @@ function SelectSubject() {
                             </Paper>
                           </Grid>
                         </Grid>
-                        : 
-                        null
                       ))}
                     </>
                   )}

@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Typography } from "@material-ui/core";
-import { deleteTest, useAuthState } from "../../context";
+import { deleteTest, getSubjects, useAuthState } from "../../context";
 import SubjectFilter from "./SubjectFilter";
 import UpdateTest from "./UpdateTest";
 import Skeleton from "@material-ui/lab/Skeleton";
@@ -26,15 +26,13 @@ const useStyles = makeStyles({
     textDecoration: "none",
   },
   field: {
-    textTransform: 'capitalize'
-  }
+    textTransform: "capitalize",
+  },
 });
 
-
-
 export default function ViewTests(props) {
-  const [{tests, loading}, dispatch] = useAuthState()
- console.log(tests)
+  const [{ tests, subjects, loading }, dispatch] = useAuthState();
+  console.log(tests);
   const classes = useStyles();
 
   const clickHandler = (testid, testname, createdBy) => {
@@ -53,94 +51,139 @@ export default function ViewTests(props) {
     );
   return (
     <>
+      <div className="d-flex justify-content-between text-right">
+        <Typography variant="h4" id="tableTitle" component="div">
+          {props.toggle === 1 ? "" : "Tests"}
+        </Typography>
+        {subjects.filter((subject) => subject.isActive === 1).length !== 0 ?
+          <SubjectFilter getTests={props.getTests} /> : null
+        }
+        
+      </div>
 
-    <div className="d-flex justify-content-between text-right">
-      <Typography variant="h4" id="tableTitle" component="div">
-      {props.toggle === 1 ? "": "Tests"}
-      </Typography>
-      <SubjectFilter getTests={props.getTests}/>
-    </div>
+      {tests.filter((test) => test.isActive === 1).length === 0 ? (
+        <div className="mb-5 pb-2">
+            <h4 className="text-center text-secondary border border-info p-3 mt-5">
+          No Tests Available!
+        </h4>
+        </div>
 
-      <TableContainer>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell className={classes.header}>Name of the test</TableCell>
-              <TableCell className={classes.header}>Subject</TableCell>
-              <TableCell className={classes.header}>Duration(mins)</TableCell>
-              <TableCell className={classes.header}>Start Date&Time</TableCell>
-              <TableCell className={classes.header}>End Date&Time</TableCell>
-              <TableCell className={classes.header}>View Questions</TableCell>
-              <TableCell className={classes.header}>View submission</TableCell>
-              <TableCell className={classes.header}>Edit Test</TableCell>
-              <TableCell className={classes.header}>Delete Test</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tests.map(({ testname, testid, subname, subid, testtime, createdBy, startTestTime, endTestTime, isActive }) => (
-              isActive === 1 ? 
-              <TableRow key={testid}>
-                <TableCell component="th" scope="row" className={classes.field}>
-                  {testname}
+      ) : (
+        <TableContainer>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.header}>
+                  Name of the test
                 </TableCell>
-                <TableCell component="th" scope="row" className={classes.field}>
-                  {subname}
+                <TableCell className={classes.header}>Subject</TableCell>
+                <TableCell className={classes.header}>Duration(mins)</TableCell>
+                <TableCell className={classes.header}>
+                  Start Date&Time
                 </TableCell>
-                <TableCell component="th" scope="row">
-                  {testtime}
+                <TableCell className={classes.header}>End Date&Time</TableCell>
+                <TableCell className={classes.header}>View Questions</TableCell>
+                <TableCell className={classes.header}>
+                  View submission
                 </TableCell>
-                <TableCell component="th" scope="row">
-                  {startTestTime}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {endTestTime}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  <Link to={{ pathname: "/add-questions" }}>
-                    <button
-                      type="button"
-                      className="btn btn-info"
-                      onClick={() => clickHandler(testid, testname, createdBy)}
-                    >
-                      Questions
-                    </button>
-                  </Link>
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  <Link to={{ pathname: "/results" }}>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={() => clickHandler(testid, testname, createdBy)}
-                    >
-                      Submissions
-                    </button>
-                  </Link>
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  <UpdateTest
-                    initialTestName={testname}
-                    initialSubid={subid}
-                    initialTestTime={testtime}
-                    testid={testid}
-                    initialSubName={subname}
-                    updateTest={props.updateTest}
-                    createdBy={createdBy}
-                    initialStartTime={startTestTime}
-                    initialEndTime={endTestTime}
-                  />
-                </TableCell>
-                <TableCell component="th" scope="row">
-                <div className="mr-4">
-                <DeleteItem deleteFun={() => deleteTest(dispatch, testid)} item={testname}/>
-                </div>
-                </TableCell>
-
-              </TableRow>: null
-            )) }
-          </TableBody>
-        </Table>
-      </TableContainer>
+                <TableCell className={classes.header}>Edit Test</TableCell>
+                <TableCell className={classes.header}>Delete Test</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tests
+                .filter((test) => test.isActive === 1)
+                .map(
+                  ({
+                    testname,
+                    testid,
+                    subname,
+                    subid,
+                    testtime,
+                    createdBy,
+                    startTestTime,
+                    endTestTime,
+                    isActive,
+                  }) =>
+                    isActive === 1 ? (
+                      <TableRow key={testid}>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          className={classes.field}
+                        >
+                          {testname}
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          className={classes.field}
+                        >
+                          {subname}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          {testtime}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          {startTestTime}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          {endTestTime}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <Link to={{ pathname: "/add-questions" }}>
+                            <button
+                              type="button"
+                              className="btn btn-info"
+                              onClick={() =>
+                                clickHandler(testid, testname, createdBy)
+                              }
+                            >
+                              Questions
+                            </button>
+                          </Link>
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <Link to={{ pathname: "/results" }}>
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() =>
+                                clickHandler(testid, testname, createdBy)
+                              }
+                            >
+                              Submissions
+                            </button>
+                          </Link>
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <UpdateTest
+                            initialTestName={testname}
+                            initialSubid={subid}
+                            initialTestTime={testtime}
+                            testid={testid}
+                            initialSubName={subname}
+                            updateTest={props.updateTest}
+                            createdBy={createdBy}
+                            initialStartTime={startTestTime}
+                            initialEndTime={endTestTime}
+                          />
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <div className="mr-4">
+                            <DeleteItem
+                              deleteFun={() => deleteTest(dispatch, testid)}
+                              item={testname}
+                            />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ) : null
+                )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
     </>
   );
 }

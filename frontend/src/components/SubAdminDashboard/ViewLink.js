@@ -45,17 +45,21 @@ export default function ViewLink() {
       <List>
         {loading ? (
           <Loading />
+        ) : links.filter((link) => link.isActive === 1).length === 0 ? (
+          <h4 className="text-center text-secondary border border-info p-3 mt-5">
+            No Links Available!
+          </h4>
         ) : (
-          links.map(({ link, linkid, linktitle, isActive }) =>
-            isActive === 1 ? (
+          links
+            .filter((link) => link.isActive === 1)
+            .map(({ link, linkid, linktitle }) => (
               <UpdateLink
                 key={linkid}
                 ilink={link}
                 ilinktitle={linktitle}
                 linkid={linkid}
               />
-            ) : null
-          )
+            ))
         )}
       </List>
     </div>

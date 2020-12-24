@@ -45,7 +45,13 @@ console.log(results)
       ) : (
         <div className="container ">
           <History history={""} />
+          {results.length === 0 ? 
+            <h4 className="col-sm-12 text-center text-secondary border border-info p-3 mt-5">
+                  No Submissions Available!
+            </h4>
+            :          
           <div className="card mt-5 text-center">
+
             <div className="d-flex justify-content-between m-2 pl-2">
               <h3 className="mr-5">Result</h3>
               <Button className="ml-5">
@@ -119,7 +125,7 @@ console.log(results)
                 )}
               </tbody>
             </table>
-          </div>
+          </div>}
         </div>
       )}
     </>

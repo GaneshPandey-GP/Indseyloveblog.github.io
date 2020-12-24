@@ -9,6 +9,7 @@ import {
   DialogContent,
   TextField,
   Button,
+  DialogTitle,
 } from "@material-ui/core";
 import QueueIcon from "@material-ui/icons/Queue";
 
@@ -51,6 +52,8 @@ export default function CreateCategory() {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
+        <DialogTitle>Create a new category</DialogTitle>
+
         <form onSubmit={handleSubmit} style={{ minWidth: 300 }}>
           <DialogContent>
             <TextField

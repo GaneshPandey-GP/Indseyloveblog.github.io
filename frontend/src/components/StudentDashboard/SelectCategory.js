@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 800,
     width: "100%",
     border: "none",
+    margin: 'dense',
     borderBottom: "1px solid #fff",
     fontSize: 22,
     color: theme.palette.text.secondary,
@@ -44,14 +45,13 @@ const useStyles = makeStyles((theme) => ({
 
 function SelectCategory() {
   const classes = useStyles();
-  const [{ loading, categories }, dispatch] = useAuthState();
+  const [{ loading, links, categories }, dispatch] = useAuthState();
 
   const clickHandler = (categoryid, category) => {
     localStorage.setItem("categoryid", categoryid)
     getSubjects4Client(dispatch, categoryid)
     localStorage.setItem("category", category)
   }
-  //if (loading) return (<><Skeleton variant="rect" height={30}/><br/><Skeleton variant="rect" height={165} /></>)
   return (
     <>
     <Nav />
@@ -63,16 +63,12 @@ function SelectCategory() {
         
             <h4>Select a Category</h4>
             <div className={classes.bodyCard}>
-              {categories.map(({ categoryName, categoryid, isActive }) => (
-
-                
-                isActive === 1 ?
+              {categories.filter((category) => category.isActive === 1).map(({ categoryName, categoryid }) => (
                 <Grid container spacing={4} key={categoryid}>
                   <Grid item xs={12}>
                     <Link to={{ pathname: "/subject-test-view" }}>
                       <Paper
                         label={categoryName}
-                        
                         className={classes.paper}
                         onClick={() => clickHandler(categoryid, categoryName)}
                         component="button">{categoryName}
@@ -80,15 +76,16 @@ function SelectCategory() {
                     </Link>
                   </Grid>
                 </Grid>
-                :
-                null
               ))}
             </div>
-            <div className="mt-5">
-               <h4>Links</h4>
-            <LinkCarousel />
-            </div>
-           
+            {
+              links.filter((link) => link.isActive === 1).length !== 0 ? 
+              <div className="mt-5">
+                <h4 className="mt-5">Links</h4>
+                <LinkCarousel />
+              </div>
+              : null
+            }
           </div>
         </div>
       )}

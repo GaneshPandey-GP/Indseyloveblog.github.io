@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     transform: "scale(0.8)",
   },
   title: {
-    fontSize: 26,
+    fontSize: 22,
     textAlign: "center",
     padding: theme.spacing(1),
     fontWidth: 900,
@@ -85,17 +85,17 @@ export const TestCard = () => {
           <Loading />
         ) : (
           <div className="container">
-            <div className="row mt-4">
-              {tests.length === 0 ? (
-                <h2 className="col-sm-12 text-center text-secondary border border-info p-3">
+            <div className="row">
+              {tests.filter(test => test.isActive === 1).length === 0 ? (
+                <h4 className="col-sm-12 text-center text-secondary border border-info p-3">
                   Tests Not Available!
-                </h2>
+                </h4>
               ) : (
-                <h2 className="col-sm-12 text-center card-header text-secondary">
+                <h3 className="col-sm-12 text-center card-header text-secondary">
                   Tests
-                </h2>
+                </h3>
               )}
-              {tests.map(
+              {tests.filter((test) => test.isActive === 1).map(
                 ({
                   testname,
                   testid,
@@ -103,11 +103,9 @@ export const TestCard = () => {
                   testtime,
                   totalMarks,
                   startTestTime,
-                  endTestTime,
-                  isActive,
+                  endTestTime
                 }) =>
-                  isActive === 1 ? (
-                    <div className="col-sm-4 mb-4 mt-4 p-2" key={testid}>
+                    <div className="col-sm-4 mb-4 mt-4" key={testid}>
                       <Card
                         className={classes.root}
                         variant="outlined"
@@ -116,7 +114,7 @@ export const TestCard = () => {
                         <CardContent>
                           <h1 className={classes.title}>{testname}</h1>
                           <div className={classes.data}>
-                            <div className="mb-3 mt-2">
+                            <div className="mb-3 mt-3">
                               <Typography color="textSecondary" variant="body1">
                                 <strong>Subject:</strong> {subname}
                               </Typography>
@@ -207,9 +205,7 @@ export const TestCard = () => {
                         </CardActions>
                       </Card>
                     </div>
-                  ) : (
-                    null
-                  )
+
               )}
             </div>
           </div>
