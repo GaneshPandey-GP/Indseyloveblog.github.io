@@ -25,6 +25,9 @@ const useStyles = makeStyles({
   link: {
     textDecoration: "none",
   },
+  field: {
+    textTransform: 'capitalize'
+  }
 });
 
 
@@ -77,10 +80,10 @@ export default function ViewTests(props) {
             {tests.map(({ testname, testid, subname, subid, testtime, createdBy, startTestTime, endTestTime, isActive }) => (
               isActive === 1 ? 
               <TableRow key={testid}>
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" className={classes.field}>
                   {testname}
                 </TableCell>
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" className={classes.field}>
                   {subname}
                 </TableCell>
                 <TableCell component="th" scope="row">

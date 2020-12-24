@@ -37,7 +37,6 @@ function ViewSubmission() {
     viewSubmission(dispatch, testid, submitID);
     viewQuestions4Client(dispatch, testid);
   }, []);
-  console.log(submission)
   submission.map((ques) => yourSoln.push(ques.answers));
   try {
     result = questions.map((item) => {
