@@ -96,13 +96,15 @@ export default function CreateSub() {
                 id="select-category"
                 defaultValue=""
                 value={categoryid}
+                label="Subject name"
                 onChange={(e) => handleInputChange(e)}
                 input={<Input id="select-category-label" />}
+                className="pt-1"
               >
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {categories.map(({ categoryid, categoryName }) => (
+                {categories.filter((category) => category.isActive === 1).map(({ categoryid, categoryName }) => (
                   <MenuItem key={categoryid} value={categoryid}>
                     {categoryName}
                   </MenuItem>

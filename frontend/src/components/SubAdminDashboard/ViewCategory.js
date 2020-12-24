@@ -43,9 +43,14 @@ export default function ViewCategory() {
       role="presentation"
     >
       <List>
-        { loading ? (<Loading />) : (categories.map(({ categoryName, categoryid, isActive }, index) =>
-          isActive === 1 ?
-            <UpdateCategory key={index} categoryName={categoryName} categoryid={categoryid} /> : null
+        { loading ? (<Loading />) : 
+          categories.filter((category) => category.isActive === 1).length === 0 ? (
+          <h6 className="text-center text-secondary border border-info p-3 mt-5">
+            No Categories Available!
+          </h6>
+        ) :
+        (categories.filter((category) => category.isActive === 1).map(({ categoryName, categoryid }, index) =>
+            <UpdateCategory key={index} categoryName={categoryName} categoryid={categoryid} /> 
         ))}
       </List>
     </div>

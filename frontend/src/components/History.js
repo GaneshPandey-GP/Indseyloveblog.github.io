@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   back: {
     marginLeft: theme.spacing(1.5),
+    marginBottom: '1rem',
     width: 35,
     height: 35,
     cursor: 'pointer',

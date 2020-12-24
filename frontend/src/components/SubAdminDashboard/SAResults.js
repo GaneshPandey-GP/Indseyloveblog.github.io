@@ -35,9 +35,9 @@ export default function SAResults() {
           <div className="mt-4">
             <History history={""} />
           </div>
-          {results.length === 0 ? (
+          {results.filter((result) => result.isActive === 1).length === 0 ? (
             <h2 className="col-sm-12 text-center text-secondary border border-info p-3 mt-4">
-              No Results!
+              No Submissions Available!
             </h2>
           ) : (
             <div className="card mt-4 text-center">

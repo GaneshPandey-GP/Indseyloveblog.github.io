@@ -24,15 +24,15 @@ function SubjectList(props) {
   }
 
   return (
-    <Dialog onClose={handleClose} aria-labelledby="select-subject" open={open}>
-      <DialogTitle id="select-subject">Select a subject</DialogTitle>
+    <Dialog onClose={handleClose} aria-labelledby="select-ubject" open={open}>
+      <DialogTitle id="select-subject" className="text-secondary">Select a Subject</DialogTitle>
       <List>
         <ListItem button onClick={() => handleListItemClick(undefined)}>
-        <ListItemText primary="All" />
+        <ListItemText primary="All" className="text-center"/>
         </ListItem>
         {subjects.map(({subname, subid}) => (
           <ListItem button onClick={(e) => handleListItemClick(e, subid)} key={subid}>
-            <ListItemText primary={subname} />
+            <ListItemText primary={subname} className="text-center"/>
           </ListItem>
         ))}
       </List>

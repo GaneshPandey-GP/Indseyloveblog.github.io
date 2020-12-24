@@ -34,7 +34,7 @@ export default function SubAdminLogin() {
     <div className="login-box">
       <i className="fas fa-user-circle fa-4x head"></i>
 
-      <h1 className="text-center">Admin Login</h1>
+      <h1 className="text-center">Sub Admin Login</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
         <div className="form-group textbox">

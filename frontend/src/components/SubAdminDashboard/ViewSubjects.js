@@ -44,9 +44,14 @@ export default function ViewSubjects() {
     >
       <List>
         { 
-          loading ? (<Loading />) : (subjects.map(({ subname, subid, categoryid, isActive }) =>
-          isActive === 1 ?
-          <UpdateSub key={subid} subname={subname} subid={subid} categoryid={categoryid}/> : null
+          loading ? (<Loading />) : 
+          subjects.filter((subject) => subject.isActive === 1).length === 0 ? (
+          <h6 className="text-center text-secondary border border-info p-3 mt-5">
+            No Subjects Available!
+          </h6>
+        ) :
+          (subjects.filter((subject) => subject.isActive === 1).map(({ subname, subid, categoryid }) =>
+          <UpdateSub key={subid} subname={subname} subid={subid} categoryid={categoryid}/> 
         ))}
       </List>
     </div>
