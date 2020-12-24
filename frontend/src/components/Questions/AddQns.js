@@ -110,7 +110,7 @@ export default function AddQns(props) {
         sectionid
       );
       props.setLoad(false);
-      // formReset();
+      formReset();
       handleClose();
     }
   };
