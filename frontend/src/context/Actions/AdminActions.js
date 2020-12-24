@@ -460,3 +460,36 @@ export const getSections4Admin = async (dispatch, testid, createdBy) => {
     });
   }
 };
+export const viewResults4Admin = async (dispatch) => {
+  const results = []
+  dispatch({
+    type: "START_LOADING",
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = {
+    database: "ExaminationSystem",
+    collection: "submissions",
+    Filter:{
+      userid: parseInt(localStorage.getItem("user.uid")),
+    }
+  }
+
+  try {
+    const res = await axios.post(`${baseURL}/viewResults`, body, config);
+    res.data.map((result) => {
+      return results.push(result);
+    })
+    dispatch({
+      type: "GET_RESULTS",
+      results: results,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ACTION_FAIL",
+    });
+  }
+}

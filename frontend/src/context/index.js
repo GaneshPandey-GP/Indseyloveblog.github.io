@@ -38,6 +38,7 @@ import {
   updateTest4Admin,
   getSections4Admin,
   updateSection4Admin,
+  viewResults4Admin,
 } from "./Actions/AdminActions";
 
 import {
@@ -115,5 +116,6 @@ export {
   deleteTest,
   deleteQuestion,
   deleteSection,
-  getSections4Client
+  getSections4Client,
+  viewResults4Admin
 };

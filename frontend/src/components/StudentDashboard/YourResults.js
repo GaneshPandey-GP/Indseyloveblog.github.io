@@ -49,17 +49,19 @@ console.log(results)
             <div className="d-flex justify-content-between m-2 pl-2">
               <h3 className="mr-5">Result</h3>
               <Button className="ml-5">
-                <CSVLink
+                  <CSVLink
                   className=" text-left text-decoration-none "
-                  data={submission.map(({ result, testname, total }) => ({
+                  data={results.map(({ result, testname, total,sectionWise },index) => ({
                     Test_Name: testname,
                     Total_Marks: total,
                     Marks_Achieved: result,
-                    // Start_Time: startTestTime,
-                    // End_Time: endTestTime
-                  }))}
+                    Section_Name : sectionWise.map((x)=>`/${x.section}`),
+                    Section_Total: sectionWise.map((x)=>`/${x.sectionTotal}`),
+                    Section_Achieved: sectionWise.map((x)=>`/${x.marksAchieved}`),                   
+                  })
+                  )}
                 >
-                  Download Result
+                  Download Result 
                 </CSVLink>
               </Button>
             </div>
