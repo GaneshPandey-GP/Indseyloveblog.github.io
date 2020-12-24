@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid #fff",
     fontSize: 15,
     color: theme.palette.text.secondary,
+    textTransform: "capitalize",
     "&:hover": {
       boxShadow: "7px 8px 10px #3f51b5",
       color: "#3f51b5",
