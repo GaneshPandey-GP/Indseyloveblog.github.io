@@ -140,4 +140,4 @@ This currently the rough documentation for examination system.
                                               -------> create test
  - 404 page not found (/*) 
  - createtest (/createtest)  
- - viewtest (/test)           //action pending..
+ - viewtest (/test)           
