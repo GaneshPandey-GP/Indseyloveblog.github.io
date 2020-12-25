@@ -34,7 +34,8 @@
                   <br><br>Pellentesque vel dignissim libero, et sagittis elit. Nulla dignissim eleifend tellus, sed
                   molestie risus rutrum non. Etiam lorem odio, convallis a arcu vel, bibendum molestie metus.
                   Pellentesque imperdiet nisl ante, eu congue nisl suscipit id.
-                  <br><br><a href="{% url 'blog' %}">Back to Blog</a></p>
+                  <br><br><a href="{% url 'blog' %}">Back to Blog</a>
+                </p>
                 <div class="tags-share">
                   <div class="row">
                     <div class="col-md-6">
@@ -64,17 +65,17 @@
 
       {% for comment in post.get_comnents %}
       <div class="card">
-        {% if not request.user.is_staff or not request.user.is_superuser %}
+        {% if not request.user.is_active or not request.user.is_superuser %}
         <div>Anonymous</div>
         {% else %}
-        <h4><i class="fa fa-user-circle-o" aria-hidden="true"></i>{{comment.user.username}}</h4>
+        <h4><i class="fa fa-user-circle-o" aria-hidden="true"></i>{{comment.name}}</h4>
         {%endif %}
         <p class="date">{{comment.publish_date|timesince}} ago</p>
         <div>{{comment.content}}</div>
       </div>
       <hr>
       {% endfor %}
-      <hr/>
+      <hr />
       <div>
         <h3 class="text-info">Leave Your message</h3>
         {% load crispy_forms_tags %}

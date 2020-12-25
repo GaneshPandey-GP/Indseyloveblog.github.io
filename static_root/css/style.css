@@ -53,7 +53,7 @@ body, html {
 
 /* Nav Bar */
 
-nav .logo {
+/* nav .logo {
   float: left;
   margin-left: 30px;
 }
@@ -87,7 +87,7 @@ nav {
   top: 0;
   z-index: 300;
   box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.5);
-}
+} */
 
 .menu-icon {
   background: transparent;
@@ -1336,3 +1336,4 @@ nav {
   }
 
 }
+

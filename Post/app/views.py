@@ -3,6 +3,50 @@ from .forms import CreatePostform, CommentForm
 from .models import CreatePost
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from .forms import CreateUserForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+from .decorators import unauthenticated_user,allowed_user
+
+@unauthenticated_user
+def LoginPage(request):
+	username = request.POST.get('username')
+	password = request.POST.get('password')
+	
+	user = authenticate(username=username, password=password)
+	if user is not None:
+		login(request,user)
+		return redirect('home')
+	else:
+		messages.info(request,'Username or Password is incorrect')	
+
+	context={}
+	return render(request,'login.html',context)
+
+
+@unauthenticated_user
+def RegisterPage(request):
+	form = CreateUserForm()
+	 
+	if request.method == 'POST':
+		form = CreateUserForm(request.POST)
+		if form.is_valid():
+			form.save()
+			user = form.cleaned_data.get('username')
+			messages.success(request,'Account was created for'+ ' ' + user)
+			return redirect('login')
+
+	context={'form':form}
+	return render(request,'register.html',context)
+
+def LogoutView(request):
+	logout(request)
+	return redirect('login')
+
+
+@login_required(login_url='login')
 
 def Index(request):
     images = CreatePost.objects.order_by('-publish_date')[0:9]
@@ -11,7 +55,7 @@ def Index(request):
     return render(request, "index.html",context)
 
 def Home(request):  
-    Latest_post = CreatePost.objects.order_by('-publish_date')[0:3]
+    Latest_post = CreatePost.objects.order_by('-publish_date')[0:5]
     images = CreatePost.objects.order_by('-publish_date')[0:8]
     post = CreatePost.objects.all()
    
@@ -36,6 +80,10 @@ def Home(request):
     return render(request, "blog.html", context)
 
 
+
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['admin'])
 def Create(request):
     title = "Home Page"
     form = CreatePostform()
@@ -47,6 +95,8 @@ def Create(request):
     context = {"title": title, "form": form}
     return render(request, "create.html", context)
 
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['admin' , 'reader'])
 def PostView(request,slug):
     post = CreatePost.objects.get(slug=slug)
     form = CommentForm()
@@ -58,10 +108,12 @@ def PostView(request,slug):
                 form.save()
                 return redirect(reverse('postview',kwargs={'slug':post.slug}))
     images = CreatePost.objects.order_by('-publish_date')[0:8]
-    Latest_post = CreatePost.objects.order_by('-publish_date')[0:3]
+    Latest_post = CreatePost.objects.order_by('-publish_date')[0:5]
     context = {"post":post,"images":images,"latest_post":Latest_post,"form":form}
     return render(request, "single-post.html",context)
- 
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['admin']) 
 def Update(request, slug):
     title = "Update Post"
     post = CreatePost.objects.get(slug=slug)
@@ -74,7 +126,8 @@ def Update(request, slug):
     context = {"title": title, "form": form}
     return render(request, "update.html", context)
 
-
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['admin'])
 def Delete(request, slug):
     title = "Delete pOst"
     post = CreatePost.objects.get(slug=slug)
