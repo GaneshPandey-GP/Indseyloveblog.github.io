@@ -184,7 +184,7 @@ const handleSubmit = (e) => {
         {(minutes===0 && seconds===0)? <> <TimesUp handleSubmit={handleSubmit}/></>: (
           <>
           <SimpleNav heading={"Attempt all the questions:"} />
-          <Timer/>
+          <div className="fixed-top text-primary container col-sm-10" style={{"marginLeft":"350px"}}> <Timer /></div>
           <form className="container " id="form" onSubmit={handleSubmit}>  
             {questions.map(
               (

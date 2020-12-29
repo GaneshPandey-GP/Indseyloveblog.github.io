@@ -52,7 +52,7 @@ export default function Timer(props) {
       ) : (
         <>
           {minutes >= 0 ? (
-            <div className="container col-sm-10 text-right mt-4">
+            <div className="container col-sm-10 text-right mt-4" >
               <span className="text-warning">
                 <strong>
                   <TimerIcon /> Time Left
