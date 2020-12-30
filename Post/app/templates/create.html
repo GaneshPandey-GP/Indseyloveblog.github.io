@@ -1,5 +1,22 @@
-<h1>{{title}}</h1>
-<form  method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
-{{form.as_p}}
-<input type="submit" value="Post" />
-</form>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% include 'Navbar.html' %}
+<div class="page-heading">
+    <div class="container">
+        <div class="heading-content">
+            <h1>Create <em>Posts</em></h1>
+        </div>
+    </div>
+</div>
+
+<div class="blog-entries">
+    <div class="container" style="color: wheat;">
+        <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+            {{form|crispy}}
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </form>
+    </div>
+</div>
+
+{% endblock %}

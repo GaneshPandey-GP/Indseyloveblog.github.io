@@ -37,7 +37,8 @@ body, html {
   text-transform: uppercase;
   color: #ffffff;
   letter-spacing: 1px;
-  background-color: rgba(250,250,250,0.1);
+  background: linear-gradient(#e66465, #9198e5);
+  border-radius: 10px;
   display: inline-block;
   margin-bottom: 0;
   margin-top: 220px;
@@ -53,7 +54,7 @@ body, html {
 
 /* Nav Bar */
 
-/* nav .logo {
+nav .logo {
   float: left;
   margin-left: 30px;
 }
@@ -87,7 +88,7 @@ nav {
   top: 0;
   z-index: 300;
   box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.5);
-} */
+}
 
 .menu-icon {
   background: transparent;
@@ -1160,7 +1161,7 @@ nav {
   border: none;
 }
 
-.sidebar-heding h2 {
+/* .sidebar-heding h2 {
   font-size: 20px;
   text-transform: capitalize;
   color: #fff;
@@ -1169,7 +1170,7 @@ nav {
   padding-bottom: 10px;
   border-bottom: 1px solid #414141;
   margin-bottom: 20px;
-}
+} */
 
 .archives ul, .categories ul {
   margin-top: -5px;
@@ -1336,4 +1337,3 @@ nav {
   }
 
 }
-

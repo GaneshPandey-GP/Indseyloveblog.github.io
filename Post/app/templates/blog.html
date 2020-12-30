@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% include 'Navbar.html' %} 
 
 <div class="page-heading">
   <div class="container">
@@ -21,49 +21,51 @@
             <div class="blog-post">
               <img src="{{data.image.url}}" alt="">
               <div class="text-content text-info">
-                <span><a href="#"><i class="fa fa-user" aria-hidden="true"></i> {{request.user.username}}</a> &nbsp; <a
+                <span><a href="#"><i class="fa fa-user" aria-hidden="true"></i> {{data.author}}</a> &nbsp; <a
                     href="#"><i class="fa fa-clock-o" aria-hidden="true"></i> {{data.publish_date|timesince}} ago</a>
+                    &nbsp; <a href="#"><i class="fa fa-comment" aria-hidden="true"></i> Comment{% if data.get_comments.count > 1 %}s {% endif %} ({{data.get_comments.count}})</a>
                 </span>
                 <h2>{{data.title}}</h2>
                 <p>{{data.content|truncatewords:60}}</p>
+
+                {% if request.user.is_active or request.user.is_superuser %}
                 <div class="simple-btn">
                   <a href="{% url 'postview' data.slug %}">continue reading</a>
                 </div>
+                {% else %}
+                <div class="simple-btn">
+                  <p class="text-info">To Read More You must <a href="{% url 'login'  %}"> login first</a></p>
+                </div>
+                {% endif %}
               </div>
             </div>
+
           </div>
           {% endfor %}
 
 
-          <div class="col-md-12">
-            <ul class="pagination  justify-content-center">
+          <div class="col-md-12 mb-5">
+            <div aria-label="Pagdivigation example">
+
+            <ol class="justify-content-center text-center text-capitalize mb-5 font-weight-bolder pagination">
               {% if post.has_previous %}
-              <li class="page-item"><a href="?{{page_request_var}}=1 {% if request.GET.q %}&q={{request.GET.q}}{% endif %}  ">&laquo;
+              <li class="page-item d-inline p-0"> <a style="color: #232323;" href="?{{page_request_var}}=1 {% if request.GET.q %}&q={{request.GET.q}}{% endif %}  ">&laquo;
                 first</a></li>
-              <li class="page-item"><a href="?{{page_request_var}}={{ post.previous_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">previous</a></li>
+              <li  class="page-item d-inline p-0"><a style="color: #232323; " href="?{{page_request_var}}={{ post.previous_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">previous</a></li>
               {% endif %}
 
-              <span class="current text-danger">
-                Page {{ post.number }} of {{ post.paginator.num_pages }}
-              </span>
+              <li class="active page-item d-inline p-0 text-danger" >
+                <a>Page ( {{ post.number }} of {{ post.paginator.num_pages }} )</a>
+              </li>
 
               {% if post.has_next %}
-              <li  class="page-item"><a href="?{{page_request_var}}={{ post.next_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">next</a></li>
-              <li class="page-item"><a href="?{{page_request_var}}={{ post.paginator.num_pages }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">last
+              <li class="page-item d-inline p-0"><a  style="color: #232323; " href="?{{page_request_var}}={{ post.next_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">next</a></li>
+              <li class="page-item d-inline p-0"><a  style="color: #232323; " href="?{{page_request_var}}={{ post.paginator.num_pages }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">last
                 &raquo;</a></li>
               {% endif %}
-            </ul>
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                {% if post.has_previous %}
-               
-                <li class="page-item"><a href="?{{page_request_var}}={{ post.previous_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">previous</a></li> 
-                <li class="page-item"><a href="?{{page_request_var}}=1 {% if request.GET.q %}&q={{request.GET.q}}{% endif %}  ">&laquo;
-                  1</a></li>
-                {% endif %}
-               
-              </ul>
-            </nav>
+            </ol>
+          </div>
+
           </div>
         </div>
       </div>
@@ -73,7 +75,7 @@
         {% include 'sidebar.html' %}
       </div>
     </div>
-    {% include 'Navbar.html' %}
+    
   </div>
 </div>
 

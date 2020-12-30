@@ -6,34 +6,74 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{title}}</title>
+    <title>{{title}}</title>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="http://code.jquery.com/jquery-3.5.1.js"></script>
+    <style>
+        nav ul li {
+            color: #1a1517;
+            background: transparent;
+        }
+
+        nav ul li .active {
+            color: #ffffff;
+            border-radius: 5px;
+            font-weight: 800;
+            background: linear-gradient(#e66465, #9198e5);
+            transition: 0.5s;
+        }
+
+        nav ul li a:hover {
+            color: #ffffff;
+            font-weight: 900;
+            background: linear-gradient(#e66465, #9198e5);
+            transition: 0.5s;
+        }
+
+        .myNav {
+            background-image: linear-gradient(#e7e2dcb9, #d1ccc6be);
+        }
+    </style>
 </head>
 
 <body>
-    <nav> 
-        <input type="checkbox" id="check">
+    <nav class="myNav">
+        <input type="checkbox" id="check" />
         <label for="check" class="checkbtn">
             <i class="fas fa-bars"></i>
         </label>
         <div class="logo">
-           <a href="{% url 'home' %}">  <small> Ind<span>sey</span><em>love</em></small> </a>
-          
+            <a href="{% url 'home' %}" style="background: transparent;"> Ind<span>sey</span><em>love</em></a>
         </div>
         <ul>
-            <li><a class="active"  href="{% url 'home'  %}">Home</a></li>
+            <li><a href="{% url 'home'  %}">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="{% url 'blog'  %}">Blog</a></li>
-            {% if request.user.is_superuser %}<li><a href="{% url 'create'  %}">  Create Blog </a></li>{% endif %}
+            {% if request.user.is_superuser %}
+            <li><a href="{% url 'create'  %}"> Create Blog </a></li>
+            {% endif %}
             <li><a href="{% url 'register'  %}">SignUp</a></li>
+            {% if request.user.is_superuser or request.user.is_active %}
             <li><a href="{% url 'logout'  %}">Logout</a></li>
-            
-
+            {% endif %}
         </ul>
-    
+
         <section></section>
     </nav>
+    <script src="http://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+        const currentLocation = location.href;
+        const menuItem = document.querySelectorAll('a');
+        console.log(menuItem)
+        const menuItemLength = menuItem.length;
+        for (let i = 0; i < menuItemLength; i++) {
+            if (menuItem[i].href === currentLocation) {
+                menuItem[i].className = "active";
 
+            }
+            
+        }
+    </script>
 </body>
 
 </html>

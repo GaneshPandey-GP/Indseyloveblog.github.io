@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+
 {% block content %}
+{% include 'Navbar.html' %} 
 
-
-<div class="page-heading">
+<div class="page-heading" >
   <div class="container">
-    <div class="heading-content">
-      <h1>{{post.title}}</h1>
+    <div class="heading-content" >
+      <h1 style=" background: linear-gradient(#e66465, #9198e5); border-radius: 10px;">{{post.title}}</h1>
     </div>
   </div>
 </div>
@@ -21,8 +22,10 @@
               <img src="{{post.image.url}}" alt="post-image">
               <div class="text-content">
                 <h2>{{post.title}}</h2>
-                <span><a href="#">{{request.user.username}}</a> / <a href="#">16 September 2018</a> / <a
-                    href="#">Branding</a></span>
+                <span><a href="#" class="text-info"><i class="fa fa-user" aria-hidden="true"></i> {{post.author}}</a> &nbsp; <a
+                  href="#" class="text-info"><i class="fa fa-clock-o" aria-hidden="true"></i> {{post.publish_date|timesince}} ago</a>
+                  &nbsp; <a href="#" class="text-info"><i class="fa fa-comment" aria-hidden="true"></i> Comment{% if post.get_comments.count > 1 %}s {% endif %} ({{post.get_comments.count}})</a>
+              </span>
                 <p>Nullam et justo pharetra, commodo eros ac, pharetra justo. Donec vel vehicula urna. Proin sodales
                   ligula vitae lacus elementum, at tempor nisl congue. Pellentesque nec lacus velit. Vestibulum
                   tincidunt hendrerit ante id sagittis. Phasellus sodales nibh mattis neque interdum viverra. Nam
@@ -39,20 +42,16 @@
                 <div class="tags-share">
                   <div class="row">
                     <div class="col-md-6">
-                      <ul class="tags">
-                        <li>Tags:</li>
-                        <li><a href="#">life</a>,</li>
-                        <li><a href="#">nature</a>,</li>
-                        <li><a href="#">life is good</a></li>
-                      </ul>
+                      <button class="btn btn-primary">Like</button>
+
                     </div>
                     <div class="col-md-6">
-                      <ul class="share">
+                      <ol class="share">
                         <li>Share:</li>
                         <li><a href="#">facebook</a>,</li>
                         <li><a href="#">twitter</a>,</li>
                         <li><a href="#">behance</a></li>
-                      </ul>
+                      </ol>
                     </div>
                   </div>
                 </div>
@@ -62,118 +61,111 @@
         </div>
       </div>
 
+      {% load mptt_tags %}
+      <div > 
+        <h1 class="bg-primary mb-3 card card-header">Comments({{post.get_comments.count}})</h1>
+  {% if post.get_comments.count >= 20 %} <div style="overflow-y:scroll; height:500px"> {% else %} <div> {% endif %}
+        {% recursetree post.get_comments %}
+        <div class="card" style="background:transparent; color: #f1f1f1;">
 
-      {% for comment in post.get_comnents %}
-      <div class="card">
-        {% if not request.user.is_active or not request.user.is_superuser %}
-        <div>Anonymous</div>
-        {% else %}
-        <h4><i class="fa fa-user-circle-o" aria-hidden="true"></i>{{comment.name}}</h4>
-        {%endif %}
-        <p class="date">{{comment.publish_date|timesince}} ago</p>
-        <div>{{comment.content}}</div>
+          {% if not request.user.is_active or not request.user.is_superuser %}
+          <h4><i class="fa fa-user-circle fa-2x mt-1" aria-hidden="true"></i> <span
+            class="card-title">Anonymous</span> <small class="date">{{node.publish_date|timesince}} ago</small>
+        </h4>
+
+          {% else %}
+          <h4><i class="fa fa-user-circle fa-2x mt-1" aria-hidden="true"></i> <span
+              class="card-title">{{node.user}}</span> <small class="date">{{node.publish_date|timesince}} ago</small>
+          </h4>
+          {% endif %}
+
+          <div id={{node.id}}>{{node.content}}</div>
+
+          
+            <div class="d-flex justify-content-between">
+              {% if not  node.is_leaf_node %}<div><button class="btn btn-primary" style="color: #f1f7f8;border: none;"
+                onclick="myReplyFunction('{{node.id}}+1')">View_Replies</button></div>{% else %} <div></div> {% endif %}
+              <div>
+                {% if not node.user|stringformat:"s" == request.user.username  %}
+                <button class="btn btn-outline-primary text-right" style="color: #f1f7f8; width: 100%;border: none;" onclick="myFunction('{{node.id}}')">Reply</button>
+                {% endif %}
+                {% if node.user|stringformat:"s" == request.user.username  %}
+                <button class="btn btn-outline-primary text-right" style="color: #f1f7f8; width: 100%;border: none;" onclick="deleteComment('{{node.id}}')">Delete</button>
+                {% endif %}
+              </div>
+            </div>
+        </div>
+        
+        {% if not node.is_leaf_node %}
+        <div id= {{node.id}}+1 style="display: none;">
+        <div class="children pl-5 pl-md-5 ">
+          {{ children }}
+        </div>
       </div>
-      <hr>
-      {% endfor %}
+        {% endif %}
+      
+        {% endrecursetree %}
+      </div>
+    </div>
       <hr />
-      <div>
+      <div style="color: wheat; font-size: 12px;">
         <h3 class="text-info">Leave Your message</h3>
         {% load crispy_forms_tags %}
         <form method="POST">{% csrf_token %}
           {{form|crispy}}
-          <button class="btn btn-primary">Comment</button>
+          <button class="btn btn-primary pull-right btn-lg" type="submit">Share</button>
         </form>
       </div>
     </div>
     <div class="col-md-4">
       <div class="side-bar">
         {% include 'sidebar.html' %}
-
       </div>
     </div>
   </div>
 </div>
 
+<script>
+  function myReplyFunction(id) {
+  var x = document.getElementById(id);
+  
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+  function formExit() {  
+     document.getElementById("commentForm").remove();
+  }
+    
+  function myFunction(id) {
+    if(document.contains(document.getElementById("commentForm"))){
+      document.getElementById("commentForm").remove();
+    }
 
+    var g = document.getElementById(id);
+    g.insertAdjacentHTML('afterend',
+    '<form method="POST" id="commentForm" style="color: wheat; font-size: 12px;">\
+            <div class="d-flex justify-content-between">\
+            <h3 class="text-info">Reply</h3>\
+            <div><button type="button" class="btn btn-outline-primary" onclick=formExit()><i class="fa fa-times-circle" aria-hidden="true"></i></button></div>\
+            </div> \
+            </div> </div> <div id="div_id_parent" class="form-group">  <div class=""> \
+            <select name="parent" class="d-none select form-control" id="id_parent"><option value=" ' + id + ' " selected=" ' + id + '"></option></select>\
+            </div> </div>\
+            <div id="div_id_content" class="form-group"> <label for="id_content" class=" requiredField">Content<span class="asteriskField">*</span> </label> \
+            <div class=""> <textarea name="content" cols="40" rows="10" class="form-control mt-2 textarea form-control" placeholder="Write your message..." required="" id="id_content">\
+            </textarea> </div> </div>\
+            {% csrf_token %}\
+            <button class="btn btn-primary full-screen-portfolio">Reply</button>\
+        </form>'
+    );
 
-<!-- Modal button -->
-<div class="popup-icon">
-  <button id="modBtn" class="modal-btn"><img src="img/contact-icon.png" alt=""></button>
-</div>
+  }
+  $('#commentForm').trigger('reset')
+</script>
 
-<!-- Modal -->
-<div id="modal" class="modal">
-  <!-- Modal Content -->
-  <div class="modal-content">
-    <!-- Modal Header -->
-    <div class="modal-header">
-      <h3 class="header-title">Say hello to <em>Highway</em></h3>
-      <div class="close-btn"><img src="img/close_contact.png" alt=""></div>
-    </div>
-    <!-- Modal Body -->
-    <div class="modal-body">
-      <div class="col-md-6 col-md-offset-3">
-        <form id="contact" action="" method="post">
-          <div class="row">
-            <div class="col-md-12">
-              <fieldset>
-                <input name="name" type="text" class="form-control" id="name" placeholder="Your name..." required>
-              </fieldset>
-            </div>
-            <div class="col-md-12">
-              <fieldset>
-                <input name="email" type="email" class="form-control" id="email" placeholder="Your email..." required>
-              </fieldset>
-            </div>
-            <div class="col-md-12">
-              <fieldset>
-                <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your message..."
-                  required></textarea>
-              </fieldset>
-            </div>
-            <div class="col-md-12">
-              <fieldset>
-                <button type="submit" id="form-submit" class="btn">Send Message Now</button>
-              </fieldset>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<section class="overlay-menu">
-  <div class="container">
-    <div class="row">
-      <div class="main-menu">
-        <ul>
-          <li>
-            <a href="index.html">Home - Full-width</a>
-          </li>
-          <li>
-            <a href="masonry.html">Home - Masonry</a>
-          </li>
-          <li>
-            <a href="grid.html">Home - Small-width</a>
-          </li>
-          <li>
-            <a href="about.html">About Us</a>
-          </li>
-          <li>
-            <a href="blog.html">Blog Entries</a>
-          </li>
-          <li>
-            <a href="single-post.html">Single Post</a>
-          </li>
-        </ul>
-        <p>We create awesome templates for you</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 
 {% endblock %}

@@ -10,13 +10,15 @@ class CreatePost(models.Model):
     content = models.TextField()
     slug  = models.SlugField(unique=True)
     publish_date = models.DateTimeField(auto_now_add=True)
+    author = models.CharField(max_length=100,default="Admin")
+    likes = models.ManyToManyField(User, related_name="blog_post")
 
     def __str__(self): 
         return self.title
         
     @property
-    def get_comnents(self):
-        return self.comments.all().order_by('-publish_date')
+    def get_comments(self):
+        return self.comments.all().filter(status=True)
 class Comment(MPTTModel): 
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
     post = models.ForeignKey(CreatePost,on_delete=models.CASCADE,blank=True,null=True,related_name="comments")
@@ -30,7 +32,7 @@ class Comment(MPTTModel):
         order_insertion_by = ['publish_date']
  
     def __str__(self): 
-        return f'comment by {self.name}' 
+        return f'comment by {self.user} in {self.post}' 
 
 
 
