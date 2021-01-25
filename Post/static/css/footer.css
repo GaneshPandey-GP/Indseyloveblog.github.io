@@ -72,7 +72,13 @@
     margin-top: 20px;
   }
 }
-
+/* @media (max-width: 280px) {
+  .footer-dark .item.social {
+    text-align: center;
+    margin-top: 20px;
+    display: inline;
+  }
+} */
 .footer-dark .item.social > a {
   font-size: 20px;
   width: 36px;
@@ -82,7 +88,7 @@
   text-align: center;
   border-radius: 50%;
   box-shadow: 0 0 0 1px #ffffff66;
-  margin: 0 8px;
+  margin: 0 12px;
   color: #fff;
   opacity: 0.75;
 }
@@ -99,7 +105,7 @@
   margin-bottom:0px;
   
 }
-.footer-dark .newsletter input[type="text"] {
+.footer-dark .newsletter .input[type="email"] {
   width: 100%;
   background:#39cfca;
   color: #000000;

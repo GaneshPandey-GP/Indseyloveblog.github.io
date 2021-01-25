@@ -2,52 +2,44 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 ">
                     <h3>Subscribe Newsletter </h3>
                     <p>Get all the latest information on Triedge Services, Events, Jobs
                         and Fairs. Sign up for our newsletter today.</p>
                 </div>
-                <div class="col-md-4 col-sm-6 mb-5">
-                    <form class="newsletter">
-                        <input type="text" placeholder="Email Address">
+                <div class="col-md-4 col-sm-12 mb-5">
+                    <form class="newsletter" action ="{% url 'subscribe' %}" method="POST">{% csrf_token %}
+                        {{form}}
+             
                         <button class="newsletter_submit_btn" type="submit"><i class="fa fa-paper-plane"></i></button>
                     </form>
-
                 </div>
-                <!-- <div class="col item social "><a href="#">  <i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="https://www.instagram.com/indseylove/"><i class="fab fa-instagram"></i></a></div> -->
-                <div class="col-md-4 col-sm-6 col item social">
-                    <div class="col-md-12">
+                <div class="col-md-4 col-sm-12 col item social">
+                    <div class="col-md-12 col-sm-12">
                         <div class="standard_social_links ml-5 ">
-                            <div class="text-center ml-5 ">
+                            <div class="text-center align-items-sm-center">
                                 <li class="round-btn btn-facebook"><a target="_blank"  href="https://www.facebook.com/kamal.pandey.12"><i class="fab fa-facebook-f"></i></a>
-
                                 </li>
                                 <li class="round-btn btn-linkedin"><a
                                     target="_blank" 
                                         href="https://www.linkedin.com/in/kamal-kishor-50685760/"><i
                                             class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-
                                 </li>
                                 <li class="round-btn btn-twitter"><a target="_blank"  href="#"><i class="fab fa-twitter"
                                             aria-hidden="true"></i></a>
-
                                 </li>
                                 <li class="round-btn btn-instagram"><a target="_blank"  href="https://www.instagram.com/indseylove/"><i
                                             class="fab fa-instagram" aria-hidden="true"></i></a>
-
                                 </li>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <p class="copyright col-sm-12 text-center">Indeseylove ©
-                    <script>document.write(new Date().getFullYear())</script>
+                <p class="copyright col-sm-12 text-center">Indeseylove © 2020-
+                    <script>document.write(new Date().getFullYear());</script>
                 </p>
             </div>
-
-
     </footer>
 </div>

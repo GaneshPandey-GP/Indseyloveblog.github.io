@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap');
 body {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'PT Serif', serif;
   background-color:#282d32;
 }
 

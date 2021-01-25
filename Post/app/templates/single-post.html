@@ -1,11 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% include 'Navbar.html' %} 
+{% include 'Navbar.html' %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap');
 
-<div class="page-heading" >
+  .h1 {
+    font-family: 'PT Serif', serif;
+    font-size: 2.55rem;
+    line-height: 2.6rem;
+    letter-spacing: -0.063px;
+  }
+
+  h2 {
+    font-family: 'PT Serif', serif;
+    font-size: 1.9rem;
+    line-height: 2.6rem;
+    letter-spacing: -0.063px;
+    font-weight: 700;
+    padding-top: 48px;
+  }
+
+  p {
+    font-family: 'PT Serif', serif;
+    line-height: 2rem;
+    font-size: 1.3rem
+  }
+</style>
+<div class="page-heading">
   <div class="container">
-    <div class="heading-content" >
+    <div class="heading-content">
       <h1 style=" background: linear-gradient(#e66465, #9198e5); border-radius: 10px;">{{post.title}}</h1>
     </div>
   </div>
@@ -22,28 +47,27 @@
               <img src="{{post.image.url}}" alt="post-image">
               <div class="text-content">
                 <h2>{{post.title}}</h2>
-                <span><a href="#" class="text-info"><i class="fa fa-user" aria-hidden="true"></i> {{post.author}}</a> &nbsp; <a
-                  href="#" class="text-info"><i class="fa fa-clock-o" aria-hidden="true"></i> {{post.publish_date|timesince}} ago</a>
-                  &nbsp; <a href="#" class="text-info"><i class="fa fa-comment" aria-hidden="true"></i> Comment{% if post.get_comments.count > 1 %}s {% endif %} ({{post.get_comments.count}})</a>
-              </span>
-                <p>Nullam et justo pharetra, commodo eros ac, pharetra justo. Donec vel vehicula urna. Proin sodales
-                  ligula vitae lacus elementum, at tempor nisl congue. Pellentesque nec lacus velit. Vestibulum
-                  tincidunt hendrerit ante id sagittis. Phasellus sodales nibh mattis neque interdum viverra. Nam
-                  accumsan arcu id fringilla auctor.
-                  <br><br>Suspendisse et rutrum nisl. Phasellus porttitor metus vel justo blandit, in finibus neque
-                  elementum. Nullam semper, turpis quis egestas consequat, dui eros tristique lectus, ac euismod ex quam
-                  id mauris. Nunc sit amet nibh sollicitudin, interdum nunc in, eleifend est.
-
-                  <br><br>Pellentesque vel dignissim libero, et sagittis elit. Nulla dignissim eleifend tellus, sed
-                  molestie risus rutrum non. Etiam lorem odio, convallis a arcu vel, bibendum molestie metus.
-                  Pellentesque imperdiet nisl ante, eu congue nisl suscipit id.
+                <span class="d-inline-block d-flex"><small class="mt-1"><a href="#" class="text-info"><i class="fa fa-user" aria-hidden="true"></i> {{post.author}}</a></small>
+                  &nbsp;&nbsp; <a href="" class="text-info"><i class="fa fa-clock-o" aria-hidden="true"></i>
+                    <small>{{post.publish_date|timesince}} ago</small> </a>
+                  &nbsp;&nbsp; <a href="" class="text-info"><i class="fa fa-comment" aria-hidden="true"></i> <small>{{ post.get_comments.count }} Comment{{post.get_comments.count| pluralize}}</small>   </a>
+                  &nbsp;&nbsp;
+                  {% if request.user.is_authenticated %}
+                  <small class="mt-1">
+                    <button class="btn btn-link text-dark p-0 border-0 btn-outline-light btn-sm"  id="like-button" value="{{post.id}}">
+                      <small><i class="fa fa-heart fa-2x text-info" aria-hidden="true"></i></small>
+                    </button>
+                    <a class="text-info" id="like_count"> {{ post.number_of_likes  }} </a > <a class="text-info">   Like{{ post.number_of_likes |pluralize }}</a>
+                  </small>
+                    {% endif %}  
+                </span>
+                <p>{{post.content}}
                   <br><br><a href="{% url 'blog' %}">Back to Blog</a>
                 </p>
                 <div class="tags-share">
                   <div class="row">
                     <div class="col-md-6">
-                      <button class="btn btn-primary">Like</button>
-
+                  
                     </div>
                     <div class="col-md-6">
                       <ol class="share">
@@ -62,91 +86,110 @@
       </div>
 
       {% load mptt_tags %}
-      <div > 
+      <div>
         <h1 class="bg-primary mb-3 card card-header">Comments({{post.get_comments.count}})</h1>
-  {% if post.get_comments.count >= 20 %} <div style="overflow-y:scroll; height:500px"> {% else %} <div> {% endif %}
-        {% recursetree post.get_comments %}
-        <div class="card" style="background:transparent; color: #f1f1f1;">
+        {% if post.get_comments.count >= 20 %} <div style="overflow-y:scroll; height:500px"> {% else %} <div> {% endif %}
+            
+            {% recursetree post.get_comments %}
+            <div class="card" style="background:transparent; color: #f1f1f1;">
 
-          {% if not request.user.is_active or not request.user.is_superuser %}
-          <h4><i class="fa fa-user-circle fa-2x mt-1" aria-hidden="true"></i> <span
-            class="card-title">Anonymous</span> <small class="date">{{node.publish_date|timesince}} ago</small>
-        </h4>
+              {% if not request.user.is_active or not request.user.is_superuser %}
+              <h4><i class="fa fa-user-circle fa-2x mt-1" aria-hidden="true"></i> <span
+                  class="card-title">{{node.user}}</span> <small class="date">{{node.publish_date|timesince}}
+                  ago</small>
+              </h4>
 
-          {% else %}
-          <h4><i class="fa fa-user-circle fa-2x mt-1" aria-hidden="true"></i> <span
-              class="card-title">{{node.user}}</span> <small class="date">{{node.publish_date|timesince}} ago</small>
-          </h4>
-          {% endif %}
+              {% else %}
+              <h4><i class="fa fa-user-circle fa-2x mt-1" aria-hidden="true"></i> <span
+                  class="card-title">{{node.user}}</span> <small class="date">{{node.publish_date|timesince}}
+                  ago</small>
+              </h4>
+              {% endif %}
 
-          <div id={{node.id}}>{{node.content}}</div>
+              <div id={{node.id}}>{{node.content}}</div>
+              <div class="d-flex justify-content-between">
+                {% if not node.is_leaf_node %}<div>
+                  <div class="border-0 bg-transparent m-3" style="cursor: pointer;"><a class="active bg-transparent"
+                      onclick="myReplyFunction(`{{node.id}}+1`)" id={{node.id}}+11>View_Replies</a href="#"></div>
+                </div>{% else %} <div></div> {% endif %}
+                <div>
+                  {% if not node.user|stringformat:"s" == request.user.username %}
+                  <button class="btn btn-outline-primary text-center m-3"
+                    style="color: #f1f7f8; width: 100%;border: none;" onclick="myFunction('{{node.id}}')">Reply</button>
+                  {% endif %}
+                  {% if node.user|stringformat:"s" == request.user.username %}
+                  <button class="btn btn-outline-primary  m-3"  style="color: #f1f7f8; width: 100%;border: none;"><a
+                      href="{% url 'comment_delete' node.id  %}">Delete</a></button>
+                  {% endif %}
+                 
 
-          
-            <div class="d-flex justify-content-between">
-              {% if not  node.is_leaf_node %}<div><button class="btn btn-primary" style="color: #f1f7f8;border: none;"
-                onclick="myReplyFunction('{{node.id}}+1')">View_Replies</button></div>{% else %} <div></div> {% endif %}
-              <div>
-                {% if not node.user|stringformat:"s" == request.user.username  %}
-                <button class="btn btn-outline-primary text-right" style="color: #f1f7f8; width: 100%;border: none;" onclick="myFunction('{{node.id}}')">Reply</button>
-                {% endif %}
-                {% if node.user|stringformat:"s" == request.user.username  %}
-                <button class="btn btn-outline-primary text-right" style="color: #f1f7f8; width: 100%;border: none;" onclick="deleteComment('{{node.id}}')">Delete</button>
-                {% endif %}
+
+                </div>
               </div>
             </div>
+
+            {% if not node.is_leaf_node %}
+            <div id={{node.id}}+1 style="display: none;">
+              <div class="children pl-5 pl-md-5 ">
+                {{ children }}
+              </div>
+            </div>
+            {% endif %}
+
+            {% endrecursetree %}
+          </div>
         </div>
-        
-        {% if not node.is_leaf_node %}
-        <div id= {{node.id}}+1 style="display: none;">
-        <div class="children pl-5 pl-md-5 ">
-          {{ children }}
+        <hr />
+        <div style="color: wheat; font-size: 12px;">
+          <label class="text-info required" class=" requiredField">Leave Your message</label>
+          {% load crispy_forms_tags %}
+          <form method="POST">{% csrf_token %}
+            {{form|crispy}}
+            <button class="btn btn-primary  btn-lg mb-5 mb-sm-5" type="submit">Share</button>
+          </form>
         </div>
       </div>
-        {% endif %}
-      
-        {% endrecursetree %}
-      </div>
-    </div>
-      <hr />
-      <div style="color: wheat; font-size: 12px;">
-        <h3 class="text-info">Leave Your message</h3>
-        {% load crispy_forms_tags %}
-        <form method="POST">{% csrf_token %}
-          {{form|crispy}}
-          <button class="btn btn-primary pull-right btn-lg" type="submit">Share</button>
-        </form>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="side-bar">
-        {% include 'sidebar.html' %}
+      <div class="col-md-4">
+        <div class="side-bar">
+          {% include 'sidebar.html' %}
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  function myReplyFunction(id) {
-  var x = document.getElementById(id);
+
+
+
   
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-  function formExit() {  
-     document.getElementById("commentForm").remove();
-  }
-    
-  function myFunction(id) {
-    if(document.contains(document.getElementById("commentForm"))){
+  <script>
+
+    function myReplyFunction(id) {
+
+      var x = document.getElementById(id);
+
+      if (x.style.display === "none") {
+        document.getElementById(id + 1).innerHTML = "Hide_Replies";
+        document.getElementById(id + 1).style.color = "#066ee4";
+        x.style.display = "block";
+      } else {
+        document.getElementById(id + 1).innerHTML = "View_Replies";
+        document.getElementById(id + 1).style.color = "#066ee4";
+        x.style.display = "none";
+      }
+
+    }
+    function formExit() {
       document.getElementById("commentForm").remove();
     }
 
-    var g = document.getElementById(id);
-    g.insertAdjacentHTML('afterend',
-    '<form method="POST" id="commentForm" style="color: wheat; font-size: 12px;">\
+    function myFunction(id) {
+      if (document.contains(document.getElementById("commentForm"))) {
+        document.getElementById("commentForm").remove();
+      }
+
+      var g = document.getElementById(id);
+      g.insertAdjacentHTML('afterend',
+        '<form method="POST" id="commentForm" style="color: wheat; font-size: 12px;">\
             <div class="d-flex justify-content-between">\
             <h3 class="text-info">Reply</h3>\
             <div><button type="button" class="btn btn-outline-primary" onclick=formExit()><i class="fa fa-times-circle" aria-hidden="true"></i></button></div>\
@@ -155,17 +198,37 @@
             <select name="parent" class="d-none select form-control" id="id_parent"><option value=" ' + id + ' " selected=" ' + id + '"></option></select>\
             </div> </div>\
             <div id="div_id_content" class="form-group"> <label for="id_content" class=" requiredField">Content<span class="asteriskField">*</span> </label> \
-            <div class=""> <textarea name="content" cols="40" rows="10" class="form-control mt-2 textarea form-control" placeholder="Write your message..." required="" id="id_content">\
+            <div class=""> <textarea name="content" cols="40" rows="1" style="color: white; font-size: 16px; font-weight:200;" class="border-top-0 border-left-0 border-right-0 border-bottom-40  border-info bg-transparent form-control mt-2 textarea form-control" placeholder="Write your reply..." required="" id="id_content">\
             </textarea> </div> </div>\
             {% csrf_token %}\
             <button class="btn btn-primary full-screen-portfolio">Reply</button>\
         </form>'
-    );
+      );
 
-  }
-  $('#commentForm').trigger('reset')
-</script>
+    }
+    $('#commentForm').trigger('reset');
+
+    $(document).on('click', '#like-button', function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: '{% url "like" %}',
+      data: {
+        postid: $('#like-button').val(),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+        action: 'post'
+      },
+      success: function (json) {
+        document.getElementById("like_count").innerHTML = json['result']
+      },
+      error: function (xhr, errmsg, err) {
+
+      }
+    });
+  });
+
+  </script>
 
 
 
-{% endblock %}
+  {% endblock %}

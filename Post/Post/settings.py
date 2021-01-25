@@ -15,6 +15,7 @@ SECRET_KEY = '31af(hk@j7#oz@()gz17auq$--1l8&j+j(01k7d2dwshigufnr'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS += ['http://127.0.0.1:8000/']
 
 
 # Application definition
@@ -27,9 +28,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "app",
+    "marketing",
     "crispy_forms",
      'mptt',
-]
+] 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
@@ -116,3 +118,15 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,"static")]
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_root')
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'indseylove123@gmail.com'
+EMAIL_HOST_PASSWORD = 'muhnlebcuphacjqq'
+EMAIL_USE_TLS = True
+
+
+
+# MAILCHIMP_API_KEY='7e5ab499a93f365ce9fbbe10e5c8fad4-us7'
+# MAILCHIMP_DATA_CENTER='us7'
+# MAILCHIMP_EMAIL_Audience_ID = 'ec18115133'

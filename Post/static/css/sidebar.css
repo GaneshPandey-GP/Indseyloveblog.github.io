@@ -339,3 +339,10 @@
         margin-left:-10px ;
     }
 }
+@media (max-width: 230px) {
+    .sidebar-widgets {
+        padding-bottom: 120px;
+        width: 100%;
+        margin-left:-10px ;
+    }
+}
