@@ -16,11 +16,12 @@
 			margin: 0;
 			padding: 0;
 			height: 100%;
-			background: #7abecc !important;
+			background: #1b1b1b !important;
 		}
 
 		.user_card {
 			width: 350px;
+			/* height: 100vh; */
 			margin-top: auto;
 			margin-bottom: auto;
 			background: #74cfbf;
@@ -28,7 +29,7 @@
 			display: flex;
 			justify-content: center;
 			flex-direction: column;
-			padding: 10px;
+			padding: 60px;
 			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -79,14 +80,19 @@
 			padding: 10px;
 			margin-top: 10px;
 		}
+		@media screen and (min-width: 676px) {
+        .user_card {
+          max-width: 600px; /* New width for default modal */
+        }
+    }
 	</style>
 
 </head>
 
 <body>
-	<div class="container h-100">
+	<div class="container-xl h-100">
 		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
+			<div class="user_card min-vw-100">
 				<div class="d-flex justify-content-center">
 
 

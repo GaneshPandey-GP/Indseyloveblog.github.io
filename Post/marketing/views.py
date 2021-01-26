@@ -8,15 +8,15 @@ from .models import SubscribeModel
 import json
 import requests
 
-# MAILCHIMP_API_KEY = settings.MAILCHIMP_API_KEY
-# MAILCHIMP_DATA_CENTER = settings.MAILCHIMP_DATA_CENTER
-# MAILCHIMP_EMAIL_Audience_ID  = settings.MAILCHIMP_EMAIL_Audience_ID 
+MAILCHIMP_API_KEY = settings.MAILCHIMP_API_KEY
+MAILCHIMP_DATA_CENTER = settings.MAILCHIMP_DATA_CENTER
+MAILCHIMP_EMAIL_Audience_ID = settings.MAILCHIMP_EMAIL_AUDIENCE_ID
 
-# api_url = 'https://{dc}.api.mailchimp.com/3.0'.format(dc=MAILCHIMP_DATA_CENTER)
-# members_endpoint = '{api_url}/lists/{list_id}/members'.format(
-#     api_url=api_url,
-#     list_id=MAILCHIMP_EMAIL_Audience_ID 
-# )
+api_url = 'https://{dc}.api.mailchimp.com/3.0'.format(dc=MAILCHIMP_DATA_CENTER)
+members_endpoint = '{api_url}/lists/{list_id}/members'.format(
+    api_url=api_url,
+    list_id=MAILCHIMP_EMAIL_Audience_ID
+)
 
 
 def subscribe(email):
@@ -38,6 +38,7 @@ def email_list_signup(request):
         if form.is_valid():
             email_signup_qs = SubscribeModel.objects.filter(email=form.instance.email)
             if email_signup_qs.exists():
+                
                 messages.info(request, "You are already subscribed")
             else:
                 subscribe(form.instance.email)

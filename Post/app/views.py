@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,reverse,get_object_or_404
 from .forms import CreatePostform, CommentForm
-from .models import CreatePost,Comment
-from marketing.models import SubscribeModel
+from .models import CreatePost
+from marketing.models import SubscribeModel,Comment
 from marketing.forms import EmailSignupForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
@@ -55,26 +55,42 @@ def LogoutView(request):
 
 
 # @login_required(login_url='login')
-
-def Index(request):
-	images = CreatePost.objects.order_by('-publish_date')[0:9]
-	title = "Home Page"
+def Footer(request):
 	form = EmailSignupForm()
 	if request.method == "POST":
 		email = request.POST.get("email")	
 		new_signup = SubscribeModel()
 		print(new_signup.email)
 		new_signup.email = email
-		
 		new_signup.save()
-	context ={"images":images,"title":title, "form":form}
+	context ={"forms":form}
+	return render(request, "footer.html",context)
+
+def Index(request):
+	images = CreatePost.objects.order_by('-publish_date')[0:9]
+	title = "Home Page"
+	Subscribeform = EmailSignupForm()
+	if request.method == "POST":
+		email = request.POST.get("email")	
+		new_signup = SubscribeModel()
+		print(new_signup.email)
+		new_signup.email = email
+		new_signup.save()
+	context ={"images":images,"title":title, "Subscribeform":Subscribeform}
 	return render(request, "index.html",context)
 
 def Home(request):  
 	Latest_post = CreatePost.objects.order_by('-publish_date')[0:5]
 	images = CreatePost.objects.order_by('-publish_date')[0:8]
 	post = CreatePost.objects.all()
-   
+	Subscribeform = EmailSignupForm()
+	if request.method == "POST":
+		email = request.POST.get("email")	
+		new_signup = SubscribeModel()
+		print(new_signup.email)
+		new_signup.email = email
+		new_signup.save()
+		
 	query = request.GET.get('q')
 	if query:
 		post = post.filter(Q(title__icontains=query) |
@@ -91,8 +107,9 @@ def Home(request):
 	except EmptyPage:
 		paginator_queryset = paginator.page(paginator.num_pages)
  
-   
-	context = {"title": "Blog Page", "post": paginator_queryset,"page_request_var":page_request_var,"latest_post":Latest_post,"images":images}
+	
+
+	context = {"title": "Blog Page","Subscribeform":Subscribeform, "post": paginator_queryset,"page_request_var":page_request_var,"latest_post":Latest_post,"images":images}
 	return render(request, "blog.html", context)
 
 
@@ -108,13 +125,12 @@ def Create(request):
 		if form.is_valid():
 			form.save()
 			return redirect("/")
-	context = {"title": title, "form": form}
+	context = {"title": title, "forms": form}
 	return render(request, "create.html", context)
 
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['admin' , 'reader'])
 def PostView(request,slug):
-   
 	post = CreatePost.objects.get(slug=slug)
 	form = CommentForm()
 	if request.method == "POST":
@@ -126,7 +142,15 @@ def PostView(request,slug):
 				return redirect(reverse('postview',kwargs={'slug':post.slug}))
 	images = CreatePost.objects.order_by('-publish_date')[0:8]
 	Latest_post = CreatePost.objects.order_by('-publish_date')[0:5]
-	context = {"post":post,"images":images,"latest_post":Latest_post,"form":form}
+
+	Subscribeform = EmailSignupForm()
+	if request.method == "POST":
+		email = request.POST.get("email")	
+		new_signup = SubscribeModel()
+		print(new_signup.email)
+		new_signup.email = email
+		new_signup.save()
+	context = {"post":post,"images":images,"latest_post":Latest_post,"forms":form,"Subscribeform":Subscribeform}
 	return render(request, "single-post.html",context)
 
 

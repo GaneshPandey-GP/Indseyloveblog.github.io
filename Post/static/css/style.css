@@ -363,6 +363,7 @@ nav {
   transform: translateY(25px);
   transition: .5s ease-in-out;
   letter-spacing: 0.5px;
+  margin-bottom:20px ;
  }
 
  .full-screen-portfolio .portfolio-item em {

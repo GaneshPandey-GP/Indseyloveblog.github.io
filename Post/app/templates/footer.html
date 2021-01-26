@@ -8,28 +8,30 @@
                         and Fairs. Sign up for our newsletter today.</p>
                 </div>
                 <div class="col-md-4 col-sm-12 mb-5">
-                    <form class="newsletter" action ="{% url 'subscribe' %}" method="POST">{% csrf_token %}
-                        {{form}}
-             
+                    <form class="newsletter" action="{% url 'subscribe' %}" method="POST">{% csrf_token %}
+                        {{Subscribeform}}
                         <button class="newsletter_submit_btn" type="submit"><i class="fa fa-paper-plane"></i></button>
+                        
                     </form>
                 </div>
                 <div class="col-md-4 col-sm-12 col item social">
                     <div class="col-md-12 col-sm-12">
                         <div class="standard_social_links ml-5 ">
                             <div class="text-center align-items-sm-center">
-                                <li class="round-btn btn-facebook"><a target="_blank"  href="https://www.facebook.com/kamal.pandey.12"><i class="fab fa-facebook-f"></i></a>
+                                <li class="round-btn btn-facebook"><a target="_blank"
+                                        href="https://www.facebook.com/kamal.pandey.12"><i
+                                            class="fab fa-facebook-f"></i></a>
                                 </li>
-                                <li class="round-btn btn-linkedin"><a
-                                    target="_blank" 
+                                <li class="round-btn btn-linkedin"><a target="_blank"
                                         href="https://www.linkedin.com/in/kamal-kishor-50685760/"><i
                                             class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                                 </li>
-                                <li class="round-btn btn-twitter"><a target="_blank"  href="#"><i class="fab fa-twitter"
+                                <li class="round-btn btn-twitter"><a target="_blank" href="#"><i class="fab fa-twitter"
                                             aria-hidden="true"></i></a>
                                 </li>
-                                <li class="round-btn btn-instagram"><a target="_blank"  href="https://www.instagram.com/indseylove/"><i
-                                            class="fab fa-instagram" aria-hidden="true"></i></a>
+                                <li class="round-btn btn-instagram"><a target="_blank"
+                                        href="https://www.instagram.com/indseylove/"><i class="fab fa-instagram"
+                                            aria-hidden="true"></i></a>
                                 </li>
                             </div>
                         </div>

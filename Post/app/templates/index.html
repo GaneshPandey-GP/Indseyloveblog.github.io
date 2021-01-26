@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
 
 {% include 'Navbar.html' %} 
+
 
 <div id="video-container">
 
@@ -29,9 +31,8 @@
         <a href="{{img.image.url}}" data-lightbox="image-1" alt="image">
           <div class="thumb">
             <div class="hover-effect">
-              <div class="hover-content">
+              <div class="hover-content ">
                 <h1>{{img.title}}</h1>
-                <p>{{img.content |truncatewords:5 }}</p>
               </div>
             </div>
             <div class="image">

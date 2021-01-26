@@ -1,6 +1,7 @@
 from django.urls import path, include
 from django.conf.urls import url
-from .views import Home, Create, Update, Delete, Index, LoginPage, PostView, RegisterPage, LogoutView, comment_delete,like,aboutPage
+from .views import ( Home, Create, Update, Delete, Index, LoginPage, PostView, 
+                     RegisterPage, LogoutView, comment_delete,like,aboutPage,Footer)
 from django.contrib.auth import views as auth_views
 from marketing.views import email_list_signup
 
@@ -19,6 +20,7 @@ urlpatterns = [
     path('like/', like, name="like"),
     path('about/', aboutPage, name= "about"),
     path('subscribe/', email_list_signup, name="subscribe"),
+    path('footer/', Footer, name="footer"),
 
   
 

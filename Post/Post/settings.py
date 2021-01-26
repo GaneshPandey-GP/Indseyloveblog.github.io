@@ -14,11 +14,14 @@ SECRET_KEY = '31af(hk@j7#oz@()gz17auq$--1l8&j+j(01k7d2dwshigufnr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS += ['http://127.0.0.1:8000/']
 
 
 # Application definition
+MAILCHIMP_API_KEY='7e5ab499a93f365ce9fbbe10e5c8fad4-us7'
+MAILCHIMP_DATA_CENTER='us7'
+MAILCHIMP_EMAIL_AUDIENCE_ID = 'ec18115133'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -30,8 +33,13 @@ INSTALLED_APPS = [
     "app",
     "marketing",
     "crispy_forms",
-     'mptt',
+    'mptt',
+    'ckeditor',
+    'ckeditor_uploader',
 ] 
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
@@ -127,6 +135,12 @@ EMAIL_USE_TLS = True
 
 
 
-# MAILCHIMP_API_KEY='7e5ab499a93f365ce9fbbe10e5c8fad4-us7'
-# MAILCHIMP_DATA_CENTER='us7'
-# MAILCHIMP_EMAIL_Audience_ID = 'ec18115133'
+CKEDITOR_CONFIGS = {
+    'default':
+    {
+        'toolbar':'full',
+        'height': 180,
+        'width':900,
+        'class':"card"
+    }
+}

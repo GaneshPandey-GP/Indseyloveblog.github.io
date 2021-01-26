@@ -61,7 +61,7 @@
                   </small>
                     {% endif %}  
                 </span>
-                <p>{{post.content}}
+                <p>{{post.content|safe}}
                   <br><br><a href="{% url 'blog' %}">Back to Blog</a>
                 </p>
                 <div class="tags-share">
@@ -144,7 +144,7 @@
           <label class="text-info required" class=" requiredField">Leave Your message</label>
           {% load crispy_forms_tags %}
           <form method="POST">{% csrf_token %}
-            {{form|crispy}}
+            {{forms|crispy}}
             <button class="btn btn-primary  btn-lg mb-5 mb-sm-5" type="submit">Share</button>
           </form>
         </div>

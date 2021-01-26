@@ -1,4 +1,5 @@
-from .models import CreatePost,Comment
+from .models import CreatePost
+from marketing.models import Comment
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -6,9 +7,7 @@ from mptt.forms import TreeNodeChoiceField
 class CreatePostform(forms.ModelForm): 
     class Meta:
         model = CreatePost
-        fields = fields = ('title',
-                   'image',
-                  'content',)
+        fields = fields = ('title', 'image', 'content',)
 
 class CommentForm(forms.ModelForm): 
     parent  = TreeNodeChoiceField(queryset=Comment.objects.all())
